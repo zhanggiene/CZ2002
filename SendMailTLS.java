@@ -12,9 +12,9 @@ public class SendMailTLS {
 
 	public static void main(String[] args) {
 		//Email of sending email
-		final String username = " "; // to be added #For the email used make sure "Allow less secure apps: ON" setting is on
+		final String username = ""; // to be added #For the email used make sure "Allow less secure apps: ON" setting is on
 		//Password of sending password: Make sure no two factor authentication for this email
-		final String password = " "; // to be added
+		final String password = ""; // to be added
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -33,9 +33,9 @@ public class SendMailTLS {
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(" ")); //Email to send to
+			message.setFrom(new InternetAddress("")); //Email to send to
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(" ")); // to be added an email addr //Email to send to
+				InternetAddress.parse("")); // to be added an email addr //Email to send to
 			message.setSubject("Testing Subject");
 			message.setText("Dear Mail Crawler,"
 				+ "\n\n No spam to my email, please!");
