@@ -16,11 +16,10 @@ public class LoginTimeManager {
 
     EnumMap<School, ArrayList<Date>> TimeMap=new EnumMap<School,ArrayList<Date>>(School.class);
     SimpleDateFormat ft;
-    String FileName;
+    String FileName="timeData.bin";
 
-    public LoginTimeManager(String fileName)
+    public LoginTimeManager()
     {
-        this.FileName=fileName;
         ft = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
     }
 
@@ -51,12 +50,14 @@ public class LoginTimeManager {
             System.out.println("the format is wrong");
             e.printStackTrace();
         }
+
+        // save
         
 
     }
 
 
-    public void loadData()
+    public void loadLoginPeriods()
     {
         try {
             FileInputStream fis=new FileInputStream("./"+this.FileName);
@@ -80,15 +81,27 @@ public class LoginTimeManager {
 
     }
 
+    public void printAllAccessPeriod()
+    {
+
+ System.out.println("Access time for all the school are:");
+ for (School name: TimeMap.keySet()){
+    System.out.println(name+": from      "+TimeMap.get(name).get(0)+"  to       "+TimeMap.get(name).get(1));  
+} 
+
+    }
+
     public static void main(String[] args) {
 
-        LoginTimeManager timemanager=new LoginTimeManager("timeData");
+        LoginTimeManager timemanager=new LoginTimeManager();
         //timemanager.add(School.SCSE,"2020-10-19 16:00","2020-10-19 17:00");
         //timemanager.save();
-        timemanager.loadData();
-        System.out.println(timemanager.isInside(School.SCSE, new Date()));
-        System.out.println(new Date());
+        timemanager.loadLoginPeriods();
+        timemanager.printAllAccessPeriod();
+
         
     }
 
 }
+
+//     edit(sch)

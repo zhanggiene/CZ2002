@@ -2,18 +2,9 @@ import java.util.ArrayList;
 
 public class Course {
     String courseCode; //CZ2002
-    int totalSize;
-    int Vacancy;
     String name;
     ArrayList<String> CourseGroup;
     School school;
-
-    public void printAllStudent()
-    // requirement 6 print student list by course
-    //make use of CourseGroup.printStudentList()
-    {
-
-    }
 
     public Course(String courseCode,int size,String name,School school)
     {

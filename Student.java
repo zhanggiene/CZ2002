@@ -23,14 +23,23 @@ public class Student implements Serializable
         return name+" "+MetriculationNumber;
     }
 
-    public void add(String index,String courseCode)
+    public void add(String index)
     {
 
+    }
+    public String getMetriculationNumber()
+    {
+        return MetriculationNumber;
     }
 
     public Boolean CheckClashes(String index)
     {
         return false;
+    }
+
+    public School getSchool()
+    {
+        return school;
     }
 
 

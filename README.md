@@ -8,5 +8,11 @@ cnweiyao@gmail.com
 wanglirong123@gmail.com
 lwenyu0110@gmail.com
 
+
+gmail sender
+NTUCZ2002A1
+CZ2002A1
+
+
 link for pointpoint slide:
 https://docs.google.com/presentation/d/17aPRCwH_j6iwYJi7kKpONqDSHYAsMdLRDBbNW1-gaBI/edit?usp=sharing 

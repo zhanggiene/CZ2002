@@ -1,8 +1,10 @@
 import java.util.*;
 import java.io.*;
+
 // since there is no setting of admin password,  it is hard coded in to the program, txt file only stores student password and ID
 
 public class PasswordManager {
+    
     Hashtable<String, String> my_dict = new Hashtable<String, String>();
     String fileName="password.txt";
     File file;
@@ -55,7 +57,7 @@ public class PasswordManager {
     public void add(String studentId,String passWord)
     // assume the studentID does not exist in the database to avoid duplicate
     {
-        assert studentExit(studentId);
+        assert studentExist(studentId);
         my_dict.put(studentId, HashPassword.hashPassword(passWord));
         this.pw.println(studentId+" "+HashPassword.hashPassword(passWord));
         System.out.println("added successfuly");
@@ -64,7 +66,7 @@ public class PasswordManager {
 
     }
 
-    public Boolean studentExit(String studentID)
+    public Boolean studentExist(String studentID)
     {
         return my_dict.containsKey(studentID);
     }

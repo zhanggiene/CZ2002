@@ -1,12 +1,5 @@
 {
-    "java.project.referencedLibraries": {
-        "include": [
-            "lib/**/*.jar",
-            "jars/activation-1.1.1.jar",
-            "jars/javax.mail.jar"
-        ],
-        "exclude": [
-            "d:\\LR\\WLR\\Documents-\\WangLR\\University\\Y2S1\\OODP\\Project\\javamail\\activation-1.1.1.jar"
-        ]
-    }
+    "java.project.referencedLibraries": [
+        "libs/**/*.jar"
+    ]
 }

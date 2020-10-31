@@ -8,6 +8,7 @@ public class CourseGroup {
     ArrayList<PeriodClass> tutorial;
     ArrayList<PeriodClass> lab;
     ArrayList<String> students;
+    
     //Q for student queing for this tutorial 
 
 

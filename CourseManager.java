@@ -3,21 +3,49 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CourseManager {
-    Map<String, Course> my_dict=new HashMap<String, Course>();
-    String FileName;
+    Map<String, Course> courses=new HashMap<String, Course>(); 
+    Map<String, CourseGroup>courseGroups=new HashMap<String, CourseGroup>();
 
-    public CourseManager(String fileName)
+    //course
+
+    String CourseFile="CourseData.bin" ;
+    String CourseGroupFile="CourseGroup.bin";
+
+    public CourseManager()
     {
-        this.FileName= fileName;
+        loadData();
+
     }
-    public void add(Course a)
+    public void addCourse(Course a)
     {
-        this.my_dict.put(a.getcourseCode(),a);
+        courses.put(a.getcourseCode(),a);
+    }
+    public void addCourseGroup(CourseGroup courseGroup)
+    {
+        courseGroups.put(courseGroup.getIndexNumber(),courseGroup);
     }
 
     public Course getCourseByCode(String CourseCode)
     {
-        return this.my_dict.get(CourseCode);
+        return courses.get(CourseCode);
+    }
+    public void enroll(Student student,CourseGroup index)
+    {
+        //to do 
+        courseGroups.get(index).enrol(student.getMetriculationNumber());
+        student.addToConfirmedIndex(index.getIndexNumber());
+
+    }
+
+    public CourseGroup getCourseGroup(String index)
+    {
+        return courseGroups.get(index);
+    }
+
+    public void printAllStudents(String courseCode)
+    {
+        // to do
+        // as the Course object to bring all student 
     }
 
 
@@ -35,7 +63,7 @@ public class CourseManager {
 
     }
     }
-    public void loadData()
+    private void loadData()
     {
         try {
             FileInputStream fis=new FileInputStream("./"+this.FileName);
@@ -56,7 +84,7 @@ public class CourseManager {
 
 
     public static void main(String[] args) {
-        CourseManager manager=new CourseManager("CourseData.bin");
+        CourseManager manager=new CourseManager();
         Course a=new Course("CZ2002",600,"oodp",School.SCSE);
         System.out.println(a.getcourseCode());
         manager.add(a);
