@@ -16,9 +16,9 @@ public class PasswordManager {
         try{
 
             this.file=new File(this.fileName);
-        loadFile();
-        this.fw=new FileWriter(this.file, true);
-        this.pw=new PrintWriter(this.fw);
+            loadFile();
+            this.fw=new FileWriter(this.file, true);
+            this.pw=new PrintWriter(this.fw);
 
 
         }

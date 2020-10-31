@@ -50,6 +50,7 @@ public class LoginTimeManager {
     public LoginTimeManager()
     {
         ft = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
+        loadLoginPeriods();
     }
 
     public void save()

@@ -22,6 +22,7 @@ public class StudentManager {
     public void addStudent(Student s)
     {
         studentAccounts.put(s.getMetriculationNumber(),s);
+        save();
     }
     public void save()
     {
@@ -75,27 +76,5 @@ public class StudentManager {
 
     }
     
-
-
-
-    public static void main(String[] args) {
-
-        StudentManager studentmanager=new StudentManager();
-        //studentmanager.loadData();
-        //studentmanager.printAllRecord();
-
-        /*Student s1 = new Student("random1", "U2020187L"); 
-        Student s2 = new Student("random2", "U2020188L"); 
-        studentmanager.add(s1.MetriculationNumber,s1);
-        studentmanager.add(s2.MetriculationNumber,s2);
-        studentmanager.printAllRecord();
-        studentmanager.save();
-        */
-        Student s2 = new Student("random3", "U2020189L"); 
-        studentmanager.add(s2);
-        studentmanager.printAllRecord();
-
-    
-}
     
 }

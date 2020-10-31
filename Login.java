@@ -34,7 +34,7 @@ public class Login {
             if (mypass.isCorrectAdmin(userName, new String(passwordArray)))
             {
                 // go to admin page APP
-                AdminApp adminPage = new AdminApp(studentManager,courseManager, timeManager, emailNotificationManager);
+                AdminApp adminPage = new AdminApp(studentManager,courseManager, timeManager, emailNotificationManager, mypass);
                 adminPage.start();
 
             }

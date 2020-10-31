@@ -8,23 +8,34 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 public class EmailNotificationManager {
 
     private Hashtable<String, String> EmailDataBase = new Hashtable<String, String>();
-    private String fileName="email.txt";
+    private String fileName = "email.txt";
     private File file;
     private Properties props;
     private Session session;
+    private FileWriter fw;
+    private PrintWriter pw;
 
-    //Email of sending email
-		private final String username = "ntucz2002a1@gmail.com"; // to be added #For the email used make sure "Allow less secure apps: ON" setting is on
-		//Password of sending password: Make sure no two factor authentication for this email
-		private final String password = "NTU2002A1"; // to be added
+    // Email of sending email
+    private final String username = "ntucz2002a1@gmail.com"; // to be added #For the email used make sure "Allow less
+                                                             // secure apps: ON" setting is on
+    // Password of sending password: Make sure no two factor authentication for this
+    // email
+    private final String password = "NTU2002A1"; // to be added
 
-    public EmailNotificationManager()
-    {
-        this.file = new File(this.fileName);
-        loadFile();
+    public EmailNotificationManager() {
+        try {
+            this.file = new File(this.fileName);
+            loadFile();
+            this.fw = new FileWriter(this.file, true);
+            this.pw=new PrintWriter(this.fw);
+        } catch (IOException e) {
+            System.out.println("An error occured.");
+            e.printStackTrace();
+        }
         setup();
     }
     private void setup()
@@ -93,6 +104,23 @@ public class EmailNotificationManager {
         {
             System.out.println("error, email not found in the dataBase");
         }
+    }
+
+    public void add(String studentId, String email)
+    // assume the studentID does not exist in the database to avoid duplicate
+    {
+        assert studentExist(studentId);
+        EmailDataBase.put(studentId, email);
+        this.pw.println(studentId+" "+ email);
+        System.out.println("Student email added successfuly");
+        System.out.println(studentId+" "+email);
+        this.pw.close();
+    }
+
+    public boolean studentExist(String metriculationNumber)
+    {
+        return EmailDataBase.contains(metriculationNumber);
+
     }
 
     public static void main(String[] args) {
