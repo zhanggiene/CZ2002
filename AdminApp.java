@@ -1,6 +1,9 @@
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Interface that an admin see after login 
@@ -63,6 +66,7 @@ public class AdminApp {
                     break;
                 case 2:
                     //Edit Student Access Period 
+                    editStudentAccessPeriod();
                     break;
                 case 3:
                     //Add Student
@@ -182,6 +186,99 @@ public class AdminApp {
             && choice<=schools.size()+1 && choice>=1){
             //timemanager.add(School.SCSE,"2020-10-19 16:00","2020-10-19 17:00");
             timeManager.add((School)schools.get(choice-1), startDateTime, endDateTime);
+            this.timeManager.printAllAccessPeriod();
+            System.out.println("--------------------------------");
+        }    
+    }
+
+    public void editStudentAccessPeriod(){
+        Scanner sc = new Scanner(System.in);
+        int choice=-1;
+        boolean progress1=false;
+        boolean progress2=false;
+        ArrayList<School> schoolChoices = this.timeManager.getSchoolsWithLoginPeriod();
+        do {
+            this.timeManager.printAllAccessPeriod();
+            System.out.println("--------------------------------");
+            
+            for (int i=1;i<=schoolChoices.size();i++){
+                System.out.println(i+". "+schoolChoices.get(i-1));
+            }
+            System.out.println((schoolChoices.size()+1)+". Return back to menu");
+            System.out.println("--------------------------------");
+            
+            try {
+                choice = sc.nextInt();
+            } catch (Exception e){
+                System.out.println("Please input an integer");
+            }
+
+            if (choice <= schoolChoices.size() && choice >= 1) {
+                progress1=true;
+                break;
+            } else if (choice != schoolChoices.size()+1){
+                System.out.println("Please input an integer from 1-"+(schoolChoices.size()+1));
+            }
+        } while (choice != schoolChoices.size()+1);
+
+        String date;
+        String time;
+        String startDateTime = null;
+        String endDateTime = null;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        while (progress1) {
+            try {
+                //start date
+                System.out.println("Press b to go back");
+                System.out.println("Choice of start date: (YYYY-MM-DD)");
+                date = sc.next();
+                if (date.equals("b")){break;}
+
+                //start time
+                System.out.println("Choice of start time: (HH:MM)");
+                time = sc.next();
+                if (date.equals("b")){break;}
+
+                //check correct format
+                startDateTime = date + " " + time;
+                df.parse(startDateTime);
+
+                progress2=true;
+                progress1=false;
+
+            } catch (Exception e){
+                System.out.println("Wrong Format of Input!");
+            }
+        }
+
+        while (progress2) {
+            try {
+                //end date
+                System.out.println("Choice of end date: (YYYY-MM-DD)");
+                date = sc.next();
+                if (date=="b"){break;}
+
+                //end time
+                System.out.println("Choice of end time: (HH:MM)");
+                time = sc.next();
+                if (date=="b"){break;}
+
+                //check correct format
+                endDateTime = date + " " + time;
+                df.parse(startDateTime);
+
+                progress2=false;
+
+            } catch (Exception e){
+                System.out.println("Wrong Format of Input!");
+            }
+        }
+
+        if (startDateTime != null && endDateTime != null 
+            && choice<=schoolChoices.size()+1 && choice>=1){
+            //timemanager.add(School.SCSE,"2020-10-19 16:00","2020-10-19 17:00");
+            timeManager.add((School)schoolChoices.get(choice-1), startDateTime, endDateTime);
             this.timeManager.printAllAccessPeriod();
             System.out.println("--------------------------------");
         }    
