@@ -7,9 +7,11 @@ public class Login {
     public static void main(String[] args) {
 
         PasswordManager mypass=new PasswordManager();
-        StudentManager studentmanager=new StudentManager();
+        StudentManager studentManager=new StudentManager();
         LoginTimeManager timeManager=new LoginTimeManager();
         CourseManager courseManager=new CourseManager();
+        EmailNotificationManager emailNotificationManager = new EmailNotificationManager();
+
         Console console = System.console();
         Scanner input = new Scanner(System.in);
         if (console == null) {
@@ -17,12 +19,12 @@ public class Login {
             System.exit(0);
         }
 
-        System.out.println("Welcome to My STudent Automated Registration System (MySTARS)");
+        System.out.println("Welcome to My Student Automated Registration System (MySTARS)");
         System.out.print("Enter your UserName:");
         String userName = input.nextLine();
 
         char[] passwordArray = console.readPassword("Enter your password:");
-        System.out.println("User name is"+userName);
+        System.out.println("User name is "+userName);
         
         //console.printf("Password entered was: %s%n", new String(passwordArray));
         //input.close();
@@ -32,7 +34,7 @@ public class Login {
             if (mypass.isCorrectAdmin(userName, new String(passwordArray)))
             {
                 // go to admin page APP
-                AdminApp adminPage =new AdminApp(studentmanager,courseManager);
+                AdminApp adminPage = new AdminApp(studentManager,courseManager, timeManager, emailNotificationManager);
                 adminPage.start();
 
             }
@@ -50,12 +52,12 @@ public class Login {
 
             if (mypass.isCorrectStudent(userName, new String(passwordArray)))
             {
-                School schoolOfStudent=studentmanager.getSchool(userName);
+                School schoolOfStudent=studentManager.getSchool(userName);
                 if (timeManager.isInside(schoolOfStudent,new Date()))
                 {
                     // within the time
-                    // initialize student APP
-                    StudentApp studentApp=new StudentApp(userName,studentmanager,courseManager);
+                    // initialize student APPs
+                    StudentApp studentApp=new StudentApp(userName,studentManager,courseManager, emailNotificationManager);
                     studentApp.start();
 
 

@@ -8,7 +8,36 @@ import java.util.*;
 
 
 enum School {
-    SCSE,EEE,MSE,MAE,SPMS;
+    SCSE {
+        @Override
+        public String toString() {
+            return "SCSE";
+        }
+    },
+    EEE {
+        @Override
+        public String toString() {
+            return "EEE";
+        }
+    },
+    MSE {
+        @Override
+        public String toString() {
+            return "MSE";
+        }
+    },
+    MAE {
+        @Override
+        public String toString() {
+            return "MAE";
+        }
+    },
+    SPMS {
+        @Override
+        public String toString() {
+            return "SPMS";
+        }
+    };
 }
 
 
@@ -51,6 +80,8 @@ public class LoginTimeManager {
             e.printStackTrace();
         }
 
+        this.save();
+
         // save
         
 
@@ -84,10 +115,10 @@ public class LoginTimeManager {
     public void printAllAccessPeriod()
     {
 
- System.out.println("Access time for all the school are:");
- for (School name: TimeMap.keySet()){
-    System.out.println(name+": from      "+TimeMap.get(name).get(0)+"  to       "+TimeMap.get(name).get(1));  
-} 
+        System.out.println("Access time for all the school are:");
+        for (School name: TimeMap.keySet()){
+            System.out.println(name+": from      "+TimeMap.get(name).get(0)+"  to       "+TimeMap.get(name).get(1));  
+        } 
 
     }
 

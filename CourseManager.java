@@ -52,10 +52,15 @@ public class CourseManager {
     public void save()
     {
         try {
-            FileOutputStream fop=new FileOutputStream("./"+this.FileName);
-            ObjectOutputStream oos=new ObjectOutputStream(fop);
-            oos.writeObject(this.my_dict);
-            oos.close();
+            FileOutputStream fopCourse=new FileOutputStream("./"+this.CourseFile);
+            ObjectOutputStream oosCourse=new ObjectOutputStream(fopCourse);
+            oosCourse.writeObject(this.courses);
+            oosCourse.close();
+
+            FileOutputStream fopCourseGroup=new FileOutputStream("./"+this.CourseGroupFile);
+            ObjectOutputStream oosCourseGroup=new ObjectOutputStream(fopCourseGroup);
+            oosCourseGroup.writeObject(this.courseGroups);
+            oosCourseGroup.close();
     
         }
          catch (Exception e) {
@@ -66,13 +71,17 @@ public class CourseManager {
     private void loadData()
     {
         try {
-            FileInputStream fis=new FileInputStream("./"+this.FileName);
-            ObjectInputStream ois=new ObjectInputStream(fis);
+            FileInputStream fisCourse=new FileInputStream("./"+this.CourseFile);
+            ObjectInputStream oisCourse=new ObjectInputStream(fisCourse);
+            this.courses=( Map<String, Course>) oisCourse.readObject();
+            oisCourse.close();
             //WriteObject wo=null;
             //WriteObject[] woj=new WriteObject[5];
-    
-            this.my_dict=( Map<String, Course>) ois.readObject();
-            ois.close();
+            FileInputStream fisCourseGroup=new FileInputStream("./"+this.CourseGroupFile);
+            ObjectInputStream oisCourseGroup=new ObjectInputStream(fisCourseGroup);
+            this.courseGroups=( Map<String, CourseGroup>) oisCourseGroup.readObject();
+            oisCourseGroup.close();
+            
     
         }
         catch (Exception e) {
