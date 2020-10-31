@@ -10,16 +10,16 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 public class EmailNotificationManager {
 
-    Hashtable<String, String> EmailDataBase = new Hashtable<String, String>();
-    String fileName="email.txt";
-    File file;
-    Properties props;
-    Session session;
+    private Hashtable<String, String> EmailDataBase = new Hashtable<String, String>();
+    private String fileName="email.txt";
+    private File file;
+    private Properties props;
+    private Session session;
 
     //Email of sending email
-		final String username = "ntucz2002a1@gmail.com"; // to be added #For the email used make sure "Allow less secure apps: ON" setting is on
+		private final String username = "ntucz2002a1@gmail.com"; // to be added #For the email used make sure "Allow less secure apps: ON" setting is on
 		//Password of sending password: Make sure no two factor authentication for this email
-		final String password = "NTU2002A1"; // to be added
+		private final String password = "NTU2002A1"; // to be added
 
     public EmailNotificationManager()
     {

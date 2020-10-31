@@ -7,8 +7,8 @@ public class StudentManager {
 
     // reference https://stackoverflow.com/questions/30013292/how-do-i-write-multiple-objects-to-the-serializable-file-and-read-them-when-the
 
-    Hashtable<String, Student> studentAccounts = new Hashtable<String, Student>();
-    String FileName="StudentData.bin";
+   private Hashtable<String, Student> studentAccounts = new Hashtable<String, Student>();
+    private String FileName="StudentData.bin";
 
     StudentManager(){
         loadData();

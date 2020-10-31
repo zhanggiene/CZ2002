@@ -43,9 +43,9 @@ enum School {
 
 public class LoginTimeManager {
 
-    EnumMap<School, ArrayList<Date>> TimeMap=new EnumMap<School,ArrayList<Date>>(School.class);
-    SimpleDateFormat ft;
-    String FileName="timeData.bin";
+    private EnumMap<School, ArrayList<Date>> TimeMap=new EnumMap<School,ArrayList<Date>>(School.class);
+    private SimpleDateFormat ft;
+    private String FileName="timeData.bin";
 
     public LoginTimeManager()
     {
