@@ -3,13 +3,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CourseManager {
-    Map<String, Course> courses=new HashMap<String, Course>(); 
-    Map<String, CourseGroup>courseGroups=new HashMap<String, CourseGroup>();
+    private Map<String, Course> courses=new HashMap<String, Course>(); 
+    private Map<String, CourseGroup>courseGroups=new HashMap<String, CourseGroup>();
 
     //course
 
-    String CourseFile="CourseData.bin" ;
-    String CourseGroupFile="CourseGroup.bin";
+   private  String CourseFile="CourseData.bin" ;
+    private String CourseGroupFile="CourseGroup.bin";
 
     public CourseManager()
     {

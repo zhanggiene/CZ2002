@@ -5,11 +5,11 @@ import java.io.*;
 
 public class PasswordManager {
     
-    Hashtable<String, String> my_dict = new Hashtable<String, String>();
-    String fileName="password.txt";
-    File file;
-    FileWriter fw;
-    PrintWriter pw;
+    private Hashtable<String, String> my_dict = new Hashtable<String, String>();
+    private String fileName="password.txt";
+    private File file;
+    private FileWriter fw;
+    private PrintWriter pw;
 
     public PasswordManager()
     {
