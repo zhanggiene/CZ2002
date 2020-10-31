@@ -1,5 +1,9 @@
 {
-    "java.project.referencedLibraries": [
-        "libs/**/*.jar"
-    ]
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "jars/activation-1.1.1.jar",
+            "jars/javax.mail.jar"
+        ],
+    }
 }
