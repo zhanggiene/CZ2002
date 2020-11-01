@@ -16,7 +16,7 @@ public class StudentManager {
         loadData();
 
     }
-    Student getStudent(String metriculationNumber)
+    public Student getStudent(String metriculationNumber)
     {
         return studentAccounts.get(metriculationNumber);
     }

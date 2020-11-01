@@ -1,9 +1,7 @@
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,6 +39,7 @@ public class AdminApp {
 
     /**
      * This method starts up the admin app and displays all choices to admin
+     * @author Wang Li Rong
      */
     public void start(){
         Scanner sc = new Scanner(System.in);
@@ -109,9 +108,10 @@ public class AdminApp {
     }
     /**
      * UI for adding student access period.
+     * @author Wang Li Rong
      */
     private void addStudentAccessPeriod(){
-        Scanner sc = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         List schools = (List<School>)java.util.Arrays.asList(School.values());
         int choice=-1;
         boolean progress1=false;
@@ -129,7 +129,7 @@ public class AdminApp {
 
             System.out.print("Choice for School: ");
             try {
-                choice = sc.nextInt();
+                choice = scan.nextInt();
             } catch (Exception e){
                 System.out.println("Please input an integer");
             }
@@ -151,12 +151,12 @@ public class AdminApp {
                 //start date
                 System.out.println("Press b to go back");
                 System.out.println("Choice of start date: (YYYY-MM-DD)");
-                date = sc.next();
+                date = scan.next();
                 if (date.equals("b")){break;}
 
                 //start time
                 System.out.println("Choice of start time: (HH:MM)");
-                time = sc.next();
+                time = scan.next();
                 if (date.equals("b")){break;}
 
                 //check correct format
@@ -175,12 +175,12 @@ public class AdminApp {
             try {
                 //end date
                 System.out.println("Choice of end date: (YYYY-MM-DD)");
-                date = sc.next();
+                date = scan.next();
                 if (date=="b"){break;}
 
                 //end time
                 System.out.println("Choice of end time: (HH:MM)");
-                time = sc.next();
+                time = scan.next();
                 if (date=="b"){break;}
 
                 //check correct format
@@ -206,6 +206,7 @@ public class AdminApp {
     /**
      * UI for editting student access period.
      * Similar to adding except only previously added schools can be chosen. 
+     * @author Wang Li Rong
      */
     private void editStudentAccessPeriod(){
         Scanner sc = new Scanner(System.in);
@@ -300,6 +301,11 @@ public class AdminApp {
         }    
     }
     
+
+    /**
+     * UI for adding a new student.
+     * @author Wang Li Rong
+     */
     private void addStudent(){
         Scanner scan = new Scanner(System.in);
         //add to student manager
@@ -447,8 +453,79 @@ public class AdminApp {
 
     
 
+    /**
+     * UI for printing list of studenets by Index Number
+     * @author Wang Li Rong
+     */
     private void printStudentListByIndexNumber(){
-        
+        String[] courseCodes = courseManager.getCourseList();
+        boolean progress1 = false; //progress to next stage or not
+        boolean progress2 = false; //progress to next stage or not
+        int courseInt=-1;
+        int courseGroupInt=-1;
+        Scanner scan = new Scanner(System.in);
+        while (true){
+            System.out.println("Courses: ");
+            for (int i=0;i<courseCodes.length;i++){
+                System.out.println((i+1)+".\t"+courseCodes[i]);
+            }
+            System.out.println((courseCodes.length+1)+".\tReturn back to menu");
+            System.out.println("---------------------------------------");
+            System.out.print("Choice of Course Code (1-"+(courseCodes.length+1)+"): ");
+            try {
+                courseInt=scan.nextInt();
+                scan.nextLine();//clear buffer
+                if (courseInt == courseCodes.length+1){
+                    break;
+                } else if (courseInt >courseCodes.length+1 && courseInt<1 ){
+                    System.out.println("Please enter an integer between 1-"+(courseCodes.length+1));
+                } else {
+                    progress1 = true;
+                    break;
+                }
+            } catch (Exception e){
+                System.out.println("Please Enter a Valid Integer.");
+            }
+        }
+        ArrayList<String> courseGroups = null;
+        while (progress1){
+            String courseCode = courseCodes[courseInt-1];
+            courseGroups = courseManager.getCourseGroupsOfCourse(courseCode);
+            for (int i=0;i<courseGroups.size();i++){
+                System.out.println((i+1)+".\t"+courseGroups.get(i));
+            }
+            System.out.println((courseGroups.size()+1)+".\tReturn back to menu");
+            System.out.println("---------------------------------------");
+            System.out.print("Choice of Course Group (1-"+(courseGroups.size()+1)+"): ");
+            
+            try {
+                courseGroupInt=scan.nextInt();
+                scan.nextLine();//clear buffer
+                if (courseGroupInt == courseGroups.size()+1){
+                    break;
+                } else if (courseGroupInt >courseGroups.size()+1 && courseGroupInt<1 ){
+                    System.out.println("Please enter an integer between 1-"+(courseGroups.size()+1));
+                } else{
+                    progress2=true;
+                    break;
+                }
+            } catch (Exception e){
+                System.out.println("Please Enter a Valid Integer.");
+            }
+        }
+        if (progress1 && progress2){
+            String courseGroupIndex = courseGroups.get(courseGroupInt-1);
+            CourseGroup courseGroup = courseManager.getCourseGroup(courseGroupIndex);
+            ArrayList<String> studentMatricNumbers = courseGroup.getStudents();
+            int i=1;
+            System.out.println("Students in "+courseGroupIndex+": ");
+            for (String matricNumber: studentMatricNumbers){
+                System.out.print(i+". ");
+                studentManager.getStudent(matricNumber).printStudent();
+                i++;
+            }
+            System.out.println("---------------------------------------");
+        }
     }
     
 

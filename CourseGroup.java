@@ -22,12 +22,6 @@ public class CourseGroup implements Serializable{
         this.studentsWaiting = new ArrayList<>();
     }
 
-    public void printStudentList()
-    // print all the student within this tutorial group
-    {
-
-    }
-
     public String getIndexNumber() {
         return indexNumber;
     }
@@ -36,6 +30,13 @@ public class CourseGroup implements Serializable{
         return courseCode;
     }
 
+    /**
+     * @return List of Students Matriculation Numbers
+     * @author Wang Li Rong
+     */
+    public ArrayList<String> getStudents() {
+        return students;
+    }
 
     public void enrol(String matriculationNumber){
         //still need to add logic 

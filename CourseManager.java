@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,12 +46,32 @@ public class CourseManager {
         return courseGroups.get(index);
     }
 
-    public void printAllStudents(String courseCode)
-    {
-        // to do
-        // as the Course object to bring all student 
+    //coursemanager cannot print students because it has no access to students
+    // public void printAllStudents(String courseCode)
+    // {
+    //     // to do
+    //     // as the Course object to bring all student 
+    // }
+    /**
+     * Get list of CoursesCodes.
+     * @author Wang Li Rong
+     */
+    public String[] getCourseList() {        
+        return Arrays.stream(courses.keySet().toArray()).toArray(String[]::new);
     }
 
+    /**
+     * Get list of CourseGroupsIndexes of a Course. 
+     * @author Wang li Rong
+     */
+    public ArrayList<String> getCourseGroupsOfCourse(String courseCode){
+        ArrayList<String> courseGroupIndexes = courses.get(courseCode).getCourseGroups(); 
+        ArrayList<String> courseGroupList = new ArrayList<>();
+        for (String indexes:courseGroupIndexes){
+            courseGroupList.add(courseGroups.get(indexes).getIndexNumber());
+        }
+        return courseGroupList;
+    }
 
     public void save()
     {
@@ -91,30 +113,30 @@ public class CourseManager {
 }
             
 
-
-
     public static void main(String[] args) {
         //For testing
         CourseManager manager=new CourseManager();
 
         //add courses
-        // Course course=new Course("CZ2002","OODP",School.SCSE);
-        // manager.addCourse(course);
+        Course course=new Course("CZ2002","OODP",School.SCSE);
+        manager.addCourse(course);
 
         //add coursegroups
-        // CourseGroup courseGroup = new CourseGroup("DSAI1", 50, "CZ2002");
-        // if (!course.courseGroupExist(courseGroup.getIndexNumber())){
-        //     course.addCourseGroup(courseGroup.getIndexNumber());
-        //     manager.addCourseGroup(courseGroup);
-        // }
-        // CourseGroup courseGroup2 = new CourseGroup("DSAI2", 50, "CZ2002");
-        // if (!course.courseGroupExist(courseGroup2.getIndexNumber())){
-        //     course.addCourseGroup(courseGroup2.getIndexNumber());
-        //     manager.addCourseGroup(courseGroup2);
-        // }
+        CourseGroup courseGroup = new CourseGroup("DSAI1", 50, "CZ2002");
+        if (!course.courseGroupExist(courseGroup.getIndexNumber())){
+            course.addCourseGroup(courseGroup.getIndexNumber());
+            manager.addCourseGroup(courseGroup);
+        }
+        CourseGroup courseGroup2 = new CourseGroup("DSAI2", 50, "CZ2002");
+        if (!course.courseGroupExist(courseGroup2.getIndexNumber())){
+            course.addCourseGroup(courseGroup2.getIndexNumber());
+            manager.addCourseGroup(courseGroup2);
+        }
 
-        // courseGroup.enrol("U1234567");
-        // courseGroup2.enrol("U2234567");
+        courseGroup.enrol("U1234567B");
+        courseGroup2.enrol("U2234567B");
+
+        manager.save();
 
         System.out.println(manager.courseGroups);
         System.out.println(manager.courses);

@@ -28,6 +28,15 @@ public class Course implements Serializable{
     public boolean courseGroupExist(String courseGroupIndex){
         return courseGroups.contains(courseGroupIndex);
     }
+
+    /**
+     * Gets list of Course Groups of a Course.
+     * @author Wang Li Rong
+     */
+    public ArrayList<String> getCourseGroups() {
+        return courseGroups;
+    }
+
     //Now each coursegroup has a totalSize instead
     // public void changeSize(int newSize)
     // {
