@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
  * 1. Adding and Editting Student Access Period 
  * 2. Adding students 
  * 3. Adding courses 
- * 4.Updating courses 
+ * 4. Updating courses 
  * 5. Checking index vacancy 
  * 6. Printing Student List By Index Number 
  * 7. Printing Student List By Course
@@ -94,6 +94,7 @@ public class AdminApp {
                     break;
                 case 8:
                     //Print Student List By Course
+                    printStudentListByCourse();
                     break;
                 case 9:
                     break;
@@ -518,12 +519,60 @@ public class AdminApp {
             CourseGroup courseGroup = courseManager.getCourseGroup(courseGroupIndex);
             ArrayList<String> studentMatricNumbers = courseGroup.getStudents();
             int i=1;
-            System.out.println("Students in "+courseGroupIndex+": ");
+            System.out.println("Students in "+courseGroupIndex+" : ");
             for (String matricNumber: studentMatricNumbers){
                 System.out.print(i+". ");
                 studentManager.getStudent(matricNumber).printStudent();
                 i++;
             }
+            System.out.println("---------------------------------------");
+        }
+    }
+
+    private void printStudentListByCourse(){
+        String[] courseCodes = courseManager.getCourseList();
+        boolean progress1 = false; //progress to next stage or not
+        int courseInt=-1;
+        Scanner scan = new Scanner(System.in);
+        while (true){
+            System.out.println("Courses: ");
+            for (int i=0;i<courseCodes.length;i++){
+                System.out.println((i+1)+".\t"+courseCodes[i]);
+            }
+            System.out.println((courseCodes.length+1)+".\tReturn back to menu");
+            System.out.println("---------------------------------------");
+            System.out.print("Choice of Course Code (1-"+(courseCodes.length+1)+"): ");
+            try {
+                courseInt=scan.nextInt();
+                scan.nextLine();//clear buffer
+                if (courseInt == courseCodes.length+1){
+                    break;
+                } else if (courseInt >courseCodes.length+1 && courseInt<1 ){
+                    System.out.println("Please enter an integer between 1-"+(courseCodes.length+1));
+                } else {
+                    progress1 = true;
+                    break;
+                }
+            } catch (Exception e){
+                System.out.println("Please Enter a Valid Integer.");
+            }
+        }
+        
+        if (progress1){
+            String courseCode = courseCodes[courseInt-1];
+            System.out.println("Students in "+courseCode+" : ");
+            ArrayList<String> courseGroups =courseManager.getCourseGroupsOfCourse(courseCode);
+            for (String courseGroupIndex: courseGroups){
+                CourseGroup courseGroup = courseManager.getCourseGroup(courseGroupIndex);
+                ArrayList<String> studentMatricNumbers = courseGroup.getStudents();
+                int i=1;
+                for (String matricNumber: studentMatricNumbers){
+                    System.out.print(i+". ");
+                    studentManager.getStudent(matricNumber).printStudent();
+                    i++;
+                }
+            }
+            
             System.out.println("---------------------------------------");
         }
     }

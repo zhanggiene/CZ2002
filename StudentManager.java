@@ -61,7 +61,7 @@ public class StudentManager {
 
     public void printAllRecord() {
         System.out.println("List of Students: ");
-        System.out.println("\tName     \tMatricNumber\tSchool\tGender");
+        System.out.println("\tName     \tGender\tNationality\t");
         int i=1;
         for (Student s : studentAccounts.values()) {
             System.out.print(i+".\t");

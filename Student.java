@@ -72,7 +72,7 @@ public class Student implements Serializable
      * @Li Rong
      */
     public void printStudent(){
-        System.out.println(name+"\t"+matriculationNumber+"\t"+school+"\t"+gender);
+        System.out.println(name+"\t"+gender+"\t"+nationality);
     }
 
 
