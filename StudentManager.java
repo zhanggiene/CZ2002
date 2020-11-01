@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+import javax.print.DocFlavor.STRING;
+
 
 
 public class StudentManager {
@@ -21,7 +23,7 @@ public class StudentManager {
 
     public void addStudent(Student s)
     {
-        studentAccounts.put(s.getMetriculationNumber(),s);
+        studentAccounts.put(s.getMatriculationNumber(),s);
         save();
     }
     public void save()
@@ -58,9 +60,13 @@ public class StudentManager {
 
 
     public void printAllRecord() {
-
+        System.out.println("List of Students: ");
+        System.out.println("\tName     \tMatricNumber\tSchool\tGender");
+        int i=1;
         for (Student s : studentAccounts.values()) {
-            System.out.println(s);
+            System.out.print(i+".\t");
+            s.printStudent();
+            i++;
         }
 
         
@@ -74,6 +80,14 @@ public class StudentManager {
     {
         return studentAccounts.contains(metriculationNumber);
 
+    }
+
+    public static void main(String args[]){
+        //testing code
+        StudentManager studentManager = new StudentManager();
+        studentManager.addStudent(new Student("John Doe", "U1234567B", School.SCSE, Gender.MALE, "Chinese"));
+        studentManager.addStudent(new Student("Jane Doe", "U2234567B", School.EEE, Gender.FEMALE, "Singaporean"));
+        studentManager.printAllRecord();
     }
     
     

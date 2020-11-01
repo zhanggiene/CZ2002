@@ -1,8 +1,20 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 enum Gender {
-    FEMALE,
-    MALE
+    FEMALE{
+        @Override
+        public String toString() {
+            return "Female";
+        }
+    },
+    MALE{
+        @Override
+        public String toString() {
+            return "Male";
+        }
+    }
 }
 
 public class Student implements Serializable
@@ -13,7 +25,7 @@ public class Student implements Serializable
     private Gender gender;
     private String nationality;
     // arraylist containing tuples containing index and its corresponing class code
-    
+    private HashMap<String,String> confirmedCourseGroups; //courseGroup: courseCode
     
     public Student(String name,
                    String matriculationNumber,
@@ -25,17 +37,22 @@ public class Student implements Serializable
         this.school=school;
         this.gender=gender;
         this.nationality=nationality;
+        this.confirmedCourseGroups = new HashMap<>();
     }
     
     public String toString() {
         return name+" "+matriculationNumber;
     }
-
-    public void add(String index)
+    /**
+     * Adds to confirmedCourseGroups. 
+     * @author Wang Li Rong
+     */
+    public void addToCourseGroups(String index, String courseCode)
     {
-
+        this.confirmedCourseGroups.put(index, courseCode);
     }
-    public String getMetriculationNumber()
+    
+    public String getMatriculationNumber()
     {
         return matriculationNumber;
     }
@@ -48,6 +65,14 @@ public class Student implements Serializable
     public School getSchool()
     {
         return school;
+    }
+
+    /**
+     * Format to print student
+     * @Li Rong
+     */
+    public void printStudent(){
+        System.out.println(name+"\t"+matriculationNumber+"\t"+school+"\t"+gender);
     }
 
 

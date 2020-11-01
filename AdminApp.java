@@ -91,6 +91,7 @@ public class AdminApp {
                     break;
                 case 7:
                     //Print Student List By Index Number
+                    printStudentListByIndexNumber();
                     break;
                 case 8:
                     //Print Student List By Course
@@ -302,13 +303,16 @@ public class AdminApp {
     private void addStudent(){
         Scanner scan = new Scanner(System.in);
         //add to student manager
+        System.out.println("Section 1/7");
         System.out.print("Student Matriculation Number: ");
-        String matricNumber = scan.next();
+        String matricNumber = scan.nextLine();
         //Goes back to main menu when student already exists
         if (studentManager.studentExist(matricNumber)){
             System.out.println("Student already exists!");
             return;
         }
+        System.out.println("========================================");
+        System.out.println("Section 2/7");
         //Checks if student name is empty
         String name = "";
         while (true){
@@ -320,6 +324,8 @@ public class AdminApp {
                 System.out.println("Please enter a valid name.");
             }
         }
+        System.out.println("========================================");
+        System.out.println("Section 3/7");
 
         int genderInt;
         Gender gender;
@@ -341,6 +347,8 @@ public class AdminApp {
                 System.out.println("Please enter a valid integer.");
             }
         }
+        System.out.println("========================================");
+        System.out.println("Section 4/7");
         
 
         List schools = (List<School>)java.util.Arrays.asList(School.values());
@@ -351,7 +359,6 @@ public class AdminApp {
             for (int i=1;i<=schools.size();i++){
                 System.out.println(i+". "+ schools.get(i-1).toString());
             }
-            System.out.println("--------------------------------");
 
             System.out.print("Choice for School: ");
             try {
@@ -366,12 +373,15 @@ public class AdminApp {
                 System.out.println("Please input an integer");
             }
         }
+        scan.nextLine(); //clear buffer
+        System.out.println("========================================");
+        System.out.println("Section 5/7");
 
         //Checks if nationality is empty
         String nationality="";
         while (true){
             System.out.print("Student Nationality: ");
-            nationality = scan.next();
+            nationality = scan.nextLine();
             if (!nationality.isEmpty()){
                 break;
             } else {
@@ -389,13 +399,15 @@ public class AdminApp {
         } else{
             throw new RuntimeException("Particulars not filled up");
         }
+
+        System.out.println("========================================");
+        System.out.println("Section 6/7");
         
         //add to password manager
         String password="";
-        System.out.print("Student Password: ");
         while (true){
             System.out.print("Student Password: ");
-            password = scan.next();
+            password = scan.nextLine();
             if (!password.isEmpty()){
                 break;
             } else {
@@ -406,6 +418,9 @@ public class AdminApp {
             passwordManager.add(matricNumber, password);
         }
 
+        System.out.println("========================================");
+        System.out.println("Section 7/7");
+
         //add to notification manger
         //reference https://blog.mailtrap.io/java-email-validation/
         String email="";
@@ -413,7 +428,7 @@ public class AdminApp {
         Pattern pattern = Pattern.compile(regex);
         while (true){
             System.out.print("Student Email: ");
-            email = scan.next();
+            email = scan.nextLine();
             Matcher matcher = pattern.matcher(email);
             if (email.matches(regex)){
                 break;
@@ -424,8 +439,18 @@ public class AdminApp {
         if (!email.isEmpty() && email.matches(regex)){
             emailNotificationManager.add(matricNumber, email);
         }
-       
+
+        System.out.println("========================================");
+
+        studentManager.printAllRecord();
     }
+
+    
+
+    private void printStudentListByIndexNumber(){
+        
+    }
+    
 
 }
 

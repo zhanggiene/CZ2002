@@ -60,7 +60,7 @@ public class PasswordManager {
         assert studentExist(studentId);
         my_dict.put(studentId, HashPassword.hashPassword(passWord));
         this.pw.println(studentId+" "+HashPassword.hashPassword(passWord));
-        System.out.println("added successfuly");
+        System.out.println("Student added successfuly");
         System.out.println(studentId+" "+HashPassword.hashPassword(passWord));
         this.pw.close();
 

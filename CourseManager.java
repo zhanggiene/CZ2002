@@ -8,7 +8,7 @@ public class CourseManager {
 
     //course
 
-   private  String CourseFile="CourseData.bin" ;
+    private  String CourseFile="CourseData.bin" ;
     private String CourseGroupFile="CourseGroup.bin";
 
     public CourseManager()
@@ -19,10 +19,12 @@ public class CourseManager {
     public void addCourse(Course a)
     {
         courses.put(a.getcourseCode(),a);
+        save();
     }
     public void addCourseGroup(CourseGroup courseGroup)
     {
         courseGroups.put(courseGroup.getIndexNumber(),courseGroup);
+        save();
     }
 
     public Course getCourseByCode(String CourseCode)
@@ -32,9 +34,9 @@ public class CourseManager {
     public void enroll(Student student,CourseGroup index)
     {
         //to do 
-        courseGroups.get(index).enrol(student.getMetriculationNumber());
-        student.addToConfirmedIndex(index.getIndexNumber());
-
+        courseGroups.get(index).enrol(student.getMatriculationNumber());
+        student.addToCourseGroups(index.getIndexNumber(), index.getCourseCode());
+        save();
     }
 
     public CourseGroup getCourseGroup(String index)
@@ -80,8 +82,7 @@ public class CourseManager {
             FileInputStream fisCourseGroup=new FileInputStream("./"+this.CourseGroupFile);
             ObjectInputStream oisCourseGroup=new ObjectInputStream(fisCourseGroup);
             this.courseGroups=( Map<String, CourseGroup>) oisCourseGroup.readObject();
-            oisCourseGroup.close();
-            
+            oisCourseGroup.close();            
     
         }
         catch (Exception e) {
@@ -93,21 +94,39 @@ public class CourseManager {
 
 
     public static void main(String[] args) {
+        //For testing
         CourseManager manager=new CourseManager();
-        Course a=new Course("CZ2002",600,"oodp",School.SCSE);
-        System.out.println(a.getcourseCode());
-        manager.add(a);
-        Course b=manager.getCourseByCode("CZ2002");
-        b.changeSize(30);
-        System.out.println(manager.getCourseByCode("CZ2002"));
+
+        //add courses
+        // Course course=new Course("CZ2002","OODP",School.SCSE);
+        // manager.addCourse(course);
+
+        //add coursegroups
+        // CourseGroup courseGroup = new CourseGroup("DSAI1", 50, "CZ2002");
+        // if (!course.courseGroupExist(courseGroup.getIndexNumber())){
+        //     course.addCourseGroup(courseGroup.getIndexNumber());
+        //     manager.addCourseGroup(courseGroup);
+        // }
+        // CourseGroup courseGroup2 = new CourseGroup("DSAI2", 50, "CZ2002");
+        // if (!course.courseGroupExist(courseGroup2.getIndexNumber())){
+        //     course.addCourseGroup(courseGroup2.getIndexNumber());
+        //     manager.addCourseGroup(courseGroup2);
+        // }
+
+        // courseGroup.enrol("U1234567");
+        // courseGroup2.enrol("U2234567");
+
+        System.out.println(manager.courseGroups);
+        System.out.println(manager.courses);
+
+        // CourseManager manager=new CourseManager();
+        // Course a=new Course("CZ2002","oodp",School.SCSE);
+        // System.out.println(a.getcourseCode());
+        // manager.add(a);
+        // Course b=manager.getCourseByCode("CZ2002");
+        // b.changeSize(30);
+        // System.out.println(manager.getCourseByCode("CZ2002"));
         
     }
-
-
-
-    
-
-
-    // 
     
 }

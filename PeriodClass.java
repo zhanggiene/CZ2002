@@ -29,7 +29,7 @@ public class PeriodClass {
 
     public Boolean hasClash(PeriodClass b)
     {
-        if (this.getweekDay().getValue()!=b.getweekDay().getValue())
+        if (this.getDayOfWeek().getValue()!=b.getDayOfWeek().getValue())
         {
             return false;
         }
@@ -53,6 +53,10 @@ public class PeriodClass {
 
     }
 
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+
     public String toString() {
         return this.dayOfWeek.name()+" "+Integer.toString(this.startTime)+"-"+Integer.toString(this.endTime);
       }
@@ -67,11 +71,6 @@ public class PeriodClass {
         //PeriodClass test1=new PeriodClass(1, 1200,1300,"lt22",);
         //PeriodClass test2=new PeriodClass(1, 1300,1500,"lt22");
         //System.out.println(test1);
-
-
-
-
-
 
     }
 
