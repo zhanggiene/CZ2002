@@ -455,7 +455,7 @@ public class AdminApp {
     
 
     /**
-     * UI for printing list of studenets by Index Number
+     * UI for printing list of students by Index Number.
      * @author Wang Li Rong
      */
     private void printStudentListByIndexNumber(){
@@ -529,6 +529,10 @@ public class AdminApp {
         }
     }
 
+    /**
+     * UI for printing list of students by Course.
+     * @author Wang Li Rong
+     */
     private void printStudentListByCourse(){
         String[] courseCodes = courseManager.getCourseList();
         boolean progress1 = false; //progress to next stage or not
