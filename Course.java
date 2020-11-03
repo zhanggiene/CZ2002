@@ -17,6 +17,10 @@ public class Course implements Serializable{
     
     }
 
+    enum School {
+        SCSE, EEE, MSE, MAE, SPMS
+    }
+
     public String getcourseCode()
     {
         return this.courseCode;

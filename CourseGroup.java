@@ -43,7 +43,7 @@ public class CourseGroup implements Serializable{
     }
 
     public void isConfirmedStudent(String matriculationNumber){
-
+        
     }
 
     public void enrol(String matriculationNumber){
