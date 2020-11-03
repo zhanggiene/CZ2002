@@ -6,20 +6,18 @@ public class Course implements Serializable{
     private String name;
     private ArrayList<String> courseGroups;
     private School school;
-    private ArrayList<String> indexes;
+    // private ArrayList<String> indexes;
 
-    public Course(String courseCode, String name, School school)
+    public Course(String courseCode, String name, School scse)
     {
         this.courseCode=courseCode;
         this.name=name;
-        this.school=school;
+        this.school=scse;
         this.courseGroups = new ArrayList<>();
     
     }
 
-    enum School {
-        SCSE, EEE, MSE, MAE, SPMS
-    }
+    
 
     public String getcourseCode()
     {
@@ -31,10 +29,10 @@ public class Course implements Serializable{
         courseGroups.add(courseGroup);
     }
 
-    public ArrayList<String> getIndexes()
-    {
-        return this.indexes;
-    }
+    // public ArrayList<String> getIndexes()
+    // {
+    //     return this.indexes;
+    // }
 
     public boolean courseGroupExist(String courseGroupIndex)
     {
