@@ -38,6 +38,14 @@ public class CourseGroup implements Serializable{
         return students;
     }
 
+    public int getVacancy(){
+        return vacancy;
+    }
+
+    public void isConfirmedStudent(String matriculationNumber){
+
+    }
+
     public void enrol(String matriculationNumber){
         //still need to add logic 
         //If length of confirmedStudents is >= vacancy, add student to waitlist
@@ -45,6 +53,19 @@ public class CourseGroup implements Serializable{
         //list and add this index to Student with addToConfirmedIndex
         //this is just testing code
         students.add(matriculationNumber);
+    }
+
+    public void isWaitlistStudent(String matriculationNumber){
+
+    }
+
+    public int getTotalSize(){
+        return totalSize;
+    }
+
+
+    public void removeFromConfirmedStudent(){
+
     }
 
 

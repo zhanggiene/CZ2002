@@ -6,6 +6,7 @@ public class Course implements Serializable{
     private String name;
     private ArrayList<String> courseGroups;
     private School school;
+    private ArrayList<String> indexes;
 
     public Course(String courseCode, String name, School school)
     {
@@ -13,6 +14,7 @@ public class Course implements Serializable{
         this.name=name;
         this.school=school;
         this.courseGroups = new ArrayList<>();
+    
     }
 
     public String getcourseCode()
@@ -25,7 +27,13 @@ public class Course implements Serializable{
         courseGroups.add(courseGroup);
     }
 
-    public boolean courseGroupExist(String courseGroupIndex){
+    public ArrayList<String> getIndexes()
+    {
+        return this.indexes;
+    }
+
+    public boolean courseGroupExist(String courseGroupIndex)
+    {
         return courseGroups.contains(courseGroupIndex);
     }
 
@@ -33,7 +41,8 @@ public class Course implements Serializable{
      * Gets list of Course Groups of a Course.
      * @author Wang Li Rong
      */
-    public ArrayList<String> getCourseGroups() {
+    public ArrayList<String> getCourseGroups() 
+    {
         return courseGroups;
     }
 
