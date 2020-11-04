@@ -42,8 +42,15 @@ public class CourseGroup implements Serializable{
         return vacancy;
     }
 
-    public void isConfirmedStudent(String matriculationNumber){
-        
+    public boolean isConfirmedStudent(String matriculationNumber){
+        for(int i = 0; i<=students.size(); i++){
+            if(matriculationNumber == students[i])
+                return true;
+              
+            else{
+                return false;
+            }
+        }
     }
 
     public void enrol(String matriculationNumber){
@@ -52,11 +59,21 @@ public class CourseGroup implements Serializable{
         //If length of confirmedStudents is <vacancy, add student to confirmedStudents 
         //list and add this index to Student with addToConfirmedIndex
         //this is just testing code
-        students.add(matriculationNumber);
+        
+        if(students.size() >= vacancy)
+            studentsWaiting.add(matriculationNumber);
+        else
+            students.add(matriculationNumber);
     }
 
-    public void isWaitlistStudent(String matriculationNumber){
-
+    public boolean isWaitlistStudent(String matriculationNumber){
+        for(int i=0; i<=studentsWaiting.size(); i++){
+            if(matriculationNumber == studentsWaiting[i]){
+                return true;
+            }
+            else
+                return false;
+        }
     }
 
     public int getTotalSize(){
@@ -64,8 +81,16 @@ public class CourseGroup implements Serializable{
     }
 
 
-    public void removeFromConfirmedStudent(){
+    public void removeFromConfirmedStudent(String students){
+        students.remove(students);
+    }
+    
+    public void addLesson(PeriodClass lesson){
+        lessons.add(lesson);
+    }
 
+    public void isClashing(CourseGroup otherindex){
+        
     }
 
 
