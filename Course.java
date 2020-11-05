@@ -48,6 +48,14 @@ public class Course implements Serializable{
         return courseGroups;
     }
 
+    /**
+     * Format to print Course
+     * Andrew
+     */
+    public void printCourse(){
+        System.out.println(courseCode+"\t"+school+"\t"+name);
+    }
+
     //Now each coursegroup has a totalSize instead
     // public void changeSize(int newSize)
     // {

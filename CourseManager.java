@@ -111,6 +111,21 @@ public class CourseManager {
             e.printStackTrace();
         }
 }
+    
+    public void printAllRecord() {
+        System.out.println("List of Courses: ");
+        System.out.println("\tCourse Code\tSchool\tCourse Name");
+        int i=1;
+        for (Course c : courses.values()) {
+            System.out.print(i+".\t");
+            c.printCourse();
+            i++;
+        }
+    }
+    
+    public boolean courseExist(String courseCode){
+        return courses.containsKey(courseCode);
+    }
             
 
     public static void main(String[] args) {
