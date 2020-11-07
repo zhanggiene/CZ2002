@@ -7,6 +7,7 @@ public class Course implements Serializable{
     private ArrayList<String> courseGroups;
     private School school;
     // private ArrayList<String> indexes;
+    private static final long serialVersionUID = 4L;
 
     public Course(String courseCode, String name, School scse)
     {

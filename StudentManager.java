@@ -81,6 +81,22 @@ public class StudentManager {
         return studentAccounts.contains(metriculationNumber);
 
     }
+    
+    //updated by WY
+	public boolean checkSwap(String matric1, String coursegroup1, String matric2, String coursegroup2) {
+		boolean swapped = false;
+		for(Map.Entry<String, Student> item : studentAccounts.entrySet()) {
+			if(item.getValue().getMatriculationNumber() == matric1) {
+				item.getValue().swapIndex(coursegroup2, coursegroup1);
+				swapped = true;
+			}else
+			if(item.getValue().getMatriculationNumber() == matric2) {
+				item.getValue().swapIndex(coursegroup1, coursegroup2);
+				swapped = true;
+			}
+		}
+		return swapped;
+	}
 
     public static void main(String args[]){
         //testing code
