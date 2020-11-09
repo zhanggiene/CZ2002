@@ -7,15 +7,19 @@ import java.util.Scanner;
 public class StudentApp {
 	private Scanner scan = new Scanner(System.in);
 	private Student loginStudent;
-	private StudentManager stdmgr = new StudentManager();
-	private CourseManager crsmgr = new CourseManager();
+	private StudentManager stdmgr;
+	private CourseManager crsmgr;
+	private EmailNotificationManager emailNotificationManager;
 	private Map<String, Course> availableCourse = new HashMap<String, Course>();
 
     public StudentApp(String userName,
                     StudentManager studentManager,
                     CourseManager courseManager,
                     EmailNotificationManager emailNotificationManager){
-    	loginStudent = stdmgr.getStudent(userName);
+		stdmgr=studentManager;
+		crsmgr=courseManager;
+		this.emailNotificationManager=emailNotificationManager;
+		loginStudent = stdmgr.getStudent(userName);
     }
     public void start(){
     	showMenu();

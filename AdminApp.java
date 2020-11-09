@@ -497,7 +497,7 @@ public class AdminApp {
      * @author Wang Li Rong
      */
     private void printStudentListByIndexNumber(){
-        String[] courseCodes = courseManager.getCourseList2();
+        String[] courseCodes = courseManager.getCourseCodeList();
         boolean progress1 = false; //progress to next stage or not
         boolean progress2 = false; //progress to next stage or not
         int courseInt=-1;
@@ -574,7 +574,7 @@ public class AdminApp {
      * @author Wang Li Rong
      */
     private void printStudentListByCourse(){
-        String[] courseCodes = courseManager.getCourseList2();
+        String[] courseCodes = courseManager.getCourseCodeList();
         boolean progress1 = false; //progress to next stage or not
         int courseInt=-1;
         Scanner scan = new Scanner(System.in);

@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CourseManager {
-	private Map<String, Course> courses=new HashMap<String, Course>(); 
-	private Map<String, CourseGroup> courseGroups=new HashMap<String, CourseGroup>();
+	private Map<String, Course> courses; 
+	private Map<String, CourseGroup> courseGroups;
 
-	private Map<String, String[]> swapIndex=new HashMap<String, String[]>();
+	private Map<String, String[]> swapIndex;
 	//course
 
 	private String CourseFile="CourseData.bin" ;
@@ -79,18 +79,12 @@ public class CourseManager {
 		courseGroups.get(index).removeFromConfirmedStudent(matric);
 	}
 
-	//coursemanager cannot print students because it has no access to students
-	// public void printAllStudents(String courseCode)
-	// {
-	//     // to do
-	//     // as the Course object to bring all student 
-	// }
 	/**
 	 * Get list of CoursesCodes.
 	 * @author Wang Li Rong
 	 */
 
-	public String[] getCourseList2() { return
+	public String[] getCourseCodeList() { return
 			Arrays.stream(courses.keySet().toArray()).toArray(String[]::new); }
 
 
@@ -124,11 +118,11 @@ public class CourseManager {
 			ObjectOutputStream oosCourseGroup=new ObjectOutputStream(fopCourseGroup);
 			oosCourseGroup.writeObject(this.courseGroups);
 			oosCourseGroup.close();
-
+			
 			FileOutputStream fopSwapIndexFile=new FileOutputStream("./"+this.SwapIndexFile);
 			ObjectOutputStream oosSwapIndexFile=new ObjectOutputStream(fopSwapIndexFile);
-			oosCourseGroup.writeObject(this.swapIndex);
-			oosCourseGroup.close();
+			oosSwapIndexFile.writeObject(this.swapIndex);
+			oosSwapIndexFile.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -151,7 +145,7 @@ public class CourseManager {
 			//updated by WY
 			FileInputStream fisSwapIndexFile = new FileInputStream("./"+this.SwapIndexFile);
 			ObjectInputStream oisSwapIndexFilep = new ObjectInputStream(fisSwapIndexFile);
-			this.swapIndex = (Map<String, String[]>)oisSwapIndexFilep.readObject();
+			this.swapIndex = (Map<String, String[]>) oisSwapIndexFilep.readObject();
 			oisSwapIndexFilep.close();  
 		}
 		catch (Exception e) {
