@@ -21,9 +21,9 @@ public class StudentManager {
         return studentAccounts.get(metriculationNumber);
     }
 
-    public void addStudent(Student s)
+    public void addStudent(Student student)
     {
-        studentAccounts.put(s.getMatriculationNumber(),s);
+        studentAccounts.put(student.getMatriculationNumber(),student);
         save();
     }
     public void save()
@@ -71,14 +71,14 @@ public class StudentManager {
 
         
     }
-    School getSchool(String metriculationNumber)
+    School getSchool(String metricNumber)
     {
-        return studentAccounts.get(metriculationNumber).getSchool();
+        return studentAccounts.get(metricNumber).getSchool();
     }
 
-    public boolean studentExist(String metriculationNumber)
+    public boolean studentExist(String metricNumber)
     {
-        return studentAccounts.contains(metriculationNumber);
+        return studentAccounts.contains(metricNumber);
 
     }
     

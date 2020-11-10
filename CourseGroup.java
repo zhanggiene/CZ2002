@@ -44,16 +44,16 @@ public class CourseGroup implements Serializable{
 	}
 
 	//updated by WY
-	public boolean isConfirmedStudent(String matriculationNumber){
+	public boolean isConfirmedStudent(String matricNumber){
 		boolean confirmed = false;
 		for(int i = 0; i<=students.size(); i++){
-			if(matriculationNumber == students.get(i))
+			if(matricNumber == students.get(i))
 				confirmed = true;
 		}
 		return confirmed;
 	}
 
-	public void enrol(String matriculationNumber){
+	public void enrol(String matricNumber){
 		//still need to add logic 
 		//If length of confirmedStudents is >= vacancy, add student to waitlist
 		//If length of confirmedStudents is <vacancy, add student to confirmedStudents 
@@ -61,25 +61,25 @@ public class CourseGroup implements Serializable{
 		//this is just testing code
 
 		if(students.size() >= vacancy)
-			studentsWaiting.add(matriculationNumber);
+			studentsWaiting.add(matricNumber);
 		else
-			students.add(matriculationNumber);
+			students.add(matricNumber);
 	}
 
 	//updated by WY
-	public boolean isWaitlistStudent(String matriculationNumber){
+	public boolean isWaitlistStudent(String matricNumber){
 		boolean waiting =false;
 		for(int i=0; i<=studentsWaiting.size(); i++){
-			if(matriculationNumber == studentsWaiting.get(i)){
+			if(matricNumber == studentsWaiting.get(i)){
 				waiting = true;
 			}
 		}
 		return waiting;
 	}
 	//updated by WY
-	public void removeWaitlistStudent(String matric) {
+	public void removeWaitlistStudent(String matricNumber) {
 		for(int i=0; i<=studentsWaiting.size(); i++){
-			if(matric == studentsWaiting.get(i)){
+			if(matricNumber == studentsWaiting.get(i)){
 				studentsWaiting.remove(i);
 				break;
 			}
@@ -102,9 +102,9 @@ public class CourseGroup implements Serializable{
 
 	//removed confirmed student and add first student from waiting list
 	//updated by WY 
-	public void removeFromConfirmedStudent(String matric){
+	public void removeFromConfirmedStudent(String matricNumber){
 		for(int i = 0; i < students.size(); i++) {
-			if(students.get(i) == matric) {
+			if(students.get(i) == matricNumber) {
 				students.remove(i);
 				enrol(studentsWaiting.get(0));
 				studentsWaiting.remove(0);

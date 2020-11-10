@@ -21,7 +21,7 @@ enum Gender {
 public class Student implements Serializable
 {
     private String name;
-    private String matriculationNumber;
+    private String matricNumber;
     private School school;
     private Gender gender;
     private String nationality;
@@ -32,12 +32,12 @@ public class Student implements Serializable
     
     
     public Student(String name,
-                   String matriculationNumber,
+                   String matricNumber,
                    School school,
                    Gender gender,
                    String nationality) {
         this.name=name;
-        this.matriculationNumber=matriculationNumber;
+        this.matricNumber=matricNumber;
         this.school=school;
         this.gender=gender;
         this.nationality=nationality;
@@ -45,7 +45,7 @@ public class Student implements Serializable
     }
     
     public String toString() {
-        return name+" "+matriculationNumber;
+        return name+" "+matricNumber;
     }
     
     /**
@@ -53,9 +53,9 @@ public class Student implements Serializable
      * @author Wang Li Rong
      * Updated by WY
      */
-    public void addToCourseGroups(String coursegroup, String courseCode)
+    public void addToCourseGroups(String courseGroup, String courseCode)
     {
-        this.confirmedCourseGroups.put(coursegroup, courseCode);
+        this.confirmedCourseGroups.put(courseGroup, courseCode);
     }
     
     //Updated by WY
@@ -71,7 +71,7 @@ public class Student implements Serializable
     
     public String getMatriculationNumber()
     {
-        return matriculationNumber;
+        return matricNumber;
     }
 
     
