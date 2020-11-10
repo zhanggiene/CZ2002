@@ -1,6 +1,12 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
+
+
+
+
+
 public class CourseGroup implements Serializable{
 	private String indexNumber;
 	private int totalSize;

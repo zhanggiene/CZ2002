@@ -9,6 +9,12 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+
+
+/**
+     provide functionality for sending emails.
+     * @author zhang zhuyan
+     */
 public class EmailNotificationManager {
 
     private Hashtable<String, String> EmailDataBase = new Hashtable<String, String>();
