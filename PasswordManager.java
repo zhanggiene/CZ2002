@@ -3,6 +3,14 @@ import java.io.*;
 
 // since there is no setting of admin password,  it is hard coded in to the program, txt file only stores student password and ID
 
+
+/**
+     * it is a password database.
+     * add and validate the correctness of the password.
+     * @author zhang zhuyan
+     */
+
+
 public class PasswordManager {
     
     private Hashtable<String, String> my_dict = new Hashtable<String, String>();

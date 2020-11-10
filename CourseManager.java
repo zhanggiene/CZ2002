@@ -4,6 +4,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+     * validate the correct timing of registering for students. 
+     * serve as a database of correct timing for each school
+     * @author zhang zhuyan
+	 * @author Weiyao
+     */
 public class CourseManager {
 	private Map<String, Course> courses; 
 	private Map<String, CourseGroup> courseGroups;

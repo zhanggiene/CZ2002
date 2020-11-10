@@ -1,6 +1,12 @@
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+
+/**
+     * return hashed password from raw password input. 
+     * @author Zhang zhuyan
+     */
 public class HashPassword{
 
     public static String hashPassword(String password)

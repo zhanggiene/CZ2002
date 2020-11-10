@@ -2,6 +2,10 @@ import java.io.Console;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+     it serves as a starting point of the whole program. 
+     * @author zhang zhuyan
+     */
 public class Login {
 
     public static void main(String[] args) {

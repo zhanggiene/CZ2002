@@ -5,6 +5,13 @@ import java.time.DayOfWeek;
 
 import java.time.format.*;
 
+
+/**
+     * all the lesson are PeriodClass object, in charge of checking classes between lessons. 
+     * @author zhang zhuyan
+     */
+
+
 enum TypeOfLesson {
     LABORATORY,TUTORIAL,LECTURE
 }

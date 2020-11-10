@@ -7,6 +7,11 @@ import java.io.*;
 import java.util.*;
 
 
+/**
+     * validate the correct timing of registering for students. 
+     * serve as a database of correct timing for each school
+     * @author zhang zhuyan
+     */
 enum School {
     SCSE {
         @Override
