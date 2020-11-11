@@ -3,7 +3,10 @@ import java.util.*;
 
 import javax.print.DocFlavor.STRING;
 
-
+/**
+     data base for students objects
+     * @author zhang zhuyan
+     */
 
 public class StudentManager {
 
@@ -16,17 +19,23 @@ public class StudentManager {
         loadData();
 
     }
+    
+    /** retreive student object from database
+     * @param metriculationNumber
+     * @return Student
+     */
     public Student getStudent(String metriculationNumber)
     {
         return studentAccounts.get(metriculationNumber);
     }
 
-    public void addStudent(Student s)
+    public void addStudent(Student student)
     {
-        studentAccounts.put(s.getMatriculationNumber(),s);
+        studentAccounts.put(student.getMatriculationNumber(),student);
         save();
     }
-    public void save()
+
+    private void save()
     {
         try {
             FileOutputStream fop=new FileOutputStream("./"+this.FileName);
@@ -71,17 +80,45 @@ public class StudentManager {
 
         
     }
-    School getSchool(String metriculationNumber)
+    School getSchool(String metricNumber)
     {
-        return studentAccounts.get(metriculationNumber).getSchool();
+        return studentAccounts.get(metricNumber).getSchool();
     }
 
-    public boolean studentExist(String metriculationNumber)
+    public boolean studentExist(String metricNumber)
     {
-        return studentAccounts.contains(metriculationNumber);
+        return studentAccounts.contains(metricNumber);
 
     }
+    
+    
+    /** 
+     * @param matric1
+     * @param coursegroup1
+     * @param matric2
+     * @param coursegroup2
+     * @return boolean
+     */
+    //updated by WY
+	public boolean checkSwap(String matric1, String coursegroup1, String matric2, String coursegroup2) {
+		boolean swapped = false;
+		for(Map.Entry<String, Student> item : studentAccounts.entrySet()) {
+			if(item.getValue().getMatriculationNumber() == matric1) {
+				item.getValue().swapIndex(coursegroup2, coursegroup1);
+				swapped = true;
+			}else
+			if(item.getValue().getMatriculationNumber() == matric2) {
+				item.getValue().swapIndex(coursegroup1, coursegroup2);
+				swapped = true;
+			}
+		}
+		return swapped;
+	}
 
+    
+    /** 
+     * @param args[]
+     */
     public static void main(String args[]){
         //testing code
         StudentManager studentManager = new StudentManager();

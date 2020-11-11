@@ -2,7 +2,14 @@ import java.io.Console;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+     it serves as a starting point of the whole program.
+     it shows all instructions for the users and receive input from the user
+     * @author zhang zhuyan
+     */
 public class Login {
+
+    
 
     public static void main(String[] args) {
 

@@ -3,6 +3,14 @@ import java.io.*;
 
 // since there is no setting of admin password,  it is hard coded in to the program, txt file only stores student password and ID
 
+
+/**
+     * it is a password database.
+     * add and validate the correctness of the password.
+     * @author zhang zhuyan
+     */
+
+
 public class PasswordManager {
     
     private Hashtable<String, String> my_dict = new Hashtable<String, String>();
@@ -54,8 +62,13 @@ public class PasswordManager {
 
     }
     
+    
+    /** assume the studentID does not exist in the database to avoid duplicates
+     * @param studentId   unique student id
+     * @param passWord   rawpassword
+     */
     public void add(String studentId,String passWord)
-    // assume the studentID does not exist in the database to avoid duplicate
+    
     {
         assert studentExist(studentId);
         my_dict.put(studentId, HashPassword.hashPassword(passWord));
@@ -66,11 +79,22 @@ public class PasswordManager {
 
     }
 
+    
+    /** check if the student is already in the database
+     * @param studentID
+     * @return Boolean
+     */
     public Boolean studentExist(String studentID)
     {
         return my_dict.containsKey(studentID);
     }
 
+    
+    /** check the correctness of the password typed by student and compare it against passwords database
+     * @param studentId
+     * @param passWord
+     * @return Boolean
+     */
     public Boolean isCorrectStudent(String studentId, String passWord)
     {
         if (my_dict.containsKey(studentId))
@@ -91,11 +115,22 @@ public class PasswordManager {
             return false;
         }
     }
+    
+    /**  verify the correctness of the admin password
+     * @param admin
+     * @param adminPass
+     * @return Boolean
+     */
     public Boolean isCorrectAdmin(String admin,String adminPass)
     {
         return admin.equals("admin") && adminPass.equals("adminPass");
     }
 
+    
+    /** check if it is admin or student
+     * @param name
+     * @return Boolean    return true if it is admin account
+     */
     public Boolean isAdmin(String name)
     {
         if (name.equals("admin"))
@@ -108,6 +143,10 @@ public class PasswordManager {
         }
     }
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args)
     {
         PasswordManager mypass=new PasswordManager();

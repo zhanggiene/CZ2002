@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 enum Gender {
     FEMALE{
@@ -20,20 +21,23 @@ enum Gender {
 public class Student implements Serializable
 {
     private String name;
-    private String matriculationNumber;
+    private String matricNumber;
     private School school;
     private Gender gender;
     private String nationality;
-    // arraylist containing tuples containing index and its corresponing class code
-    private HashMap<String,String> confirmedCourseGroups; //courseGroup: courseCode
+    // arraylist containing tuples containing index and its corresponding class code
+    private HashMap<String,String> confirmedCourseGroups; //course-group(index), course-code
+    private static final long serialVersionUID = 3L;
+    
+    
     
     public Student(String name,
-                   String matriculationNumber,
+                   String matricNumber,
                    School school,
                    Gender gender,
                    String nationality) {
         this.name=name;
-        this.matriculationNumber=matriculationNumber;
+        this.matricNumber=matricNumber;
         this.school=school;
         this.gender=gender;
         this.nationality=nationality;
@@ -41,22 +45,36 @@ public class Student implements Serializable
     }
     
     public String toString() {
-        return name+" "+matriculationNumber;
+        return name+" "+matricNumber;
     }
+    
     /**
      * Adds to confirmedCourseGroups. 
      * @author Wang Li Rong
+     * Updated by WY
      */
-    public void addToCourseGroups(String index, String courseCode)
+    public void addToCourseGroups(String courseGroup, String courseCode)
     {
-        this.confirmedCourseGroups.put(index, courseCode);
+        this.confirmedCourseGroups.put(courseGroup, courseCode);
+    }
+    
+    //Updated by WY
+    public HashMap<String,String> getConfirmedCourseGroups (){
+    	return confirmedCourseGroups;
+    }
+    
+    public void swapIndex(String group1, String group2) {//group1 = new, group2 = old
+    	String coursecode = confirmedCourseGroups.get(group2);
+    	confirmedCourseGroups.remove(group2);
+    	confirmedCourseGroups.put(group1, coursecode);
     }
     
     public String getMatriculationNumber()
     {
-        return matriculationNumber;
+        return matricNumber;
     }
 
+    
     public Boolean CheckClashes(String index)
     {
         return false;
@@ -74,9 +92,17 @@ public class Student implements Serializable
     public void printStudent(){
         System.out.println(name+"\t"+gender+"\t"+nationality);
     }
-
-
-
-
+    //Updated by WY
+    public void printRegisterCourse() {
+    	System.out.println("|Your registered course groups     |");
+    	System.out.println("================================================");
+    	System.out.println("|  Course Group\tCourse Code");
+    	int i = 1;
+    	for(Map.Entry<String, String> item: confirmedCourseGroups.entrySet()){
+    		System.out.println("|"+i+". "+ item.getKey() + "\t" + item.getValue());
+    		i++;
+    	}
+    	System.out.println("================================================");
+    }
     
 }
