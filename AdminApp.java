@@ -85,6 +85,7 @@ public class AdminApp {
                     break;
                 case 5:
                     // Update Course
+                    updateCourse();
                     break;
                 case 6:
                     // Check Index Vacancy
@@ -469,7 +470,7 @@ public class AdminApp {
         while(true){
             System.out.println("1. Add new courses");
             System.out.println("2. Add new index for existing courses");
-            System.out.println("Your choice (1/2) :");
+            System.out.print("Your choice (1/2) :");
             try {
                 int choice = scan.nextInt();
                 if (choice !=1 && choice !=2){
@@ -549,7 +550,7 @@ public class AdminApp {
             System.out.println("Enter course code:");
             scan.nextLine();
             String courseCode = scan.nextLine();
-            // check whether index number is already exists
+            // check whether course code is already exists
             if (!courseManager.courseExist(courseCode)){
                 System.out.println("Course not exists!");
                 return;
@@ -597,6 +598,29 @@ public class AdminApp {
         }
 
     }
+
+    /**
+     * UI for updating a course.
+     * @author Andrew Wiraatmaja
+     */
+
+    public void updateCourse(){
+        String[] courseCodes = courseManager.getCourseList();
+        Scanner scan = new Scanner(System.in);
+        courseManager.printAllRecord();
+        System.out.println("Enter which course you want to update: ");
+        int choice = scan.nextInt();
+        String courseCode = courseCodes[choice -1];
+        
+        System.out.println("Select which particular you want to update");
+        System.out.println("1. Course Code");
+        System.out.println("2. Course Name");
+        System.out.println("3. Index Number");
+        System.out.println("4. Vacancy");
+        int choice2 = scan.nextInt();
+    }
+
+
 
     
 

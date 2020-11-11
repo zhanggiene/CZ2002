@@ -56,6 +56,12 @@ public class Course implements Serializable{
         System.out.println(courseCode+"\t"+school+"\t"+name);
     }
 
+
+
+	public CourseGroup getCourseGroup(int i) {
+		return null;
+	}
+
     //Now each coursegroup has a totalSize instead
     // public void changeSize(int newSize)
     // {

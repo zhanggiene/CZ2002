@@ -119,6 +119,7 @@ public class CourseManager {
         for (Course c : courses.values()) {
             System.out.print(i+".\t");
             c.printCourse();
+            CourseGroup cg = c.getCourseGroup(i);
             i++;
         }
     }
