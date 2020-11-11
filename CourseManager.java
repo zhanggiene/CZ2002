@@ -26,9 +26,9 @@ public class CourseManager {
 		checkSwap();
 
 	}
-	public void addCourse(Course a)
+	public void addCourse(Course course)
 	{
-		courses.put(a.getcourseCode(),a);
+		courses.put(course.getcourseCode(),course);
 		save();
 	}
 	public void addCourseGroup(CourseGroup courseGroup)

@@ -29,13 +29,9 @@ public class StudentManager {
         return studentAccounts.get(metriculationNumber);
     }
 
-    
-    /**  add student into the data base, 
-     * @param s student
-     */
-    public void addStudent(Student s)
+    public void addStudent(Student student)
     {
-        studentAccounts.put(s.getMatriculationNumber(),s);
+        studentAccounts.put(student.getMatriculationNumber(),student);
         save();
     }
 
@@ -84,24 +80,14 @@ public class StudentManager {
 
         
     }
-    
-    /**  return the school of student of a given metriculation number.
-     * @param metriculationNumber
-     * @return School  
-     */
-    School getSchool(String metriculationNumber)
+    School getSchool(String metricNumber)
     {
-        return studentAccounts.get(metriculationNumber).getSchool();
+        return studentAccounts.get(metricNumber).getSchool();
     }
 
-    
-    /** check is the student of a metriculation number will exist.
-     * @param metriculationNumber
-     * @return boolean
-     */
-    public boolean studentExist(String metriculationNumber)
+    public boolean studentExist(String metricNumber)
     {
-        return studentAccounts.contains(metriculationNumber);
+        return studentAccounts.contains(metricNumber);
 
     }
     
