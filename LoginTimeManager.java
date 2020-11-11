@@ -58,7 +58,7 @@ public class LoginTimeManager {
         loadLoginPeriods();
     }
 
-    public void save()
+    private void save()
     {
         try {
             FileOutputStream fop=new FileOutputStream("./"+this.FileName);
@@ -72,7 +72,14 @@ public class LoginTimeManager {
     }
     }
 
-    public void add(School scse, String start, String end) {
+    
+    /** 
+     * add access time for each school
+     * @param schoolName  schoolName of Type School
+     * @param start       start of type String "2020-10-19 16:00"
+     * @param end         type String eg  "2020-10-19 16:00"
+     */
+    public void add(School schoolName, String start, String end) {
 
         try {
             Date time1 = ft.parse(start);
@@ -80,7 +87,7 @@ public class LoginTimeManager {
             ArrayList<Date> interval = new ArrayList<Date>();
             interval.add(time1);
             interval.add(time2);
-            TimeMap.put(scse, interval);
+            TimeMap.put(schoolName, interval);
         } catch (ParseException e) {
             System.out.println("the format is wrong");
             e.printStackTrace();
@@ -91,11 +98,17 @@ public class LoginTimeManager {
         // save
     }
 
-    public ArrayList getSchoolsWithLoginPeriod(){
+    
+    /** 
+     * @return ArrayList
+     */
+    private ArrayList getSchoolsWithLoginPeriod(){
         return new ArrayList<>(this.TimeMap.keySet());
     }
 
-
+    /**
+     * load data from local data, must use this method after initialization
+     */
     public void loadLoginPeriods()
     {
         try {
@@ -113,13 +126,22 @@ public class LoginTimeManager {
         }
 }
 
+    
+    /** 
+     * @param studentSchool  school type of student of type School
+     * @param currentTime   the time of login of type Date
+     * @return boolean      true if it is within the allowed time frame
+     */
     public boolean isInside(School studentSchool, Date currentTime) {
         ArrayList<Date> interval = TimeMap.get(studentSchool);
 
         return currentTime.after(interval.get(0)) && currentTime.before(interval.get(1));
 
     }
-
+    /**
+     * print start and end access time for each school. 
+     * 
+     */
     public void printAllAccessPeriod()
     {
 
@@ -130,6 +152,10 @@ public class LoginTimeManager {
 
     }
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
 
         LoginTimeManager timemanager=new LoginTimeManager();

@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 
 /**
-     provide functionality for sending emails.
+     provide functionality for sending emails. it is also the email database 
      * @author zhang zhuyan
      */
 public class EmailNotificationManager {
@@ -83,6 +83,12 @@ public class EmailNotificationManager {
 
     }
 
+    
+    /**  send email with subject and content to student using metriculationNUmber to identidy the student. 
+     * @param studentMetriculationNumber
+     * @param Subject
+     * @param Content
+     */
     public void SendEmail(String studentMetriculationNumber,String Subject,String Content)
     {
         if (EmailDataBase.containsKey(studentMetriculationNumber))
@@ -112,8 +118,14 @@ public class EmailNotificationManager {
         }
     }
 
+    
+    /**   assume the studentID does not exist in the database to avoid duplicate
+     *   add studentId and its associated email to the database
+     * @param studentId
+     * @param email
+     */
     public void add(String studentId, String email)
-    // assume the studentID does not exist in the database to avoid duplicate
+    
     {
         assert studentExist(studentId);
         EmailDataBase.put(studentId, email);
@@ -123,12 +135,21 @@ public class EmailNotificationManager {
         this.pw.close();
     }
 
+    
+    /** check is the student has email address in the database
+     * @param metriculationNumber
+     * @return boolean
+     */
     public boolean studentExist(String metriculationNumber)
     {
         return EmailDataBase.contains(metriculationNumber);
 
     }
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         EmailNotificationManager manager=new EmailNotificationManager();
         manager.SendEmail("U1920187L", "test1", "hi test123");

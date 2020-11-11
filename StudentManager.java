@@ -19,17 +19,27 @@ public class StudentManager {
         loadData();
 
     }
+    
+    /** retreive student object from database
+     * @param metriculationNumber
+     * @return Student
+     */
     public Student getStudent(String metriculationNumber)
     {
         return studentAccounts.get(metriculationNumber);
     }
 
+    
+    /**  add student into the data base, 
+     * @param s student
+     */
     public void addStudent(Student s)
     {
         studentAccounts.put(s.getMatriculationNumber(),s);
         save();
     }
-    public void save()
+
+    private void save()
     {
         try {
             FileOutputStream fop=new FileOutputStream("./"+this.FileName);
@@ -74,17 +84,35 @@ public class StudentManager {
 
         
     }
+    
+    /**  return the school of student of a given metriculation number.
+     * @param metriculationNumber
+     * @return School  
+     */
     School getSchool(String metriculationNumber)
     {
         return studentAccounts.get(metriculationNumber).getSchool();
     }
 
+    
+    /** check is the student of a metriculation number will exist.
+     * @param metriculationNumber
+     * @return boolean
+     */
     public boolean studentExist(String metriculationNumber)
     {
         return studentAccounts.contains(metriculationNumber);
 
     }
     
+    
+    /** 
+     * @param matric1
+     * @param coursegroup1
+     * @param matric2
+     * @param coursegroup2
+     * @return boolean
+     */
     //updated by WY
 	public boolean checkSwap(String matric1, String coursegroup1, String matric2, String coursegroup2) {
 		boolean swapped = false;
@@ -101,6 +129,10 @@ public class StudentManager {
 		return swapped;
 	}
 
+    
+    /** 
+     * @param args[]
+     */
     public static void main(String args[]){
         //testing code
         StudentManager studentManager = new StudentManager();

@@ -4,11 +4,17 @@ import java.security.NoSuchAlgorithmException;
 
 
 /**
-     * return hashed password from raw password input. 
+     * generate hashed password
      * @author Zhang zhuyan
      */
 public class HashPassword{
 
+    
+    /** 
+     * return hashed password from raw password input. 
+     * @param password
+     * @return String
+     */
     public static String hashPassword(String password)
     {
         try
@@ -33,7 +39,7 @@ public class HashPassword{
         return "error";
         
     }
-
+    
     public static void main(String[] args)
     {
         String password="password";
