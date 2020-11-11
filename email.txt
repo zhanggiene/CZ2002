@@ -1,8 +1,2 @@
 U1234567B ntucz2002a1@gmail.com
 U2234567B ntucz2002a1@gmail.com
-<<<<<<< HEAD
-U3234567B ntucz2002a1@gmail.com
-U1920021C and@e.ntu.edu.sg
-Ualal hdk@e.ntu.edu.sg
-=======
->>>>>>> b9a23ba660b9705f902360187c06b17d98479969

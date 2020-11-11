@@ -643,7 +643,7 @@ public class AdminApp {
      */
 
     public void updateCourse(){
-        String[] courseCodes = courseManager.getCourseList();
+        String[] courseCodes = courseManager.getCourseCodeList();
         Scanner scan = new Scanner(System.in);
         courseManager.printAllRecord();
         System.out.println("Enter which course you want to update: ");

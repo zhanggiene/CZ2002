@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumMap;
 import java.io.*;
-import java.util.*;
 
 
 /**
@@ -102,7 +101,7 @@ public class LoginTimeManager {
     /** 
      * @return ArrayList
      */
-    private ArrayList getSchoolsWithLoginPeriod(){
+    public ArrayList getSchoolsWithLoginPeriod(){
         return new ArrayList<>(this.TimeMap.keySet());
     }
 

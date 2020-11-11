@@ -23,7 +23,17 @@ public class CourseManager {
 	public CourseManager()
 	{
 		loadData();
-		checkSwap();
+		if (this.courses == null){
+			this.courses = new HashMap<String, Course>();
+		}
+		if (this.courseGroups == null){
+			this.courseGroups = new HashMap<String, CourseGroup>();
+		}
+		if (this.swapIndex == null){
+			this.swapIndex = new HashMap<String, String[]>();
+		} else {
+			checkSwap();
+		}
 
 	}
 	public void addCourse(Course course)
@@ -214,6 +224,23 @@ public class CourseManager {
 		swapIndex.put(courseID, temp);
 	}
 
+	public void printAllRecord() {
+        System.out.println("List of Courses: ");
+        System.out.println("\tCourse Code\tSchool\tCourse Name");
+        int i=1;
+        for (Course c : courses.values()) {
+            System.out.print(i+".\t");
+            c.printCourse();
+            CourseGroup cg = c.getCourseGroup(i);
+            i++;
+        }
+	}
+	
+	public boolean courseExist(String courseCode){
+        return courses.containsKey(courseCode);
+    }
+	
+
 	public static void main(String[] args) {
 		//For testing
 		CourseManager manager=new CourseManager();
@@ -252,114 +279,4 @@ public class CourseManager {
 
 	}
 
-<<<<<<< HEAD
-    /**
-     * Get list of CourseGroupsIndexes of a Course. 
-     * @author Wang li Rong
-     */
-    public ArrayList<String> getCourseGroupsOfCourse(String courseCode){
-        ArrayList<String> courseGroupIndexes = courses.get(courseCode).getCourseGroups(); 
-        ArrayList<String> courseGroupList = new ArrayList<>();
-        for (String indexes:courseGroupIndexes){
-            courseGroupList.add(courseGroups.get(indexes).getIndexNumber());
-        }
-        return courseGroupList;
-    }
-
-    public void save()
-    {
-        try {
-            FileOutputStream fopCourse=new FileOutputStream("./"+this.CourseFile);
-            ObjectOutputStream oosCourse=new ObjectOutputStream(fopCourse);
-            oosCourse.writeObject(this.courses);
-            oosCourse.close();
-
-            FileOutputStream fopCourseGroup=new FileOutputStream("./"+this.CourseGroupFile);
-            ObjectOutputStream oosCourseGroup=new ObjectOutputStream(fopCourseGroup);
-            oosCourseGroup.writeObject(this.courseGroups);
-            oosCourseGroup.close();
-    
-        }
-         catch (Exception e) {
-            e.printStackTrace();
-
-    }
-    }
-    private void loadData()
-    {
-        try {
-            FileInputStream fisCourse=new FileInputStream("./"+this.CourseFile);
-            ObjectInputStream oisCourse=new ObjectInputStream(fisCourse);
-            this.courses=( Map<String, Course>) oisCourse.readObject();
-            oisCourse.close();
-            //WriteObject wo=null;
-            //WriteObject[] woj=new WriteObject[5];
-            FileInputStream fisCourseGroup=new FileInputStream("./"+this.CourseGroupFile);
-            ObjectInputStream oisCourseGroup=new ObjectInputStream(fisCourseGroup);
-            this.courseGroups=( Map<String, CourseGroup>) oisCourseGroup.readObject();
-            oisCourseGroup.close();            
-    
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-}
-    
-    public void printAllRecord() {
-        System.out.println("List of Courses: ");
-        System.out.println("\tCourse Code\tSchool\tCourse Name");
-        int i=1;
-        for (Course c : courses.values()) {
-            System.out.print(i+".\t");
-            c.printCourse();
-            CourseGroup cg = c.getCourseGroup(i);
-            i++;
-        }
-    }
-    
-    public boolean courseExist(String courseCode){
-        return courses.containsKey(courseCode);
-    }
-            
-
-    public static void main(String[] args) {
-        //For testing
-        CourseManager manager=new CourseManager();
-
-        //add courses
-        Course course=new Course("CZ2002","OODP",School.SCSE);
-        manager.addCourse(course);
-
-        //add coursegroups
-        CourseGroup courseGroup = new CourseGroup("DSAI1", 50, "CZ2002");
-        if (!course.courseGroupExist(courseGroup.getIndexNumber())){
-            course.addCourseGroup(courseGroup.getIndexNumber());
-            manager.addCourseGroup(courseGroup);
-        }
-        CourseGroup courseGroup2 = new CourseGroup("DSAI2", 50, "CZ2002");
-        if (!course.courseGroupExist(courseGroup2.getIndexNumber())){
-            course.addCourseGroup(courseGroup2.getIndexNumber());
-            manager.addCourseGroup(courseGroup2);
-        }
-
-        courseGroup.enrol("U1234567B");
-        courseGroup2.enrol("U2234567B");
-
-        manager.save();
-
-        System.out.println(manager.courseGroups);
-        System.out.println(manager.courses);
-
-        // CourseManager manager=new CourseManager();
-        // Course a=new Course("CZ2002","oodp",School.SCSE);
-        // System.out.println(a.getcourseCode());
-        // manager.add(a);
-        // Course b=manager.getCourseByCode("CZ2002");
-        // b.changeSize(30);
-        // System.out.println(manager.getCourseByCode("CZ2002"));
-        
-    }
-    
-=======
->>>>>>> b9a23ba660b9705f902360187c06b17d98479969
 }

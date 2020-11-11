@@ -140,7 +140,7 @@ public class StudentApp {
     
     //Updated by WY
     private void dropCourseGroup(String courseGroup) {
-    	crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatricNumber());   	
+    	crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatriculationNumber());   	
     }
     
     public void printMenu() {
