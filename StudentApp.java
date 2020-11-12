@@ -4,6 +4,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+/**
+ * Interface that a student see after login 
+ * Functionalities include: 
+ * 1. Add Course Group 
+ * 2. Drop Course Group 
+ * 3. Check/Print Courses Registered 
+ * 4. Check Vacancies Available
+ * 5. Check Index Number of Course 
+ * 6. Swop Index Number with Another Student 
+ * 9. Quit
+ * 
+ * @author Wei Yao
+ */
 public class StudentApp {
 	private Scanner scan = new Scanner(System.in);
 	private Student loginStudent;
@@ -25,7 +38,10 @@ public class StudentApp {
     	showMenu();
     	
     }
-    
+    /**
+     * This method starts up the student app and displays all choices to admin
+     * @author Wei Yao
+     */
     public void showMenu() {
     	System.out.println("=================Student Page================");
         System.out.println("| 1. Add Course Group                       |");
@@ -44,23 +60,33 @@ public class StudentApp {
         option = scan.nextInt();
         switch(option) {
         	case 1: addMenu();
-        		break;
+				break;
+				//Add Course Group
         	case 2: dropMenu();
-        		break;	
+				break;	
+				//Drop Course Group
         	case 3: printMenu();
-        		break;
+				break;
+				//Check/Print Courses Registered
         	case 4: checkVacancies();
-        		break;
+				break;
+				//Check Vacancies Available
         	case 5: checkIndex();
-        		break;
+				break;
+				//Check Index Number of Course
         	case 6: swopIndex();
-        		break;
+				break;
+				//Swop Index Number with Another Student
         	case 9: System.out.println("Exiting MyStars now....");
         		break;	
         }
         
     }
-    
+    /**
+     * Menu for adding course.
+     * 
+     * @author Wei Yao
+     */
     public void addMenu() {
     	System.out.println("=================Add Course Page================");
     	
@@ -110,7 +136,11 @@ public class StudentApp {
         	showMenu();
         }    	
     }
-    
+    /**
+     * Menu for dropping course.
+     * 
+     * @author Wei Yao
+     */
     public void dropMenu() {
     	System.out.println("|Please select the course group you wish to drop:     |");
     	System.out.println("================================================");
@@ -138,15 +168,27 @@ public class StudentApp {
         }
     }
     
-    //Updated by WY
+    /**
+     * Drop from course group.
+     * 
+     * @author Wei Yao
+     */
     private void dropCourseGroup(String courseGroup) {
     	crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatriculationNumber());   	
     }
-    
+    /**
+     * Print all registered courses.
+     * 
+     * @author Wei Yao
+     */
     public void printMenu() {
     	loginStudent.printRegisterCourse();
     }
-    
+    /**
+     * Menu for checking vacancy.
+     * 
+     * @author Wei Yao
+     */
     public void checkVacancies() {
     	System.out.println("|These are the vacancies for all available course groups |");
     	System.out.println("==========================================================");
@@ -159,7 +201,11 @@ public class StudentApp {
     	scan.next();
     	showMenu();
     }
-    
+    /**
+     * Print out available course groups for a course.
+     * 
+     * @author Wei Yao
+     */
     public void checkIndex() {
     	System.out.println("|These are the indexes for all available course groups     |");
     	System.out.println("==========================================================");
@@ -172,7 +218,11 @@ public class StudentApp {
      	scan.next();
      	showMenu();
     }
-    
+    /**
+     * Menu for swopping index with another student.
+     * 
+     * @author Wei Yao
+     */
     public void swopIndex() {
 
     	System.out.println("================Swap Index Menu=========================");

@@ -16,7 +16,15 @@ enum Gender {
         }
     }
 }
-
+/** 
+     * @param name
+     * @param matricNumber
+     * @param school
+     * @param gender
+     * @param nationality
+     * 
+     * @author Wei Yao
+     */
 public class Student implements Serializable
 {
     private String name;
@@ -24,7 +32,7 @@ public class Student implements Serializable
     private School school;
     private Gender gender;
     private String nationality;
-    // arraylist containing tuples containing index and its corresponding class code
+    //arraylist containing tuples containing index and its corresponding class code
     private HashMap<String,String> confirmedCourseGroups; //course-group(index), course-code
     private static final long serialVersionUID = 3L;
     
@@ -50,19 +58,20 @@ public class Student implements Serializable
     /**
      * Adds to confirmedCourseGroups. 
      * @author Wang Li Rong
-     * Updated by WY
+     * Updated by Wei Yao
      */
     public void addToCourseGroups(String courseGroup, String courseCode)
     {
         this.confirmedCourseGroups.put(courseGroup, courseCode);
     }
     
-    //Updated by WY
+    //Updated by Wei Yao
     public HashMap<String,String> getConfirmedCourseGroups (){
     	return confirmedCourseGroups;
     }
     
-    public void swapIndex(String group1, String group2) {//group1 = new, group2 = old
+    public void swapIndex(String group1, String group2) {
+        //group1 = new, group2 = old
     	String coursecode = confirmedCourseGroups.get(group2);
     	confirmedCourseGroups.remove(group2);
     	confirmedCourseGroups.put(group1, coursecode);
@@ -91,7 +100,7 @@ public class Student implements Serializable
     public void printStudent(){
         System.out.println(name+"\t"+gender+"\t"+nationality);
     }
-    //Updated by WY
+    //Updated by Wei Yao
     public void printRegisterCourse() {
     	System.out.println("|Your registered course groups     |");
     	System.out.println("================================================");

@@ -7,14 +7,13 @@ import java.util.Map;
 /**
      * validate the correct timing of registering for students. 
      * serve as a database of correct timing for each school
-	 * @author Weiyao
+	 * @author Wei Yao
      */
 public class CourseManager {
 	private Map<String, Course> courses; 
 	private Map<String, CourseGroup> courseGroups;
 
 	private Map<String, String[]> swapIndex;
-	//course
 
 	private String CourseFile="CourseData.bin" ;
 	private String CourseGroupFile="CourseGroup.bin";
@@ -46,12 +45,18 @@ public class CourseManager {
 		courseGroups.put(courseGroup.getIndexNumber(),courseGroup);
 		save();
 	}
-
+	/** retreive course object
+     * @param CourseCode
+     * @return Course
+	 * @author Wei Yao
+     */
 	public Course getCourseByCode(String CourseCode)
 	{
 		return courses.get(CourseCode);
 	}
-
+	/** get course vacancies
+	 * @author Wei Yao
+     */
 	public ArrayList<String[]> getVacancies(){
 		ArrayList<String[]> crsvacancies = new ArrayList<String[]>();
 		for(Map.Entry<String, CourseGroup> item: courseGroups.entrySet()) {
@@ -60,25 +65,30 @@ public class CourseManager {
 		}
 		return crsvacancies;
 	}
-
+	/** enrol student into a course	
+	 * @author Wei Yao
+     */
 	public void enrol(Student student,CourseGroup index)
 	{
 		courseGroups.get(index.getIndexNumber()).enrol(student.getMatriculationNumber());
 		student.addToCourseGroups(index.getIndexNumber(), index.getCourseCode());
 		save();
 	}
-
+	/** retreive course group (index) object
+     * @param courseCode
+     * @return CourseGroup
+	 * @author Wei Yao
+     */
 	public CourseGroup getCourseGroup(String index)
 	{
 		return courseGroups.get(index);
 	}
 
-	//Created by WY
 	public Map<String, CourseGroup> getCourseGroup()
 	{
 		return courseGroups;
 	}
-	//Created by WY
+
 	public Map<String, CourseGroup> getCourseGroupWY(String courseCode)
 	{
 		Map<String, CourseGroup> CGByCourseCode = new HashMap<String, CourseGroup>();
@@ -89,7 +99,10 @@ public class CourseManager {
 		}
 		return CGByCourseCode;
 	}
-	//Created by WY
+	/**
+	 * Drop student from course group
+	 * @author Wei Yao
+	 */
 	public void dropCourseGroup(String index, String matric) {
 		courseGroups.get(index).removeFromConfirmedStudent(matric);
 	}
@@ -103,7 +116,7 @@ public class CourseManager {
 			Arrays.stream(courses.keySet().toArray()).toArray(String[]::new); }
 
 
-	//Updated by WY
+	
 	public Map<String, Course> getCourseList(){
 		return courses;
 	}
@@ -168,7 +181,7 @@ public class CourseManager {
 		}
 	}
 	
-	//Created by WY
+
 	private void loadSwap()
 	{
 		try {          
@@ -185,7 +198,10 @@ public class CourseManager {
 			cnfe.printStackTrace();
 		}
 	}
-	//Created by WY
+	/**
+	 * Save the swop index result
+	 * @author Wei Yao
+	 */
 	public void saveSwap()
 	{
 		FileOutputStream fopSwapIndexFile;
@@ -200,7 +216,10 @@ public class CourseManager {
 			ioe.printStackTrace();
 		}
 	}
-	//Created by WY
+	/**
+	 * Cross checking to confirm that both student wish to swop
+	 * @author Wei Yao
+	 */
 	public boolean checkSwap() {
 		boolean swapped = false;
 		for(Map.Entry<String, String[]> item : swapIndex.entrySet()) {
@@ -218,7 +237,13 @@ public class CourseManager {
 
 		return swapped;
 	}
-	
+	/**
+	 * Swop students' course group
+	 * @param courseID
+	 * @param matric1
+	 * @param matric2
+	 * @author Wei Yao
+	 */
 	public void addSwap(String courseID, String matric1, String matric2) {
 		String[] temp = {matric1, matric2};
 		swapIndex.put(courseID, temp);
@@ -235,7 +260,12 @@ public class CourseManager {
             i++;
         }
 	}
-	
+	/**
+	 * Check if course exist
+	 * @param courseCode
+	 * @return boolean
+	 * @author Wei Yao
+	 */
 	public boolean courseExist(String courseCode){
         return courses.containsKey(courseCode);
     }
