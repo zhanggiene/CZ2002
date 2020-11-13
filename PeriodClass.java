@@ -64,7 +64,7 @@ public class PeriodClass {
     /** 
      * @return DayOfWeek
      */
-    private DayOfWeek getDayOfWeek() {
+    public DayOfWeek getDayOfWeek() {
         return dayOfWeek;
     }
 
@@ -75,6 +75,44 @@ public class PeriodClass {
     public String toString() {
         return this.dayOfWeek.name()+" "+Integer.toString(this.startTime)+"-"+Integer.toString(this.endTime);
       }
+
+    /**
+     * Getter for Type of Lesson
+     * @author Wang Li Rong
+     * @return Type of Lesson
+     */
+    public TypeOfLesson getTypeOfLesson() {
+        return typeOfLesson;
+    }
+
+    /**
+     * Getter for Start Time
+     * @author Wang Li Rong
+     * @return Start time in int format
+     */
+    public int getStartTime() {
+        return startTime;
+    }
+
+
+    /**
+     * Getter for End Time
+     * @author Wang Li Rong
+     * @return End time in int format
+     */
+    public int getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * Getter for location
+     * @author Wang Li Rong
+     * @return Location (String)
+     */
+    public String getLocation() {
+        return location;
+    }
+
 
     
     /** 

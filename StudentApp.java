@@ -49,7 +49,8 @@ public class StudentApp {
         System.out.println("| 3. Check/Print Courses Registered         |");
         System.out.println("| 4. Check Vacancies Available              |");
         System.out.println("| 5. Check Index Number of Course           |");
-        System.out.println("| 6. Swop Index Number with Another Student |");
+		System.out.println("| 6. Swop Index Number with Another Student |");
+		System.out.println("| 7. View Confirmed Time Table              |");
         System.out.println("| 9. Quit                                   |");
         System.out.println("=============================================");
         System.out.print("Option: ");
@@ -77,6 +78,8 @@ public class StudentApp {
         	case 6: swopIndex();
 				break;
 				//Swop Index Number with Another Student
+			case 7: viewTimetable();
+				break;
         	case 9: System.out.println("Exiting MyStars now....");
         		break;	
         }
@@ -102,7 +105,7 @@ public class StudentApp {
     	System.out.println("|Please select the course you wish to add:     |");
     	System.out.println("================================================");
     	System.out.print("Option: ");
-        while(scan.hasNextInt()) {
+        while(!scan.hasNextInt()) {
         	System.out.println("Please input numbers between 1 - "+ availableCourse.size()+" or 99 only.\nOption: ");
         }
         int option = scan.nextInt();
@@ -123,7 +126,7 @@ public class StudentApp {
 	        System.out.println("|Please select the course group you wish to add:     |");
 	    	System.out.println("================================================");
 	    	System.out.print("Option: ");
-	        while(scan.hasNextInt()) {
+	        while(!scan.hasNextInt()) {
 	        	System.out.println("Please input numbers between 1 - "+ availableCG.size()+" or 99 only.\nOption: ");
 	        }
 	        option = scan.nextInt();
@@ -155,7 +158,7 @@ public class StudentApp {
         }    
         System.out.print("|99. Return to previous menu. ");
         System.out.print("Option: ");
-        while(scan.hasNextInt()) {
+        while(!scan.hasNextInt()) {
         	System.out.println("Please input numbers between 1 - "+ studentregcourse.size()+" or 99 only.\nOption: ");
         }
         int option = scan.nextInt();
@@ -174,7 +177,8 @@ public class StudentApp {
      * @author Wei Yao
      */
     private void dropCourseGroup(String courseGroup) {
-    	crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatriculationNumber());   	
+		crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatriculationNumber());  
+		showMenu(); 	
     }
     /**
      * Print all registered courses.
@@ -182,7 +186,8 @@ public class StudentApp {
      * @author Wei Yao
      */
     public void printMenu() {
-    	loginStudent.printRegisterCourse();
+		loginStudent.printRegisterCourse();
+		showMenu();
     }
     /**
      * Menu for checking vacancy.
@@ -234,6 +239,36 @@ public class StudentApp {
     	System.out.println("|Your registered course group will be updated if successful.\nPress any key to return to previous menu.");
         scan.next();
         showMenu();
-    }
-    
+	}
+	
+
+	/**
+	 * UI to view student's timetable 
+	 * @author Wang Li Rong
+	 */
+	public void viewTimetable(){
+		Object[] confirmedCourseGroupIndexes = this.loginStudent.getConfirmedCourseGroups().keySet().toArray();
+		System.out.println("======================Time Table=========================");
+		for (Object courseGroupIndex : confirmedCourseGroupIndexes) {
+			CourseGroup courseGroup = this.crsmgr.getCourseGroup((String)courseGroupIndex);
+			String courseCode = courseGroup.getCourseCode();
+			String courseName = this.crsmgr.getCourseByCode(courseCode).getName();
+			System.out.println(courseCode+"\t"+courseName);
+			ArrayList<PeriodClass> lessons = courseGroup.getLessons();
+			System.out.println("Day \t Time \t Lesson Type \t Location");
+			for (PeriodClass lesson: lessons){
+				System.out.println(lesson.getDayOfWeek()+"\t"+
+								   Integer.toString(lesson.getStartTime())+"-"+Integer.toString(lesson.getEndTime())+"\t"+
+								   lesson.getLocation());
+			}
+			System.out.println("---------------------------------------------------------");
+			System.out.print("Press any key to continue to the next course...");
+			scan.nextLine();
+		}
+		System.out.println("End of Time Table");
+		System.out.println("Press any key to return to main menu");
+		scan.nextLine();
+		scan.nextLine();
+		showMenu();
+	}
 }

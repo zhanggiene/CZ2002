@@ -108,7 +108,7 @@ public class AdminApp {
         } while (choice != 9);
 
         sc.close();
-        System.out.println("Logging out of account...");
+        System.out.println("Exiting MyStars now....");
 
     }
 

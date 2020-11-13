@@ -74,8 +74,15 @@ public class Course implements Serializable{
     // {
     //     return Integer.toString(this.totalSize);
     // }
-
     
+    /**
+     * Getter for name of course
+     * @author Wang Li Rong
+     * @return
+     */
+    public String getName(){
+        return this.name;
+    }
 
     
 }
