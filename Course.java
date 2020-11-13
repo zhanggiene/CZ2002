@@ -6,6 +6,7 @@ public class Course implements Serializable{
     private String name;
     private ArrayList<String> courseGroups;
     private School school;
+    private int courseAU;
     // private ArrayList<String> indexes;
     private static final long serialVersionUID = 4L;
 
@@ -14,6 +15,7 @@ public class Course implements Serializable{
         this.courseCode=courseCode;
         this.name=name;
         this.school=scse;
+        this.courseAU=courseAU;
         this.courseGroups = new ArrayList<>();
     
     }
@@ -84,5 +86,11 @@ public class Course implements Serializable{
         return this.name;
     }
 
-    
+    /**
+     * @author Wenyu
+     * @return
+     */
+    public int getCourseAU(){
+        return this.courseAU;
+    }
 }

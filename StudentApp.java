@@ -89,11 +89,13 @@ public class StudentApp {
      * Menu for adding course.
      * 
      * @author Wei Yao
+	 * update by Wenyu
      */
     public void addMenu() {
     	System.out.println("=================Add Course Page================");
     	
-    	int i = 1;
+		int i = 1;
+		int totalAU = 0;
     	availableCourse = crsmgr.getCourseList(); //coursemanager method to retrieve all courses
     	String[] courseID = new String[availableCourse.size()];
     	for(Entry<String, Course> item: availableCourse.entrySet()) {
@@ -131,9 +133,16 @@ public class StudentApp {
 	        }
 	        option = scan.nextInt();
 	        if(option != 99) {
-		        crsmgr.enrol(loginStudent, availableCG.get(matchCG[option]));
-		        System.out.println("You have added course group: "+matchCG[option]);
-		        addMenu();
+				if(totalAU <=21){
+		        	crsmgr.enrol(loginStudent, availableCG.get(matchCG[option]));
+					System.out.println("You have added course group: "+matchCG[option]);
+					int addedCourseAU = crsmgr.getCourseByCode(matchCG[option]).getCourseAU();
+					totalAU += addedCourseAU;
+					addMenu();
+				}
+				else {
+					System.out.println("You have exceeded the maximum AU. Course cannot be added");
+				}
 	        }
         }else {
         	showMenu();
