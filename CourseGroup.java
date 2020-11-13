@@ -38,6 +38,7 @@ public class CourseGroup implements Serializable{
 	}
 
 	/**
+	 * Getter for list of student matriculation numbers
 	 * @return List of Students Matriculation Numbers
 	 * @author Wang Li Rong
 	 */

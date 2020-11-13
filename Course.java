@@ -43,6 +43,7 @@ public class Course implements Serializable{
     /**
      * Gets list of Course Groups of a Course.
      * @author Wang Li Rong
+     * @return List of Course Group Indexes
      */
     public ArrayList<String> getCourseGroups() 
     {

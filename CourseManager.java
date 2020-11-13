@@ -108,8 +108,9 @@ public class CourseManager {
 	}
 
 	/**
-	 * Get list of CoursesCodes.
+	 * Getter for list of Courses Codes.
 	 * @author Wang Li Rong
+	 * @return List of Course Codes 
 	 */
 
 	public String[] getCourseCodeList() { return
@@ -122,8 +123,9 @@ public class CourseManager {
 	}
 
 	/**
-	 * Get list of CourseGroupsIndexes of a Course. 
-	 * @author Wang li Rong
+	 * Getter for list of course groups indexes of a course. 
+	 * @author Wang Li Rong
+	 * @return List of course group indexes of a course
 	 */
 	public ArrayList<String> getCourseGroupsOfCourse(String courseCode){
 		ArrayList<String> courseGroupIndexes = courses.get(courseCode).getCourseGroups(); 
