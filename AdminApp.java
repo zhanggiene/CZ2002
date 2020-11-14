@@ -547,9 +547,9 @@ public class AdminApp {
 
                 System.out.print("Choice for School: ");
                 try {
-                    schoolInt = scan.nextInt() - 1;
+                    schoolInt = scan.nextInt();
                     if (schoolInt <= schools.size() && schoolInt >=1) {
-                        school = (School)schools.get(schoolInt);
+                        school = (School)schools.get(schoolInt-1);
                         break;
                     } else {
                         System.out.println("Please input an integer between 1-"+ schools.size()+1);
@@ -631,8 +631,10 @@ public class AdminApp {
         }
 
         if (!indexNum.isEmpty() && vacance > 0){
-            CourseGroup courseNum = new CourseGroup(indexNum,vacance, courseCode);   
+            CourseGroup courseNum = new CourseGroup(indexNum,vacance, courseCode);
             courseManager.addCourseGroup(courseNum);
+            Course c = courseManager.getCourseByCode(courseCode);   
+            c.addCourseGroup(indexNum);
         } else{
             throw new RuntimeException("Particulars not filled up");
         }
@@ -657,45 +659,82 @@ public class AdminApp {
         System.out.println("1. Course Code");
         System.out.println("2. Course Name");
         System.out.println("3. Index Specific");
-        System.out.print("Your choice : ");
+        System.out.print("Your choice :");
         int choice2 = scan.nextInt();
 
-        switch(choice2){
-            case 1 :
-                System.out.println("Select new course code: ");
-                String newCode = scan.nextLine();
-                c.setCourseCode(newCode);
-            case 2 :
-                System.out.println("Enter new course name: ");
-                String newName = scan.nextLine();
-                c.setCourseName(newName);
-            case 3 :
+        if(choice2 == 1){
+            String newCode = "";
+            while (true){
+                scan.nextLine();
+                System.out.print("Enter the new course code: ");
+                newCode = scan.nextLine();
+                if (!newCode.isEmpty()){
+                    break;
+                } else {
+                    System.out.println("Please enter a valid course code.");
+                }
+            }
+            c.setCourseCode(newCode);
+        }
+        else if(choice2 == 2){
+            String newName = "";
+            while (true){
+                scan.nextLine();
+                System.out.print("Enter the new course name: ");
+                newName = scan.nextLine();
+                if (!newName.isEmpty()){
+                    break;
+                } else {
+                    System.out.println("Please enter a valid course name.");
+                }
+            }
+            c.setCourseName(newName);
+        }
+        else if(choice2 == 3){
                 System.out.println("Select which index you want to change");
                 ArrayList<String> cg = c.getCourseGroup();
-                for(int j=0;j<cg.size();j++){
-                    System.out.print(cg.get(j));
+                for(int j=1;j<=cg.size();j++){
+                    System.out.println(j + cg.get(j-1));
                 }
+                System.out.print("\n");
                 System.out.println("Your choice (1-" + cg.size() +  "): ");
                 int cgInt = scan.nextInt();
-                String cgString = cg.get(cgInt);
+                String cgString = cg.get(cgInt-1);
                 CourseGroup cgIndex = courseManager.getCourseGroup(cgString);
+                cgIndex.printInfo();
                 System.out.println("What do you want to change");
                 System.out.println("1. Index Number");
                 System.out.println("2. Vacancy");
                 System.out.print("Your choice: ");
                 int indexInt = scan.nextInt();
-                switch(indexInt){
-                    case 1 :
-                        System.out.println("Enter new index number: ");
-                        String newNumber = scan.nextLine();
-                        cgIndex.setIndexNumber(newNumber);
-                    case 2 :
+                if(indexInt == 1){
+                    String newNumber = "";
+                    while (true){
+                        scan.nextLine();
+                        System.out.print("Enter the new index number: ");
+                        newNumber = scan.nextLine();
+                        if (!newNumber.isEmpty()){
+                            break;
+                        } else {
+                            System.out.println("Please enter a valid index number.");
+                        }
+                    }
+                    cgIndex.setIndexNumber(newNumber);
+                    cg.set(cgInt-1,newNumber);
+                }
+                else if(indexInt == 2){
+                    int newVacancy = 10;
+                    try {
                         System.out.println("Enter new vacancy: ");
-                        int newVacancy = scan.nextInt();
-                        cgIndex.setVacancy(newVacancy);
+                        newVacancy = scan.nextInt();
+                    } catch (Exception e){
+                        System.out.println("Please enter a valid integer.");
+                    }    
+                    cgIndex.setVacancy(newVacancy);
+                }
             }
+
         }
-    }
 
     /**
      * UI for checking vacancies.
@@ -712,11 +751,11 @@ public class AdminApp {
         Course c = courseManager.getCourseByCode(courseCode);
         ArrayList<String> cg = c.getCourseGroup();
         for(int j=0;j<cg.size();j++){
-            System.out.print(cg.get(j));
+            System.out.println((j+1)+ cg.get(j));
         }
         System.out.println("Select which index you want to check the vacancy: ");
         int choice2 = scan.nextInt();
-        String courseGroup = cg.get(choice2);
+        String courseGroup = cg.get(choice2-1);
         CourseGroup courseNum = courseManager.getCourseGroup(courseGroup);
         System.out.println("Vacancies available : "+ courseNum.getVacancy());
     }

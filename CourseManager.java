@@ -254,15 +254,16 @@ public class CourseManager {
 
 	public void printAllRecord() {
         System.out.println("List of Courses: ");
-        System.out.println("\tCourse Code\tSchool\tCourse Name");
+        System.out.println("\tCourse Code\tSchool\tCourse Name\tIndex");
 		int i=1;
         for (Course c : courses.values()) {
             System.out.print(i+".\t");
 			c.printCourse();
 			ArrayList<String> cg = c.getCourseGroup();
 			for(int j=0;j<cg.size();j++){
-				System.out.print(cg.get(j));
+				System.out.print(cg.get(j) + " ");
 			}
+			System.out.print("\n");
             i++;
         }
     }

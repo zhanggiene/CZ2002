@@ -65,7 +65,7 @@ public class Course implements Serializable{
      * Andrew
      */
     public void printCourse(){
-        System.out.println(courseCode+"\t"+school+"\t"+name);
+        System.out.print(courseCode+"\t"+school+"\t"+name+"\t");
     }
 
 

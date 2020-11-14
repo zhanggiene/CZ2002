@@ -144,6 +144,10 @@ public class CourseGroup implements Serializable{
 
 	}
 
+	public void printInfo(){
+		System.out.println("Index Number : " + indexNumber);
+		System.out.println("Vacancy = " + vacancy);
+	}
 
 
 
