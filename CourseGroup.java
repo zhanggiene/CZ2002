@@ -33,6 +33,10 @@ public class CourseGroup implements Serializable{
 		return indexNumber;
 	}
 
+	public void setIndexNumber(String newNumber){
+		this.indexNumber = newNumber;
+	}
+
 	public String getCourseCode() {
 		return courseCode;
 	}
@@ -48,6 +52,10 @@ public class CourseGroup implements Serializable{
 
 	public int getVacancy(){
 		return vacancy;
+	}
+
+	public void setVacancy(int newVacancy){
+		this.vacancy = newVacancy;
 	}
 
 	//updated by WY

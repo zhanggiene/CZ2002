@@ -26,6 +26,14 @@ public class Course implements Serializable{
     {
         return this.courseCode;
     }
+    
+    public void setCourseCode(String newCode){
+        this.courseCode = newCode;
+    }
+
+    public void setCourseName (String newName){
+        this.name = newName;
+    }
 
     public void addCourseGroup(String courseGroup)
     {
@@ -59,11 +67,13 @@ public class Course implements Serializable{
     public void printCourse(){
         System.out.println(courseCode+"\t"+school+"\t"+name);
     }
-
-
-
-	public CourseGroup getCourseGroup(int i) {
+    
+    public CourseGroup getCourseGroup(int i) {
 		return null;
+	}
+
+	public ArrayList<String> getCourseGroup() {
+		return courseGroups;
 	}
 
     //Now each coursegroup has a totalSize instead
@@ -76,8 +86,8 @@ public class Course implements Serializable{
     // {
     //     return Integer.toString(this.totalSize);
     // }
-    
-    /**
+
+     /**
      * Getter for name of course
      * @author Wang Li Rong
      * @return
@@ -93,4 +103,6 @@ public class Course implements Serializable{
     public int getCourseAU(){
         return this.courseAU;
     }
+
+    
 }

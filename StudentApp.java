@@ -101,7 +101,7 @@ public class StudentApp {
 			int confirmedCourseAU = crsmgr.getCourseByCode(confirmedCourse.get(i)).getCourseAU();
 			totalAU += confirmedCourseAU;
 		}
-		
+
     	availableCourse = crsmgr.getCourseList(); //coursemanager method to retrieve all courses
     	String[] courseID = new String[availableCourse.size()];
     	for(Entry<String, Course> item: availableCourse.entrySet()) {
@@ -182,13 +182,13 @@ public class StudentApp {
         int option = scan.nextInt();
         if(option != 99) {
         	String addedStudentFromWaitlist = dropCourseGroup(matchCG[option]);
-			System.out.print("You have dropped course group: "+matchCG[option]+".");
+        	System.out.print("You have dropped course group: "+matchCG[option]+".");
 			//if there was a student added from waitlist
 			if (addedStudentFromWaitlist != null){
 				//send an email
 				emailNotificationManager.sendEmail(addedStudentFromWaitlist, "New course added from your waitlist", matchCG[option]+" has been added. ");
 			}
-        	dropMenu();
+			dropMenu();
         }else {
         	showMenu();
         }

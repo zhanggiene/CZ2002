@@ -75,8 +75,8 @@ public class PeriodClass {
     public String toString() {
         return this.dayOfWeek.name()+" "+Integer.toString(this.startTime)+"-"+Integer.toString(this.endTime);
       }
-
-    /**
+    
+      /**
      * Getter for Type of Lesson
      * @author Wang Li Rong
      * @return Type of Lesson
@@ -112,7 +112,7 @@ public class PeriodClass {
     public String getLocation() {
         return location;
     }
-
+    
 
     
     /** 
