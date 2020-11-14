@@ -150,8 +150,10 @@ public class StudentApp {
     }
     /**
      * Menu for dropping course.
+	 * Also notifies the newly added student from waitlist via emailNotification manager
      * 
      * @author Wei Yao
+	 * Updated by Wang Li Rong
      */
     public void dropMenu() {
     	System.out.println("|Please select the course group you wish to drop:     |");
@@ -172,8 +174,13 @@ public class StudentApp {
         }
         int option = scan.nextInt();
         if(option != 99) {
-        	dropCourseGroup(matchCG[option]);
-        	System.out.print("You have dropped course group: "+matchCG[option]+".");
+        	String addedStudentFromWaitlist = dropCourseGroup(matchCG[option]);
+			System.out.print("You have dropped course group: "+matchCG[option]+".");
+			//if there was a student added from waitlist
+			if (addedStudentFromWaitlist != null){
+				//send an email
+				emailNotificationManager.sendEmail(addedStudentFromWaitlist, "New course added from your waitlist", matchCG[option]+" has been added. ");
+			}
         	dropMenu();
         }else {
         	showMenu();
@@ -184,10 +191,12 @@ public class StudentApp {
      * Drop from course group.
      * 
      * @author Wei Yao
+	 * Updated by Wang Li Rong
      */
-    private void dropCourseGroup(String courseGroup) {
-		crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatriculationNumber());  
+    private String dropCourseGroup(String courseGroup) {
+		String addedStudentFromWaitList = crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatriculationNumber());  
 		showMenu(); 	
+		return addedStudentFromWaitList;
     }
     /**
      * Print all registered courses.

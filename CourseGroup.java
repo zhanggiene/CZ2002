@@ -108,16 +108,19 @@ public class CourseGroup implements Serializable{
 	}
 
 	//removed confirmed student and add first student from waiting list
+	//return matirc number of first student from wait list
 	//updated by WY 
-	public void removeFromConfirmedStudent(String matricNumber){
+	public String removeFromConfirmedStudent(String matricNumber){
 		for(int i = 0; i < students.size(); i++) {
 			if(students.get(i) == matricNumber) {
 				students.remove(i);
+				String waitListStudent = studentsWaiting.get(0);
 				enrol(studentsWaiting.get(0));
 				studentsWaiting.remove(0);
-				break;
+				return waitListStudent;
 			}
 		}
+		return null; //if no student in waitlist
 	}
 
 	public void addLesson(PeriodClass lesson){

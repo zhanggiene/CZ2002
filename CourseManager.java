@@ -100,11 +100,12 @@ public class CourseManager {
 		return CGByCourseCode;
 	}
 	/**
-	 * Drop student from course group
+	 * Drop student from course group and returns next waitlist student
 	 * @author Wei Yao
+	 * Updated by Wang Li Rong
 	 */
-	public void dropCourseGroup(String index, String matric) {
-		courseGroups.get(index).removeFromConfirmedStudent(matric);
+	public String dropCourseGroup(String index, String matric) {
+		return courseGroups.get(index).removeFromConfirmedStudent(matric);
 	}
 
 	/**
