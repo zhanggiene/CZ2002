@@ -255,14 +255,18 @@ public class CourseManager {
 	public void printAllRecord() {
         System.out.println("List of Courses: ");
         System.out.println("\tCourse Code\tSchool\tCourse Name");
-        int i=1;
+		int i=1;
         for (Course c : courses.values()) {
             System.out.print(i+".\t");
-            c.printCourse();
-            CourseGroup cg = c.getCourseGroup(i);
+			c.printCourse();
+			ArrayList<String> cg = c.getCourseGroup();
+			for(int j=0;j<cg.size();j++){
+				System.out.print(cg.get(j));
+			}
             i++;
         }
-	}
+    }
+	
 	/**
 	 * Check if course exist
 	 * @param courseCode
