@@ -89,7 +89,7 @@ public class EmailNotificationManager {
      * @param Subject
      * @param Content
      */
-    public void sendEmail(String studentMetriculationNumber,String Subject,String Content)
+    public void SendEmail(String studentMetriculationNumber,String Subject,String Content)
     {
         if (EmailDataBase.containsKey(studentMetriculationNumber))
         {
@@ -152,6 +152,6 @@ public class EmailNotificationManager {
      */
     public static void main(String[] args) {
         EmailNotificationManager manager=new EmailNotificationManager();
-        manager.sendEmail("U1920187L", "test1", "hi test123");
+        manager.SendEmail("U1920187L", "test1", "hi test123");
     }
 }

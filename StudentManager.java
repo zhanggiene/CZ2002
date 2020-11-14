@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+import javax.print.DocFlavor.STRING;
+
 /**
      data base for students objects
      * @author zhang zhuyan
@@ -97,6 +99,7 @@ public class StudentManager {
      * @param coursegroup2
      * @return boolean
      */
+    //updated by WY
 	public boolean checkSwap(String matric1, String coursegroup1, String matric2, String coursegroup2) {
 		boolean swapped = false;
 		for(Map.Entry<String, Student> item : studentAccounts.entrySet()) {

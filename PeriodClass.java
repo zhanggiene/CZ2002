@@ -1,4 +1,9 @@
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.sql.Time;
 import java.time.DayOfWeek;
+
+import java.time.format.*;
 
 
 /**
@@ -64,7 +69,7 @@ public class PeriodClass {
     /** 
      * @return DayOfWeek
      */
-    public DayOfWeek getDayOfWeek() {
+    private DayOfWeek getDayOfWeek() {
         return dayOfWeek;
     }
 

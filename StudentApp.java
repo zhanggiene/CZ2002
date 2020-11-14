@@ -4,19 +4,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
-/**
- * Interface that a student see after login 
- * Functionalities include: 
- * 1. Add Course Group 
- * 2. Drop Course Group 
- * 3. Check/Print Courses Registered 
- * 4. Check Vacancies Available
- * 5. Check Index Number of Course 
- * 6. Swop Index Number with Another Student 
- * 9. Quit
- * 
- * @author Wei Yao
- */
 public class StudentApp {
 	private Scanner scan = new Scanner(System.in);
 	private Student loginStudent;
@@ -38,10 +25,7 @@ public class StudentApp {
     	showMenu();
     	
     }
-    /**
-     * This method starts up the student app and displays all choices to admin
-     * @author Wei Yao
-     */
+    
     public void showMenu() {
     	System.out.println("=================Student Page================");
         System.out.println("| 1. Add Course Group                       |");
@@ -49,8 +33,7 @@ public class StudentApp {
         System.out.println("| 3. Check/Print Courses Registered         |");
         System.out.println("| 4. Check Vacancies Available              |");
         System.out.println("| 5. Check Index Number of Course           |");
-		System.out.println("| 6. Swop Index Number with Another Student |");
-		System.out.println("| 7. View Confirmed Time Table              |");
+        System.out.println("| 6. Swop Index Number with Another Student |");
         System.out.println("| 9. Quit                                   |");
         System.out.println("=============================================");
         System.out.print("Option: ");
@@ -61,36 +44,23 @@ public class StudentApp {
         option = scan.nextInt();
         switch(option) {
         	case 1: addMenu();
-				break;
-				//Add Course Group
+        		break;
         	case 2: dropMenu();
-				break;	
-				//Drop Course Group
+        		break;	
         	case 3: printMenu();
-				break;
-				//Check/Print Courses Registered
+        		break;
         	case 4: checkVacancies();
-				break;
-				//Check Vacancies Available
+        		break;
         	case 5: checkIndex();
-				break;
-				//Check Index Number of Course
+        		break;
         	case 6: swopIndex();
-				break;
-				//Swop Index Number with Another Student
-			case 7: viewTimetable();
-				break;
+        		break;
         	case 9: System.out.println("Exiting MyStars now....");
         		break;	
         }
         
     }
-    /**
-     * Menu for adding course.
-     * 
-     * @author Wei Yao
-	 * update by Wenyu
-     */
+    
     public void addMenu() {
     	System.out.println("=================Add Course Page================");
     	
@@ -113,7 +83,7 @@ public class StudentApp {
     	System.out.println("|Please select the course you wish to add:     |");
     	System.out.println("================================================");
     	System.out.print("Option: ");
-        while(!scan.hasNextInt()) {
+        while(scan.hasNextInt()) {
         	System.out.println("Please input numbers between 1 - "+ availableCourse.size()+" or 99 only.\nOption: ");
         }
         int option = scan.nextInt();
@@ -134,34 +104,20 @@ public class StudentApp {
 	        System.out.println("|Please select the course group you wish to add:     |");
 	    	System.out.println("================================================");
 	    	System.out.print("Option: ");
-	        while(!scan.hasNextInt()) {
+	        while(scan.hasNextInt()) {
 	        	System.out.println("Please input numbers between 1 - "+ availableCG.size()+" or 99 only.\nOption: ");
 	        }
 	        option = scan.nextInt();
 	        if(option != 99) {
-				int addedCourseAU = crsmgr.getCourseByCode(matchCG[option]).getCourseAU();
-				totalAU += addedCourseAU;
-				if(totalAU <=21){
-		        	crsmgr.enrol(loginStudent, availableCG.get(matchCG[option]));
-					System.out.println("You have added course group: "+matchCG[option]);
-					addMenu();
-				}
-				else {
-					System.out.println("You have exceeded the maximum AU. Course cannot be added");
-					showMenu();
-				}
+		        crsmgr.enrol(loginStudent, availableCG.get(matchCG[option]));
+		        System.out.println("You have added course group: "+matchCG[option]);
+		        addMenu();
 	        }
         }else {
         	showMenu();
         }    	
     }
-    /**
-     * Menu for dropping course.
-	 * Also notifies the newly added student from waitlist via emailNotification manager
-     * 
-     * @author Wei Yao
-	 * Updated by Wang Li Rong
-     */
+    
     public void dropMenu() {
     	System.out.println("|Please select the course group you wish to drop:     |");
     	System.out.println("================================================");
@@ -176,7 +132,7 @@ public class StudentApp {
         }    
         System.out.print("|99. Return to previous menu. ");
         System.out.print("Option: ");
-        while(!scan.hasNextInt()) {
+        while(scan.hasNextInt()) {
         	System.out.println("Please input numbers between 1 - "+ studentregcourse.size()+" or 99 only.\nOption: ");
         }
         int option = scan.nextInt();
@@ -194,31 +150,15 @@ public class StudentApp {
         }
     }
     
-    /**
-     * Drop from course group.
-     * 
-     * @author Wei Yao
-	 * Updated by Wang Li Rong
-     */
-    private String dropCourseGroup(String courseGroup) {
-		String addedStudentFromWaitList = crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatriculationNumber());  
-		showMenu(); 	
-		return addedStudentFromWaitList;
+    //Updated by WY
+    private void dropCourseGroup(String courseGroup) {
+    	crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatricNumber());   	
     }
-    /**
-     * Print all registered courses.
-     * 
-     * @author Wei Yao
-     */
+    
     public void printMenu() {
-		loginStudent.printRegisterCourse();
-		showMenu();
+    	loginStudent.printRegisterCourse();
     }
-    /**
-     * Menu for checking vacancy.
-     * 
-     * @author Wei Yao
-     */
+    
     public void checkVacancies() {
     	System.out.println("|These are the vacancies for all available course groups |");
     	System.out.println("==========================================================");
@@ -231,11 +171,7 @@ public class StudentApp {
     	scan.next();
     	showMenu();
     }
-    /**
-     * Print out available course groups for a course.
-     * 
-     * @author Wei Yao
-     */
+    
     public void checkIndex() {
     	System.out.println("|These are the indexes for all available course groups     |");
     	System.out.println("==========================================================");
@@ -248,11 +184,7 @@ public class StudentApp {
      	scan.next();
      	showMenu();
     }
-    /**
-     * Menu for swopping index with another student.
-     * 
-     * @author Wei Yao
-     */
+    
     public void swopIndex() {
 
     	System.out.println("================Swap Index Menu=========================");
@@ -264,36 +196,6 @@ public class StudentApp {
     	System.out.println("|Your registered course group will be updated if successful.\nPress any key to return to previous menu.");
         scan.next();
         showMenu();
-	}
-	
-
-	/**
-	 * UI to view student's timetable 
-	 * @author Wang Li Rong
-	 */
-	public void viewTimetable(){
-		Object[] confirmedCourseGroupIndexes = this.loginStudent.getConfirmedCourseGroups().keySet().toArray();
-		System.out.println("======================Time Table=========================");
-		for (Object courseGroupIndex : confirmedCourseGroupIndexes) {
-			CourseGroup courseGroup = this.crsmgr.getCourseGroup((String)courseGroupIndex);
-			String courseCode = courseGroup.getCourseCode();
-			String courseName = this.crsmgr.getCourseByCode(courseCode).getName();
-			System.out.println(courseCode+"\t"+courseName);
-			ArrayList<PeriodClass> lessons = courseGroup.getLessons();
-			System.out.println("Day \t Time \t Lesson Type \t Location");
-			for (PeriodClass lesson: lessons){
-				System.out.println(lesson.getDayOfWeek()+"\t"+
-								   Integer.toString(lesson.getStartTime())+"-"+Integer.toString(lesson.getEndTime())+"\t"+
-								   lesson.getLocation());
-			}
-			System.out.println("---------------------------------------------------------");
-			System.out.print("Press any key to continue to the next course...");
-			scan.nextLine();
-		}
-		System.out.println("End of Time Table");
-		System.out.println("Press any key to return to main menu");
-		scan.nextLine();
-		scan.nextLine();
-		showMenu();
-	}
+    }
+    
 }

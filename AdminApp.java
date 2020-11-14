@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -109,7 +110,7 @@ public class AdminApp {
         } while (choice != 9);
 
         sc.close();
-        System.out.println("Exiting MyStars now....");
+        System.out.println("Logging out of account...");
 
     }
 
