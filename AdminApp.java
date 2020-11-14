@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,6 +92,7 @@ public class AdminApp {
                     break;
                 case 6:
                     // Check Index Vacancy
+                    checkVacancy();
                     break;
                 case 7:
                     // Print Student List By Index Number
@@ -555,6 +557,7 @@ public class AdminApp {
                     }
                 } catch (Exception e){
                     System.out.println("Please input an integer");
+                    scan.nextLine();
                 }
             }
             scan.nextLine();
@@ -643,21 +646,81 @@ public class AdminApp {
      */
 
     public void updateCourse(){
-        String[] courseCodes = courseManager.getCourseList();
+        String[] courseCodes = courseManager.getCourseCodeList();
         Scanner scan = new Scanner(System.in);
         courseManager.printAllRecord();
         System.out.println("Enter which course you want to update: ");
         int choice = scan.nextInt();
         String courseCode = courseCodes[choice -1];
+        Course c = courseManager.getCourseByCode(courseCode);
         
         System.out.println("Select which particular you want to update");
         System.out.println("1. Course Code");
         System.out.println("2. Course Name");
-        System.out.println("3. Index Number");
-        System.out.println("4. Vacancy");
+        System.out.println("3. Index Specific");
+        System.out.print("Your choice : ");
         int choice2 = scan.nextInt();
+
+        switch(choice2){
+            case 1 :
+                System.out.println("Select new course code: ");
+                String newCode = scan.nextLine();
+                c.setCourseCode(newCode);
+            case 2 :
+                System.out.println("Enter new course name: ");
+                String newName = scan.nextLine();
+                c.setCourseName(newName);
+            case 3 :
+                System.out.println("Select which index you want to change");
+                ArrayList<String> cg = c.getCourseGroup();
+                for(int j=0;j<cg.size();j++){
+                    System.out.print(cg.get(j));
+                }
+                System.out.println("Your choice (1-" + cg.size() +  "): ");
+                int cgInt = scan.nextInt();
+                String cgString = cg.get(cgInt);
+                CourseGroup cgIndex = courseManager.getCourseGroup(cgString);
+                System.out.println("What do you want to change");
+                System.out.println("1. Index Number");
+                System.out.println("2. Vacancy");
+                System.out.print("Your choice: ");
+                int indexInt = scan.nextInt();
+                switch(indexInt){
+                    case 1 :
+                        System.out.println("Enter new index number: ");
+                        String newNumber = scan.nextLine();
+                        cgIndex.setIndexNumber(newNumber);
+                    case 2 :
+                        System.out.println("Enter new vacancy: ");
+                        int newVacancy = scan.nextInt();
+                        cgIndex.setVacancy(newVacancy);
+            }
+        }
     }
 
+    /**
+     * UI for checking vacancies.
+     * @author Andrew Wiraatmaja
+     */
+
+    public void checkVacancy(){
+        String [] courseCodes = courseManager.getCourseCodeList();
+        Scanner scan = new Scanner(System.in);
+        courseManager.printAllRecord();
+        System.out.println("Enter which course you want to check: ");
+        int choice = scan.nextInt();
+        String courseCode = courseCodes[choice -1];
+        Course c = courseManager.getCourseByCode(courseCode);
+        ArrayList<String> cg = c.getCourseGroup();
+        for(int j=0;j<cg.size();j++){
+            System.out.print(cg.get(j));
+        }
+        System.out.println("Select which index you want to check the vacancy: ");
+        int choice2 = scan.nextInt();
+        String courseGroup = cg.get(choice2);
+        CourseGroup courseNum = courseManager.getCourseGroup(courseGroup);
+        System.out.println("Vacancies available : "+ courseNum.getVacancy());
+    }
 
     
 
