@@ -70,7 +70,7 @@ public class Course implements Serializable{
 
 
 
-	public ArrayList<String> getCourseGroup(int i) {
+	public ArrayList<String> getCourseGroup() {
 		return courseGroups;
 	}
 
