@@ -254,11 +254,7 @@ public class CourseManager {
 
 	public void printAllRecord() {
         System.out.println("List of Courses: ");
-<<<<<<< HEAD
         System.out.println("\tCourse Code\tSchool\tCourse Name\tIndex");
-=======
-        System.out.println("\tCourse Code\tSchool\tCourse Name");
->>>>>>> 62eafac1f8e6275184fb68fc42331edbf308bda2
 		int i=1;
         for (Course c : courses.values()) {
             System.out.print(i+".\t");
