@@ -67,7 +67,7 @@ public class StudentApp {
 		int i = 1;
 		int totalAU = 0;
 		ArrayList<String> confirmedCourse = new ArrayList<String> (loginStudent.getConfirmedCourseGroups().values());
-		for(i=i-1; i<confirmedCourse.size(); i++){
+		for(i=i-1; i<confirmedCourse.size() i++){
 			int confirmedCourseAU = crsmgr.getCourseByCode(confirmedCourse.get(i)).getCourseAU();
 			totalAU += confirmedCourseAU;
 		}
