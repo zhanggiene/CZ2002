@@ -96,6 +96,12 @@ public class StudentApp {
     	
 		int i = 1;
 		int totalAU = 0;
+		ArrayList<String> confirmedCourse = new ArrayList<String> (loginStudent.getConfirmedCourseGroups().values());
+		for(i=i-1; i<confirmedCourse.size() i++){
+			int confirmedCourseAU = crsmgr.getCourseByCode(confirmedCourse.get(i)).getCourseAU();
+			totalAU += confirmedCourseAU;
+		}
+		
     	availableCourse = crsmgr.getCourseList(); //coursemanager method to retrieve all courses
     	String[] courseID = new String[availableCourse.size()];
     	for(Entry<String, Course> item: availableCourse.entrySet()) {
@@ -133,15 +139,16 @@ public class StudentApp {
 	        }
 	        option = scan.nextInt();
 	        if(option != 99) {
+				int addedCourseAU = crsmgr.getCourseByCode(matchCG[option]).getCourseAU();
+				totalAU += addedCourseAU;
 				if(totalAU <=21){
 		        	crsmgr.enrol(loginStudent, availableCG.get(matchCG[option]));
 					System.out.println("You have added course group: "+matchCG[option]);
-					int addedCourseAU = crsmgr.getCourseByCode(matchCG[option]).getCourseAU();
-					totalAU += addedCourseAU;
 					addMenu();
 				}
 				else {
 					System.out.println("You have exceeded the maximum AU. Course cannot be added");
+					showMenu();
 				}
 	        }
         }else {
