@@ -50,6 +50,14 @@ public class CourseGroup implements Serializable{
 		return vacancy;
 	}
 
+	public void setIndexNumber(String newNumber){
+		this.indexNumber = newNumber;
+	}
+
+	public void setVacancy(int newVacancy){
+		this.vacancy = newVacancy;
+	}
+
 	//updated by WY
 	public boolean isConfirmedStudent(String matricNumber){
 		boolean confirmed = false;

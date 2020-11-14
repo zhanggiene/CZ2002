@@ -27,6 +27,14 @@ public class Course implements Serializable{
         return this.courseCode;
     }
 
+    public void setCourseCode(String newCode){
+        this.courseCode = newCode;
+    }
+
+    public void setCourseName (String newName){
+        this.name = newName;
+    }
+
     public void addCourseGroup(String courseGroup)
     {
         courseGroups.add(courseGroup);
@@ -62,8 +70,8 @@ public class Course implements Serializable{
 
 
 
-	public CourseGroup getCourseGroup(int i) {
-		return null;
+	public ArrayList<String> getCourseGroup(int i) {
+		return courseGroups;
 	}
 
     //Now each coursegroup has a totalSize instead
