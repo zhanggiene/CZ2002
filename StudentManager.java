@@ -17,7 +17,6 @@ public class StudentManager {
 
     StudentManager(){
         loadData();
-
     }
     
     /** retreive student object from database

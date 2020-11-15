@@ -53,10 +53,13 @@ public class CourseGroup implements Serializable{
 		return vacancy;
 	}
 
+<<<<<<< Updated upstream
 	public void setVacancy(int newVacancy){
 		this.vacancy = newVacancy;
 	}
 
+=======
+>>>>>>> Stashed changes
 	//updated by WY
 	public boolean isConfirmedStudent(String matricNumber){
 		boolean confirmed = false;
@@ -135,6 +138,7 @@ public class CourseGroup implements Serializable{
 	public ArrayList<PeriodClass> getLessons(){
 		return lessons;
 	}
+<<<<<<< Updated upstream
 
 	public void isClashing(CourseGroup otherindex){
 
@@ -146,4 +150,6 @@ public class CourseGroup implements Serializable{
 
 
 
+=======
+>>>>>>> Stashed changes
 }

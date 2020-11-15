@@ -74,12 +74,14 @@ public class Student implements Serializable
         return matricNumber;
     }
 
-    
+    /*
     public Boolean CheckClashes(String index)
     {
+
         return false;
     }
-
+    */
+    
     public School getSchool()
     {
         return school;

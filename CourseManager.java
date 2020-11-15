@@ -96,12 +96,17 @@ public class CourseManager {
 	{
 		return courseGroups;
 	}
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 	
 =======
 	//Created by WY
 >>>>>>> c9c28414fae852a5922cc42d72c53ada5b26e2a5
 	public Map<String, CourseGroup> getCourseGroupWY(String courseCode)
+=======
+
+/* 	public Map<String, CourseGroup> getCourseGroupWY(String courseCode)
+>>>>>>> Stashed changes
 	{
 		Map<String, CourseGroup> CGByCourseCode = new HashMap<String, CourseGroup>();
 		for(Map.Entry<String, CourseGroup> item: courseGroups.entrySet()) {
@@ -110,11 +115,22 @@ public class CourseManager {
 			}
 		}
 		return CGByCourseCode;
+<<<<<<< Updated upstream
 	}
 	//Created by WY
 	public void dropCourseGroup(String index, String matric) {
 		courseGroups.get(index).removeFromConfirmedStudent(matric);
 	}
+=======
+	} */
+	/**
+	 * Drop student from course group and returns next waitlist student
+	 * @author Wei Yao
+	 * Updated by Wang Li Rong
+	 */
+	public String dropCourseGroup(String index, String matric) {
+		return courseGroups.get(index).removeFromConfirmedStudent(matric);
+>>>>>>> Stashed changes
 	}
 
 <<<<<<< HEAD
@@ -190,12 +206,22 @@ public class CourseManager {
 			this.swapIndex = (Map<String, String[]>) oisSwapIndexFilep.readObject();
 			oisSwapIndexFilep.close();  
 		}
-		catch (Exception e) {
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (ClassNotFoundException cnfe) {
+			cnfe.printStackTrace();
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+<<<<<<< Updated upstream
 	//Created by WY
+=======
+/* 
+>>>>>>> Stashed changes
 	private void loadSwap()
 	{
 		try {          
@@ -211,8 +237,16 @@ public class CourseManager {
 		} catch (ClassNotFoundException cnfe) {
 			cnfe.printStackTrace();
 		}
+<<<<<<< Updated upstream
 	}
 	//Created by WY
+=======
+	} */
+	/**
+	 * Save the swap index result
+	 * @author Wei Yao
+	 */
+>>>>>>> Stashed changes
 	public void saveSwap()
 	{
 		FileOutputStream fopSwapIndexFile;
@@ -254,11 +288,16 @@ public class CourseManager {
 	public void printAllRecord() {
         System.out.println("List of Courses: ");
         System.out.println("\tCourse Code\tSchool\tCourse Name");
+<<<<<<< Updated upstream
 		int i=1;
+=======
+        int i=1;
+>>>>>>> Stashed changes
         for (Course c : courses.values()) {
             System.out.print(i+".\t");
-			c.printCourse();
+            c.printCourse();
 			ArrayList<String> cg = c.getCourseGroup();
+<<<<<<< Updated upstream
 			for(int j=0;j<cg.size();j++){
 				System.out.print(cg.get(j));
 			}
@@ -266,6 +305,15 @@ public class CourseManager {
         }
     }
     
+=======
+			for(int k = 0; k < cg.size(); k++){
+				System.out.print(" "+ cg.get(k));
+			}
+			System.out.println(" ");
+            i++;
+        }
+	}
+>>>>>>> Stashed changes
 	/**
 	 * Check if course exist
 	 * @param courseCode
@@ -277,7 +325,28 @@ public class CourseManager {
 	}
 	
 	
+<<<<<<< Updated upstream
 	public static void main(String[] args) {
+=======
+	public boolean isClashing(CourseGroup currentindex, CourseGroup newindex){
+		boolean clash = false;
+		for(PeriodClass item: currentindex.getLessons()){//load first lesson.
+			for(PeriodClass item2: newindex.getLessons()){//compare starttime of first lesson to other lessons in new index
+				if(item.getStartTime() >= item2.startTime && item.getStartTime() < item2.getEndTime()){
+					clash = true;
+					return clash;
+				}
+				if(item.getEndTime() > item2.startTime && item.getStartTime() <= item2.getEndTime()){
+					clash = true;
+					return clash;
+				}
+			}
+		}
+		return clash;
+	}
+
+	/* public static void main(String[] args) {
+>>>>>>> Stashed changes
 		//For testing
 		CourseManager manager=new CourseManager();
 
@@ -303,7 +372,7 @@ public class CourseManager {
 		manager.save();
 
 		System.out.println(manager.courseGroups);
-		System.out.println(manager.courses);
+		System.out.println(manager.courses); */
 
 		// CourseManager manager=new CourseManager();
 		// Course a=new Course("CZ2002","oodp",School.SCSE);
@@ -313,6 +382,7 @@ public class CourseManager {
 		// b.changeSize(30);
 		// System.out.println(manager.getCourseByCode("CZ2002"));
 
+<<<<<<< Updated upstream
 	}
 }
 
@@ -320,3 +390,8 @@ public class CourseManager {
             
 
     
+=======
+	//}
+}
+
+>>>>>>> Stashed changes
