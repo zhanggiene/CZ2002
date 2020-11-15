@@ -84,7 +84,7 @@ public class StudentManager {
 
     public boolean studentExist(String metricNumber)
     {
-        return studentAccounts.contains(metricNumber);
+        return studentAccounts.containsKey(metricNumber);
 
     }
     
