@@ -1,7 +1,6 @@
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -110,7 +109,7 @@ public class AdminApp {
         } while (choice != 9);
 
         sc.close();
-        System.out.println("Logging out of account...");
+        System.out.println("Exiting MyStars now....");
 
     }
 
@@ -574,9 +573,10 @@ public class AdminApp {
                     System.out.println("Please enter a valid course code.");
                 }
             }
+            //TODO: REMEMBER TO ADD IN SELECTION FOR AU OF COURSE
 
             if (school!=null && !courseCode.isEmpty() && !courseName.isEmpty()){
-                Course course = new Course(courseCode,courseName, school);    
+                Course course = new Course(courseCode,courseName, school,3);    
                 courseManager.addCourse(course);
             } else{
                 throw new RuntimeException("Particulars not filled up");

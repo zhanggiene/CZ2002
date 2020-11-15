@@ -23,7 +23,17 @@ public class CourseManager {
 	public CourseManager()
 	{
 		loadData();
-		checkSwap();
+		if (this.courses == null){
+			this.courses = new HashMap<String, Course>();
+		}
+		if (this.courseGroups == null){
+			this.courseGroups = new HashMap<String, CourseGroup>();
+		}
+		if (this.swapIndex == null){
+			this.swapIndex = new HashMap<String, String[]>();
+		} else {
+			checkSwap();
+		}
 
 	}
 	public void addCourse(Course course)
@@ -189,11 +199,7 @@ public class CourseManager {
 		}
 	}
 	
-<<<<<<< Updated upstream
-	//Created by WY
-=======
 /* 
->>>>>>> Stashed changes
 	private void loadSwap()
 	{
 		try {          
@@ -209,16 +215,11 @@ public class CourseManager {
 		} catch (ClassNotFoundException cnfe) {
 			cnfe.printStackTrace();
 		}
-<<<<<<< Updated upstream
-	}
-	//Created by WY
-=======
 	} */
 	/**
 	 * Save the swap index result
 	 * @author Wei Yao
 	 */
->>>>>>> Stashed changes
 	public void saveSwap()
 	{
 		FileOutputStream fopSwapIndexFile;
@@ -260,24 +261,11 @@ public class CourseManager {
 	public void printAllRecord() {
         System.out.println("List of Courses: ");
         System.out.println("\tCourse Code\tSchool\tCourse Name");
-<<<<<<< Updated upstream
-		int i=1;
-=======
         int i=1;
->>>>>>> Stashed changes
         for (Course c : courses.values()) {
             System.out.print(i+".\t");
             c.printCourse();
 			ArrayList<String> cg = c.getCourseGroup();
-<<<<<<< Updated upstream
-			for(int j=0;j<cg.size();j++){
-				System.out.print(cg.get(j));
-			}
-            i++;
-        }
-    }
-    
-=======
 			for(int k = 0; k < cg.size(); k++){
 				System.out.print(" "+ cg.get(k));
 			}
@@ -285,7 +273,6 @@ public class CourseManager {
             i++;
         }
 	}
->>>>>>> Stashed changes
 	/**
 	 * Check if course exist
 	 * @param courseCode
@@ -297,10 +284,7 @@ public class CourseManager {
 	}
 	
 	
-<<<<<<< Updated upstream
-	public static void main(String[] args) {
-=======
-	public boolean isClashing(CourseGroup currentindex, CourseGroup newindex){
+	public boolean isClashing(CourseGroup currentindex, CourseGroup newindex){	
 		boolean clash = false;
 		for(PeriodClass item: currentindex.getLessons()){//load first lesson.
 			for(PeriodClass item2: newindex.getLessons()){//compare starttime of first lesson to other lessons in new index
@@ -317,13 +301,13 @@ public class CourseManager {
 		return clash;
 	}
 
-	/* public static void main(String[] args) {
->>>>>>> Stashed changes
+	/*
+	public static void main(String[] args) {
 		//For testing
 		CourseManager manager=new CourseManager();
 
 		//add courses
-		Course course=new Course("CZ2002","OODP",School.SCSE);
+		Course course=new Course("CZ2002","OODP",School.SCSE, 3);
 		manager.addCourse(course);
 
 		//add coursegroups
@@ -344,7 +328,7 @@ public class CourseManager {
 		manager.save();
 
 		System.out.println(manager.courseGroups);
-		System.out.println(manager.courses); */
+		System.out.println(manager.courses); 
 
 		// CourseManager manager=new CourseManager();
 		// Course a=new Course("CZ2002","oodp",School.SCSE);
@@ -354,16 +338,7 @@ public class CourseManager {
 		// b.changeSize(30);
 		// System.out.println(manager.getCourseByCode("CZ2002"));
 
-<<<<<<< Updated upstream
 	}
+	*/
 }
 
-    
-            
-
-    
-=======
-	//}
-}
-
->>>>>>> Stashed changes
