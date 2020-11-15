@@ -14,8 +14,6 @@ import java.time.DayOfWeek;
 public class CourseManager {
 	private Map<String, Course> courses; 
 	private Map<String, CourseGroup> courseGroups;
-	private Map<DayOfWeek, PeriodClass> periodClass;
-
 	private Map<String, String[]> swapIndex;
 	//course
 
@@ -31,9 +29,6 @@ public class CourseManager {
 		}
 		if (this.courseGroups == null){
 			this.courseGroups = new HashMap<String, CourseGroup>();
-		}
-		if (this.periodClass == null){
-			this.periodClass = new HashMap<DayOfWeek,PeriodClass>();
 		}
 		if (this.swapIndex == null){
 			this.swapIndex = new HashMap<String, String[]>();
@@ -53,32 +48,6 @@ public class CourseManager {
 		courseGroups.put(courseGroup.getIndexNumber(),courseGroup);
 		save();
 	}
-
-	public void addLesson(PeriodClass period){
-		periodClass.put(period.getDayOfWeek(),period);
-		save();
-	}
-
-	public void updateCourse(Course course,int i,String change){
-		if(i==1){
-			course.setCourseCode(change);
-		} else if (i==2){
-			course.setCourseName(change);
-		}
-	}
-
-	public void updateCourseSchool(Course course, School school){
-		course.setSchool(school);
-	}
-
-	public void updateCourseGroupNumber(CourseGroup cg, String change){
-		cg.setIndexNumber(change);
-	}
-
-	public void updateCourseGroupVacancy(CourseGroup cg, int change){
-		cg.setVacancy(change);
-	}
-
 
 	/** retreive course object
      * @param CourseCode

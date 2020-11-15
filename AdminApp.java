@@ -690,7 +690,6 @@ public class AdminApp {
                 PeriodClass period;
                 if (day > 0 && day < 7 && start > 0 && end > 0 && !loc.isEmpty()){
                     period = new PeriodClass(type,day,start,end,loc);
-                    courseManager.addLesson(period);
                     courseNum.addLesson(period);
                 } else{
                     throw new RuntimeException("Particulars not filled up");
@@ -736,7 +735,7 @@ public class AdminApp {
                     System.out.println("Please enter a valid course code.");
                 }
             }
-            courseManager.updateCourse(c,1,newCode);
+            c.setCourseCode(newCode);
         }
         else if(choice2 == 2){
             String newName = "";
@@ -750,7 +749,7 @@ public class AdminApp {
                     System.out.println("Please enter a valid course name.");
                 }
             }
-            courseManager.updateCourse(c,2,newName);
+            c.setCourseName(newName);
         }
         else if(choice2 == 3){
             List schools = (List<School>)java.util.Arrays.asList(School.values());
@@ -775,7 +774,7 @@ public class AdminApp {
                     scan.nextLine();
                 }
             }
-            courseManager.updateCourseSchool(c, school);
+            c.setSchool(school);
             scan.nextLine();
         }
         else if(choice2 == 4){
@@ -807,7 +806,7 @@ public class AdminApp {
                             System.out.println("Please enter a valid index number.");
                         }
                     }
-                    courseManager.updateCourseGroupNumber(cgIndex, newNumber);
+                    cgIndex.setIndexNumber(newNumber);
                     cg.set(cgInt-1,newNumber);
                 }
                 else if(indexInt == 2){
@@ -818,7 +817,7 @@ public class AdminApp {
                     } catch (Exception e){
                         System.out.println("Please enter a valid integer.");
                     }    
-                    courseManager.updateCourseGroupVacancy(cgIndex, newVacancy);
+                    cgIndex.setVacancy(newVacancy);
                 }
             }
 
