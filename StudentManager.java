@@ -1,8 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-import javax.print.DocFlavor.STRING;
-
 /**
      data base for students objects
      * @author zhang zhuyan
