@@ -99,4 +99,8 @@ public class Course implements Serializable{
     public int getCourseAU(){
         return this.courseAU;
     }
+
+    public void setCourseAU(int numAU){
+        this.courseAU = numAU;
+    }
 }

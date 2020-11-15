@@ -709,7 +709,8 @@ public class AdminApp {
         System.out.println("Select which particular you want to update");
         System.out.println("1. Course Code");
         System.out.println("2. Course Name");
-        System.out.println("3. Index Specific");
+        System.out.println("3. Number of AU");
+        System.out.println("4. Index Specific");
         System.out.print("Your choice :");
         int choice2 = scan.nextInt();
 
@@ -742,6 +743,21 @@ public class AdminApp {
             c.setCourseName(newName);
         }
         else if(choice2 == 3){
+            int newAU = 3;
+            while (true){
+                scan.nextLine();
+                System.out.print("Enter the new AU: ");
+                try{
+                    newAU = scan.nextInt();
+                    break;
+                } catch(Exception e){
+                    System.out.println("Please enter valid integer");
+                    scan.nextLine();
+                }
+            }
+            c.setCourseAU(newAU);
+        }
+        else if(choice2 == 4){
                 System.out.println("Select which index you want to change");
                 ArrayList<String> cg = c.getCourseGroup();
                 for(int j=1;j<=cg.size();j++){
