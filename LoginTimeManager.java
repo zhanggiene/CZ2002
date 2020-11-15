@@ -102,7 +102,7 @@ public class LoginTimeManager {
     /** 
      * @return ArrayList
      */
-    private ArrayList getSchoolsWithLoginPeriod(){
+    public ArrayList getSchoolsWithLoginPeriod(){
         return new ArrayList<>(this.TimeMap.keySet());
     }
 

@@ -16,7 +16,9 @@ public class Login {
         PasswordManager mypass=new PasswordManager();
         StudentManager studentManager=new StudentManager();
         LoginTimeManager timeManager=new LoginTimeManager();
+        System.out.println("check1");
         CourseManager courseManager=new CourseManager();
+        
         EmailNotificationManager emailNotificationManager = new EmailNotificationManager();
 
         Console console = System.console();

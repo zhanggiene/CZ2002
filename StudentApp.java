@@ -33,14 +33,9 @@ public class StudentApp {
         System.out.println("| 3. Check/Print Courses Registered         |");
         System.out.println("| 4. Check Vacancies Available              |");
         System.out.println("| 5. Check Index Number of Course           |");
-<<<<<<< Updated upstream
-        System.out.println("| 6. Swop Index Number with Another Student |");
-        System.out.println("| 9. Quit                                   |");
-=======
 		System.out.println("| 6. Swop Index Number with Another Student |");
 		System.out.println("| 7. View Confirmed Time Table              |");
         System.out.println("| 99. Quit                                   |");
->>>>>>> Stashed changes
         System.out.println("=============================================");
         System.out.print("Option: ");
         int option = 0;
@@ -61,11 +56,6 @@ public class StudentApp {
         	case 5: checkIndex();
         		break;
         	case 6: swopIndex();
-<<<<<<< Updated upstream
-        		break;
-        	case 9: System.out.println("Exiting MyStars now....");
-        		break;	
-=======
 				break;
 				//Swop Index Number with Another Student
 			case 7: viewTimetable();
@@ -75,7 +65,6 @@ public class StudentApp {
 			default: System.out.println("Please input numbers between 1 - 6 or 99 only.\nOption: ");
 				showMenu();;
 				break;
->>>>>>> Stashed changes
         }
         
     }
