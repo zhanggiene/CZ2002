@@ -37,25 +37,19 @@ public class CourseManager {
 		save();
 	}
 
-<<<<<<< HEAD
 	/** retreive course object
      * @param CourseCode
      * @return Course
 	 * @author Wei Yao
      */
-=======
->>>>>>> c9c28414fae852a5922cc42d72c53ada5b26e2a5
 	public Course getCourseByCode(String CourseCode)
 	{
 		return courses.get(CourseCode);
 	}
 
-<<<<<<< HEAD
 	/** get course vacancies
 	 * @author Wei Yao
      */
-=======
->>>>>>> c9c28414fae852a5922cc42d72c53ada5b26e2a5
 	public ArrayList<String[]> getVacancies(){
 		ArrayList<String[]> crsvacancies = new ArrayList<String[]>();
 		for(Map.Entry<String, CourseGroup> item: courseGroups.entrySet()) {
@@ -65,12 +59,9 @@ public class CourseManager {
 		return crsvacancies;
 	}
 
-<<<<<<< HEAD
 	/** enrol student into a course	
 	 * @author Wei Yao
      */
-=======
->>>>>>> c9c28414fae852a5922cc42d72c53ada5b26e2a5
 	public void enrol(Student student,CourseGroup index)
 	{
 		courseGroups.get(index.getIndexNumber()).enrol(student.getMatriculationNumber());
@@ -78,14 +69,11 @@ public class CourseManager {
 		save();
 	}
 
-<<<<<<< HEAD
 	/** retreive course group (index) object
      * @param courseCode
      * @return CourseGroup
 	 * @author Wei Yao
      */
-=======
->>>>>>> c9c28414fae852a5922cc42d72c53ada5b26e2a5
 	public CourseGroup getCourseGroup(String index)
 	{
 		return courseGroups.get(index);
@@ -96,17 +84,9 @@ public class CourseManager {
 	{
 		return courseGroups;
 	}
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-	
-=======
-	//Created by WY
->>>>>>> c9c28414fae852a5922cc42d72c53ada5b26e2a5
-	public Map<String, CourseGroup> getCourseGroupWY(String courseCode)
-=======
+
 
 /* 	public Map<String, CourseGroup> getCourseGroupWY(String courseCode)
->>>>>>> Stashed changes
 	{
 		Map<String, CourseGroup> CGByCourseCode = new HashMap<String, CourseGroup>();
 		for(Map.Entry<String, CourseGroup> item: courseGroups.entrySet()) {
@@ -115,13 +95,11 @@ public class CourseManager {
 			}
 		}
 		return CGByCourseCode;
-<<<<<<< Updated upstream
 	}
 	//Created by WY
 	public void dropCourseGroup(String index, String matric) {
 		courseGroups.get(index).removeFromConfirmedStudent(matric);
 	}
-=======
 	} */
 	/**
 	 * Drop student from course group and returns next waitlist student
@@ -130,16 +108,10 @@ public class CourseManager {
 	 */
 	public String dropCourseGroup(String index, String matric) {
 		return courseGroups.get(index).removeFromConfirmedStudent(matric);
->>>>>>> Stashed changes
 	}
 
-<<<<<<< HEAD
-		/**
-	 * Getter for list of Courses Codes.
-=======
 	/**
 	 * Get list of CoursesCodes.
->>>>>>> c9c28414fae852a5922cc42d72c53ada5b26e2a5
 	 * @author Wang Li Rong
 	 */
 
