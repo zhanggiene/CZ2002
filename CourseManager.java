@@ -254,7 +254,7 @@ public class CourseManager {
 
 	public void printAllRecord() {
         System.out.println("List of Courses: ");
-        System.out.println("\tCourse Code\tSchool\tCourse Name\tIndex");
+        System.out.println("\tCourse Code\tSchool\tCourse Name\tAU\tIndex");
 		int i=1;
         for (Course c : courses.values()) {
             System.out.print(i+".\t");
@@ -284,7 +284,7 @@ public class CourseManager {
 		CourseManager manager=new CourseManager();
 
 		//add courses
-		Course course=new Course("CZ2002","OODP",School.SCSE);
+		Course course=new Course("CZ2002","OODP",School.SCSE,3);
 		manager.addCourse(course);
 
 		//add coursegroups

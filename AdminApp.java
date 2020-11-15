@@ -524,7 +524,7 @@ public class AdminApp {
         }
 
         if (myChoice == 1){
-            System.out.println("Section 1/4");
+            System.out.println("Section 1/5");
             System.out.print("Course Code : ");
             scan.nextLine();
             String courseCode = scan.nextLine();
@@ -535,7 +535,7 @@ public class AdminApp {
             }
 
             System.out.println("========================================");
-            System.out.println("Section 2/4");
+            System.out.println("Section 2/5");
             List schools = (List<School>)java.util.Arrays.asList(School.values());
             int schoolInt;
             School school;
@@ -562,7 +562,7 @@ public class AdminApp {
             scan.nextLine();
 
             System.out.println("========================================");
-            System.out.println("Section 3/4");
+            System.out.println("Section 3/5");
             String courseName = "";
             while (true){
                 System.out.print("Course Name: ");
@@ -573,15 +573,30 @@ public class AdminApp {
                     System.out.println("Please enter a valid course code.");
                 }
             }
+            
+            System.out.println("========================================");
+            System.out.println("Section 4/5");
+            int numAU = 3;
+            while (true) {
+                System.out.print("Number of AU: ");
+                try {
+                    numAU = scan.nextInt();
+                    break;
+                } catch (Exception e){
+                    System.out.println("Please input an integer");
+                    scan.nextLine();
+                }
+            }
+            scan.nextLine();
 
             if (school!=null && !courseCode.isEmpty() && !courseName.isEmpty()){
-                Course course = new Course(courseCode,courseName, school);    
+                Course course = new Course(courseCode,courseName, school,numAU);    
                 courseManager.addCourse(course);
             } else{
                 throw new RuntimeException("Particulars not filled up");
             }
 
-            System.out.println("Section 4/4");
+            System.out.println("Section 5/5");
             addIndex(courseCode);
 
             courseManager.printAllRecord();

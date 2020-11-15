@@ -10,7 +10,7 @@ public class Course implements Serializable{
     // private ArrayList<String> indexes;
     private static final long serialVersionUID = 4L;
 
-    public Course(String courseCode, String name, School scse)
+    public Course(String courseCode, String name, School scse, int courseAU)
     {
         this.courseCode=courseCode;
         this.name=name;
@@ -63,7 +63,7 @@ public class Course implements Serializable{
      * Andrew
      */
     public void printCourse(){
-        System.out.print(courseCode+"\t"+school+"\t"+name+"\t");
+        System.out.print(courseCode+"\t"+school+"\t"+name+"\t" + courseAU + "\t");
     }
 
 
