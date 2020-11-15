@@ -140,9 +140,9 @@ public class CourseGroup implements Serializable{
 	}
 <<<<<<< Updated upstream
 
-	public void isClashing(CourseGroup otherindex){
+/* 	public void ing(CourseGroup otherindex){
 
-	}
+	} */
 
 
 
