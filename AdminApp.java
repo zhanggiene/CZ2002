@@ -630,14 +630,50 @@ public class AdminApp {
             System.out.println("Please enter a valid integer.");
         }
 
+        CourseGroup courseNum;
         if (!indexNum.isEmpty() && vacance > 0){
-            CourseGroup courseNum = new CourseGroup(indexNum,vacance, courseCode);
+            courseNum = new CourseGroup(indexNum,vacance, courseCode);
             courseManager.addCourseGroup(courseNum);
             Course c = courseManager.getCourseByCode(courseCode);   
             c.addCourseGroup(indexNum);
         } else{
             throw new RuntimeException("Particulars not filled up");
         }
+
+        boolean adding = true;
+        while(adding){
+            System.out.println("Select which lesson available");
+            System.out.println("1. Lecture");
+            System.out.println("2. Tutorial");
+            System.out.println("3. Lab");
+            System.out.println("Your choice (Enter -1 to stop adding lesson) : ");
+            int lessInt = scan.nextInt();
+            if(lessInt == -1){
+                adding = false;
+            }else{
+                TypeOfLesson type = TypeOfLesson.LECTURE; 
+                if(lessInt == 1){
+                    type = TypeOfLesson.LECTURE;
+                } else if(lessInt == 2){
+                    type = TypeOfLesson.TUTORIAL;
+                }else if(lessInt == 3){
+                    type = TypeOfLesson.LABORATORY;
+                }
+                scan.nextLine();
+                System.out.print("Select what day : ");
+                int day = scan.nextInt();
+                System.out.print("Select start time : ");
+                int start = scan.nextInt();
+                System.out.print("Select end time : ");
+                int end = scan.nextInt();
+                scan.nextLine();
+                System.out.print("Select location : ");
+                String loc = scan.nextLine();
+                PeriodClass period = new PeriodClass(type,day,start,end,loc);
+                courseNum.addLesson(period);
+            }
+        }
+
 
     }
 
@@ -694,7 +730,7 @@ public class AdminApp {
                 System.out.println("Select which index you want to change");
                 ArrayList<String> cg = c.getCourseGroup();
                 for(int j=1;j<=cg.size();j++){
-                    System.out.println(j + cg.get(j-1));
+                    System.out.println(j + " " +  cg.get(j-1));
                 }
                 System.out.print("\n");
                 System.out.println("Your choice (1-" + cg.size() +  "): ");

@@ -19,9 +19,7 @@ public class Course implements Serializable{
         this.courseGroups = new ArrayList<>();
     
     }
-
     
-
     public String getcourseCode()
     {
         return this.courseCode;
