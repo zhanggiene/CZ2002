@@ -1,8 +1,10 @@
 import java.io.*;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.time.DayOfWeek;
 
 /**
      * validate the correct timing of registering for students. 
@@ -12,6 +14,7 @@ import java.util.Map;
 public class CourseManager {
 	private Map<String, Course> courses; 
 	private Map<String, CourseGroup> courseGroups;
+	private Map<DayOfWeek, PeriodClass> periodClass;
 
 	private Map<String, String[]> swapIndex;
 	//course
@@ -29,6 +32,9 @@ public class CourseManager {
 		if (this.courseGroups == null){
 			this.courseGroups = new HashMap<String, CourseGroup>();
 		}
+		if (this.periodClass == null){
+			this.periodClass = new HashMap<DayOfWeek,PeriodClass>();
+		}
 		if (this.swapIndex == null){
 			this.swapIndex = new HashMap<String, String[]>();
 		} else {
@@ -41,11 +47,38 @@ public class CourseManager {
 		courses.put(course.getcourseCode(),course);
 		save();
 	}
+
 	public void addCourseGroup(CourseGroup courseGroup)
 	{
 		courseGroups.put(courseGroup.getIndexNumber(),courseGroup);
 		save();
 	}
+
+	public void addLesson(PeriodClass period){
+		periodClass.put(period.getDayOfWeek(),period);
+		save();
+	}
+
+	public void updateCourse(Course course,int i,String change){
+		if(i==1){
+			course.setCourseCode(change);
+		} else if (i==2){
+			course.setCourseName(change);
+		}
+	}
+
+	public void updateCourseSchool(Course course, School school){
+		course.setSchool(school);
+	}
+
+	public void updateCourseGroupNumber(CourseGroup cg, String change){
+		cg.setIndexNumber(change);
+	}
+
+	public void updateCourseGroupVacancy(CourseGroup cg, int change){
+		cg.setVacancy(change);
+	}
+
 
 	/** retreive course object
      * @param CourseCode
@@ -260,19 +293,19 @@ public class CourseManager {
 
 	public void printAllRecord() {
         System.out.println("List of Courses: ");
-        System.out.println("\tCourse Code\tSchool\tCourse Name");
-        int i=1;
+        System.out.println("\tCourse Code\tSchool\tCourse Name\tAU\tIndex");
+		int i=1;
         for (Course c : courses.values()) {
             System.out.print(i+".\t");
-            c.printCourse();
+			c.printCourse();
 			ArrayList<String> cg = c.getCourseGroup();
-			for(int k = 0; k < cg.size(); k++){
-				System.out.print(" "+ cg.get(k));
+			for(int j=0;j<cg.size();j++){
+				System.out.print(cg.get(j) + "\t");
 			}
-			System.out.println(" ");
+			System.out.print("\n");
             i++;
         }
-	}
+    }
 	/**
 	 * Check if course exist
 	 * @param courseCode

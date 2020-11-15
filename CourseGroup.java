@@ -137,4 +137,14 @@ public class CourseGroup implements Serializable{
 	public ArrayList<PeriodClass> getLessons(){
 		return lessons;
 	}
+
+	public void printInfo(){
+		System.out.println("Index Number : " + indexNumber);
+		System.out.println("Vacancy = " + vacancy);
+		System.out.println("Type\tDay\tStart Time\tEnd Time\tLocation");
+		for(int i = 0;i<lessons.size();i++){
+			PeriodClass less = lessons.get(i);
+			less.printRecord();
+		}
+	}
 }
