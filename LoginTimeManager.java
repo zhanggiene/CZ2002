@@ -47,7 +47,7 @@ enum School {
 
 public class LoginTimeManager {
 
-    private EnumMap<School, ArrayList<Date>> TimeMap=new EnumMap<School,ArrayList<Date>>(School.class);
+    private EnumMap<School, ArrayList<Date>> TimeMap;
     private SimpleDateFormat ft;
     private String FileName="timeData.bin";
 
@@ -106,18 +106,32 @@ public class LoginTimeManager {
     }
 
     /**
-     * load data from local data, must use this method after initialization
+     * load data from local data, must use this method after initialization 
+     * it is private as it will load automatically upon initialization
      */
-    public void loadLoginPeriods()
+    private void loadLoginPeriods()
     {
         try {
-            FileInputStream fis=new FileInputStream("./"+this.FileName);
-            ObjectInputStream ois=new ObjectInputStream(fis);
-            //WriteObject wo=null;
-            //WriteObject[] woj=new WriteObject[5];
-    
-            this.TimeMap=(EnumMap<School, ArrayList<Date>>) ois.readObject();
-            ois.close();
+            File yourFile = new File(this.FileName);
+            if(!yourFile.exists()){
+
+                yourFile.createNewFile();
+                this.TimeMap=new EnumMap<School,ArrayList<Date>>(School.class);
+
+              }
+
+              else
+              {
+                FileInputStream fis=new FileInputStream("./"+this.FileName);
+                ObjectInputStream ois=new ObjectInputStream(fis);
+                //WriteObject wo=null;
+                //WriteObject[] woj=new WriteObject[5];
+        
+                this.TimeMap=(EnumMap<School, ArrayList<Date>>) ois.readObject();
+                ois.close();
+              }
+
+            
     
         }
         catch (Exception e) {
@@ -159,10 +173,7 @@ public class LoginTimeManager {
 
         LoginTimeManager timemanager=new LoginTimeManager();
         //timemanager.add(School.SCSE,"2020-10-19 16:00","2020-10-19 17:00");
-        //timemanager.save();
-        timemanager.loadLoginPeriods();
         timemanager.printAllAccessPeriod();
-
         
     }
 

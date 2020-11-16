@@ -24,6 +24,7 @@ public class PasswordManager {
         try{
 
             this.file=new File(this.fileName);
+            this.file.createNewFile();
             loadFile();
             this.fw=new FileWriter(this.file, true);
             this.pw=new PrintWriter(this.fw);
@@ -151,7 +152,7 @@ public class PasswordManager {
     {
         PasswordManager mypass=new PasswordManager();
         //mypass.add("U1920187L","1920187scse");
-        mypass.add("U192018L","192017scse");
+        mypass.add("U1920187L","192017scse");
         System.out.println(mypass.isCorrectStudent("U1920187L","1920187scse"));
 
     }
