@@ -187,9 +187,12 @@ public class LoginTimeManager {
     {
 
         System.out.println("Access time for all the school are:");
+        if(this.TimeMap!=null)
+        {
         for (School name: TimeMap.keySet()){
             System.out.println(name+": from      "+TimeMap.get(name).get(0)+"  to       "+TimeMap.get(name).get(1));  
         } 
+    }
 
     }
 
@@ -200,7 +203,7 @@ public class LoginTimeManager {
     public static void main(String[] args) {
 
         LoginTimeManager timemanager=new LoginTimeManager();
-        SimpleDateFormat ft =new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
+        /*SimpleDateFormat ft =new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
         Date timeTemp;
         try {
             timeTemp = ft.parse("2020-11-19 17:00");
@@ -211,6 +214,7 @@ public class LoginTimeManager {
             
         }
         //timemanager.add(School.SCSE,"2020-10-19 16:00","2020-10-19 17:00");
+        */
         
 
         timemanager.printAllAccessPeriod();
