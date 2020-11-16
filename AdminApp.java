@@ -917,6 +917,7 @@ public class AdminApp {
             ArrayList<String> studentMatricNumbers = courseGroup.getStudents();
             int i=1;
             System.out.println("Students in "+courseGroupIndex+" : ");
+            System.out.println("\tName     \tGender\tNationality\tSchool");
             for (String matricNumber: studentMatricNumbers){
                 System.out.print(i+". ");
                 studentManager.getStudent(matricNumber).printStudent();
@@ -963,6 +964,7 @@ public class AdminApp {
         if (progress1){
             String courseCode = courseCodes[courseInt-1];
             System.out.println("Students in "+courseCode+" : ");
+            System.out.println("\tName     \tGender\tNationality\tSchool");
             ArrayList<String> courseGroups =courseManager.getCourseGroupsOfCourse(courseCode);
             for (String courseGroupIndex: courseGroups){
                 CourseGroup courseGroup = courseManager.getCourseGroup(courseGroupIndex);
