@@ -237,7 +237,7 @@ public class StudentApp {
 			for (PeriodClass lesson: lessons){
 				System.out.println(lesson.getDayOfWeek()+"\t"+
 								   Integer.toString(lesson.getStartTime())+"-"+Integer.toString(lesson.getEndTime())+"\t"+
-								   lesson.getLocation());
+								   lesson.typeOfLesson + "\t"+ lesson.getLocation());
 			}
 			System.out.println("---------------------------------------------------------");
 			System.out.print("Press any key to continue to the next course...");
@@ -245,7 +245,6 @@ public class StudentApp {
 		}
 		System.out.println("End of Time Table");
 		System.out.println("Press any key to return to main menu");
-		scan.nextLine();
 		scan.nextLine();
 		showMenu();
 	}
