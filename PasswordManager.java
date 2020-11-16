@@ -3,81 +3,89 @@ import java.io.*;
 
 // since there is no setting of admin password,  it is hard coded in to the program, txt file only stores student password and ID
 
-
 /**
-     * it is a password database.
-     * add and validate the correctness of the password.
-     * @author zhang zhuyan
-     */
-
+ * it is a password database. add and validate the correctness of the password.
+ * 
+ * @author zhang zhuyan
+ */
 
 public class PasswordManager {
-    
-    private Hashtable<String, String> my_dict = new Hashtable<String, String>();
-    private String fileName="password.txt";
+
+    public Hashtable<String, String> my_dict = new Hashtable<String, String>();
+    private String fileName = "password.txt";
     private File file;
     private FileWriter fw;
     private PrintWriter pw;
 
-    public PasswordManager()
-    {
-        try{
+    public PasswordManager() {
+        try {
 
-            this.file=new File(this.fileName);
+            this.file = new File(this.fileName);
             this.file.createNewFile();
             loadFile();
-            this.fw=new FileWriter(this.file, true);
-            this.pw=new PrintWriter(this.fw);
+            this.fw = new FileWriter(this.file, true);
+            this.pw = new PrintWriter(this.fw);
 
-
-        }
-        catch(IOException e)
-        {
+        } catch (IOException e) {
             System.out.println("An error occured.");
             e.printStackTrace();
         }
 
-        
-
     }
 
-    private void loadFile()
-    {
-        try{
-            Scanner rd=new Scanner(this.file);
-            while(rd.hasNextLine())
-            {
-                String data=rd.nextLine();
-                String[] splittedData=data.split(" ",2);
-                my_dict.put(splittedData[0],splittedData[1]);
+    private void loadFile() {
+        try {
+            Scanner rd = new Scanner(this.file);
+            while (rd.hasNextLine()) {
+                String data = rd.nextLine();
+                String[] splittedData = data.split(" ", 2);
+                my_dict.put(splittedData[0], splittedData[1]);
 
             }
-        rd.close();
-        
-    }
-        catch(FileNotFoundException e)
-        {
+            rd.close();
+
+        } catch (FileNotFoundException e) {
             System.out.println("An error occured.");
             e.printStackTrace();
         }
 
     }
-    
-    
-    /** assume the studentID does not exist in the database to avoid duplicates
-     * @param studentId   unique student id
-     * @param passWord   rawpassword
+
+    /**
+     * assume the studentID does not exist in the database to avoid duplicates
+     * 
+     * @param studentId unique student id
+     * @param passWord  rawpassword
      */
-    public void add(String studentId,String passWord)
-    
+    public void add(String studentId, String passWord)
+
     {
+        // this.pw=new PrintWriter(this.fw);
         assert studentExist(studentId);
         my_dict.put(studentId, HashPassword.hashPassword(passWord));
-        this.pw.println(studentId+" "+HashPassword.hashPassword(passWord));
-        System.out.println("Student added successfuly");
-        System.out.println(studentId+" "+HashPassword.hashPassword(passWord));
-        this.pw.close();
+        // this.pw.println(studentId+" "+HashPassword.hashPassword(passWord));
+        //System.out.println("Student added successfuly");
+        //System.out.println(studentId + " " + HashPassword.hashPassword(passWord));
+        save();
+    }
 
+    private void save() {
+        this.file = new File(this.fileName);
+        try {
+            this.fw = new FileWriter(this.file, false);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        this.pw=new PrintWriter(this.fw);
+        for (Map.Entry<String, String> entry : my_dict.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            this.pw.println(key+" "+value);
+            
+            // ...
+        }
+        this.pw.close();
     }
 
     
@@ -152,8 +160,11 @@ public class PasswordManager {
     {
         PasswordManager mypass=new PasswordManager();
         //mypass.add("U1920187L","1920187scse");
-        //mypass.add("U1920187L","192017scse");
-        System.out.println(mypass.isCorrectStudent("U1234567B","student"));
+        //mypass.add("U1234567L","1920187scse");
+        //System.out.println(mypass.isCorrectStudent("U1234567L","1920187scse"));
+        //System.out.println(mypass.my_dict);
+        mypass.add("U1234560L","1920187scse");
+        System.out.println(mypass.my_dict);
 
     }
 
