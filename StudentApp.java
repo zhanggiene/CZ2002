@@ -38,12 +38,11 @@ public class StudentApp {
         System.out.println("| 99. Quit                                   |");
         System.out.println("=============================================");
         System.out.print("Option: ");
-        int option = 0;
+		int option = 0;
         while(!scan.hasNextInt()) {
 			System.out.println("Please input numbers between 1 - 6 or 99 only.\nOption: ");
-			option = scan.nextInt();
         }
-        
+        option = scan.nextInt();
         switch(option) {
         	case 1: addMenu();
         		break;
