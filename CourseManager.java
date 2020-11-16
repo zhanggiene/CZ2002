@@ -1,8 +1,10 @@
 import java.io.*;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.time.DayOfWeek;
 
 /**
      * validate the correct timing of registering for students. 
@@ -12,7 +14,6 @@ import java.util.Map;
 public class CourseManager {
 	private Map<String, Course> courses; 
 	private Map<String, CourseGroup> courseGroups;
-
 	private Map<String, String[]> swapIndex;
 	//course
 
@@ -41,6 +42,7 @@ public class CourseManager {
 		courses.put(course.getcourseCode(),course);
 		save();
 	}
+
 	public void addCourseGroup(CourseGroup courseGroup)
 	{
 		courseGroups.put(courseGroup.getIndexNumber(),courseGroup);
@@ -260,19 +262,19 @@ public class CourseManager {
 
 	public void printAllRecord() {
         System.out.println("List of Courses: ");
-        System.out.println("\tCourse Code\tSchool\tCourse Name");
-        int i=1;
+        System.out.println("\tCourse Code\tSchool\tCourse Name\tAU\tIndex");
+		int i=1;
         for (Course c : courses.values()) {
             System.out.print(i+".\t");
-            c.printCourse();
+			c.printCourse();
 			ArrayList<String> cg = c.getCourseGroup();
-			for(int k = 0; k < cg.size(); k++){
-				System.out.print(" "+ cg.get(k));
+			for(int j=0;j<cg.size();j++){
+				System.out.print(cg.get(j) + "\t");
 			}
-			System.out.println(" ");
+			System.out.print("\n");
             i++;
         }
-	}
+    }
 	/**
 	 * Check if course exist
 	 * @param courseCode

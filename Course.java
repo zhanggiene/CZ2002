@@ -15,6 +15,7 @@ public class Course implements Serializable{
         this.courseCode=courseCode;
         this.name=name;
         this.school=scse;
+        this.courseAU = courseAU;
         this.courseGroups = new ArrayList<>();
     
     }
@@ -63,7 +64,7 @@ public class Course implements Serializable{
      * Andrew
      */
     public void printCourse(){
-        System.out.println(courseCode+"\t"+school+"\t"+name);
+        System.out.print(courseCode+"\t"+school+"\t"+name+"\t" + courseAU + "\t");
     }
     
     public CourseGroup getCourseGroup(int i) {
@@ -102,5 +103,8 @@ public class Course implements Serializable{
         return this.courseAU;
     }
 
+    public void setSchool(School school){
+        this.school = school;
+    }
     
 }

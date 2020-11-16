@@ -17,10 +17,11 @@ public class PeriodClass {
     String location;
     TypeOfLesson typeOfLesson;
 
-    public PeriodClass(int weekday,int start,int end,String location)
+    public PeriodClass(TypeOfLesson type, int weekday,int start,int end,String location)
     {
         assert start<end;
         assert start%10==0;
+        this.typeOfLesson = type;
         this.dayOfWeek=DayOfWeek.of(weekday);  
         startTime=start;
         endTime=end;
@@ -112,8 +113,10 @@ public class PeriodClass {
     public String getLocation() {
         return location;
     }
-    
 
+    public void printRecord(){
+        System.out.println(typeOfLesson + "\t" + dayOfWeek + "\t" + startTime + "\t" + endTime + "\t" + location);
+    }
     
     /** 
      * @param args[]

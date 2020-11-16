@@ -501,7 +501,8 @@ public class AdminApp {
      */
 
     private void addCourse(){
-        courseManager.printAllRecord();
+        System.out.println("ADDING NEW COURSE/INDEX");
+        System.out.println("==========================");
         Scanner scan = new Scanner(System.in);
         
         int myChoice;
@@ -524,18 +525,17 @@ public class AdminApp {
         }
 
         if (myChoice == 1){
-            System.out.println("Section 1/4");
-            System.out.print("Course Code : ");
+            System.out.println("Section 1/5");
+            System.out.print("Enter Course Code : ");
             scan.nextLine();
             String courseCode = scan.nextLine();
-            // check whether course code is already exists
             if (courseManager.courseExist(courseCode)){
                 System.out.println("Course already exists!");
                 return;
             }
 
             System.out.println("========================================");
-            System.out.println("Section 2/4");
+            System.out.println("Section 2/5");
             List schools = (List<School>)java.util.Arrays.asList(School.values());
             int schoolInt;
             School school;
@@ -545,11 +545,11 @@ public class AdminApp {
                     System.out.println(i+". "+ schools.get(i-1).toString());
                 }
 
-                System.out.print("Choice for School: ");
+                System.out.print("Enter Choice for School: ");
                 try {
-                    schoolInt = scan.nextInt() - 1;
+                    schoolInt = scan.nextInt();
                     if (schoolInt <= schools.size() && schoolInt >=1) {
-                        school = (School)schools.get(schoolInt);
+                        school = (School)schools.get(schoolInt-1);
                         break;
                     } else {
                         System.out.println("Please input an integer between 1-"+ schools.size()+1);
@@ -562,27 +562,41 @@ public class AdminApp {
             scan.nextLine();
 
             System.out.println("========================================");
-            System.out.println("Section 3/4");
+            System.out.println("Section 3/5");
             String courseName = "";
             while (true){
-                System.out.print("Course Name: ");
+                System.out.print("Enter Course Name: ");
                 courseName = scan.nextLine();
                 if (!courseName.isEmpty()){
                     break;
                 } else {
-                    System.out.println("Please enter a valid course code.");
+                    System.out.println("Please enter a valid course name.");
                 }
             }
-            //TODO: REMEMBER TO ADD IN SELECTION FOR AU OF COURSE
+            
+            System.out.println("========================================");
+            System.out.println("Section 4/5");
+            int numAU = 3;
+            while (true) {
+                System.out.print("Enter Number of AU: ");
+                try {
+                    numAU = scan.nextInt();
+                    break;
+                } catch (Exception e){
+                    System.out.println("Please input an integer");
+                    scan.nextLine();
+                }
+            }
+            scan.nextLine();
 
             if (school!=null && !courseCode.isEmpty() && !courseName.isEmpty()){
-                Course course = new Course(courseCode,courseName, school,3);    
+                Course course = new Course(courseCode,courseName, school,numAU);    
                 courseManager.addCourse(course);
             } else{
                 throw new RuntimeException("Particulars not filled up");
             }
 
-            System.out.println("Section 4/4");
+            System.out.println("Section 5/5");
             addIndex(courseCode);
 
             courseManager.printAllRecord();
@@ -598,6 +612,7 @@ public class AdminApp {
             } else{
                 addIndex(courseCode);
             }
+            courseManager.printAllRecord();
         }
 
     }
@@ -609,7 +624,7 @@ public class AdminApp {
 
     public void addIndex(String courseCode){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Adding new index");
+        System.out.println("ADDING NEW INDEX");
         System.out.println("=========================");
 
         String indexNum = "";
@@ -631,12 +646,58 @@ public class AdminApp {
             System.out.println("Please enter a valid integer.");
         }
 
+        CourseGroup courseNum;
         if (!indexNum.isEmpty() && vacance > 0){
-            CourseGroup courseNum = new CourseGroup(indexNum,vacance, courseCode);   
+            courseNum = new CourseGroup(indexNum,vacance, courseCode);
             courseManager.addCourseGroup(courseNum);
+            Course c = courseManager.getCourseByCode(courseCode);   
+            c.addCourseGroup(indexNum);
         } else{
             throw new RuntimeException("Particulars not filled up");
         }
+
+        boolean adding = true;
+        while(adding){
+            System.out.println("Select which lesson available");
+            System.out.println("1. Lecture");
+            System.out.println("2. Tutorial");
+            System.out.println("3. Lab");
+            System.out.println("Your choice (Enter -1 to stop adding lesson) : ");
+            int lessInt = scan.nextInt();
+            if(lessInt == -1){
+                adding = false;
+            }else{
+                TypeOfLesson type = TypeOfLesson.LECTURE; 
+                if(lessInt == 1){
+                    type = TypeOfLesson.LECTURE;
+                } else if(lessInt == 2){
+                    type = TypeOfLesson.TUTORIAL;
+                }else if(lessInt == 3){
+                    type = TypeOfLesson.LABORATORY;
+                }
+                scan.nextLine();
+                System.out.print("Select what day : ");
+                int day = scan.nextInt();
+                scan.nextLine();
+                System.out.print("Select start time : ");
+                int start = scan.nextInt();
+                scan.nextLine();
+                System.out.print("Select end time : ");
+                int end = scan.nextInt();
+                scan.nextLine();
+                System.out.print("Select location : ");
+                String loc = scan.nextLine();
+                PeriodClass period;
+                if (day > 0 && day < 7 && start > 0 && end > 0 && !loc.isEmpty()){
+                    period = new PeriodClass(type,day,start,end,loc);
+                    courseNum.addLesson(period);
+                } else{
+                    throw new RuntimeException("Particulars not filled up");
+                }
+                
+            }
+        }
+
 
     }
 
@@ -646,8 +707,8 @@ public class AdminApp {
      */
 
     public void updateCourse(){
-        String[] courseCodes = courseManager.getCourseCodeList();
         Scanner scan = new Scanner(System.in);
+        String[] courseCodes = courseManager.getCourseCodeList();
         courseManager.printAllRecord();
         System.out.println("Enter which course you want to update: ");
         int choice = scan.nextInt();
@@ -657,46 +718,110 @@ public class AdminApp {
         System.out.println("Select which particular you want to update");
         System.out.println("1. Course Code");
         System.out.println("2. Course Name");
-        System.out.println("3. Index Specific");
-        System.out.print("Your choice : ");
+        System.out.println("3. School");
+        System.out.println("4. Index Specific");
+        System.out.print("Your choice :");
         int choice2 = scan.nextInt();
 
-        switch(choice2){
-            case 1 :
-                System.out.println("Select new course code: ");
-                String newCode = scan.nextLine();
-                c.setCourseCode(newCode);
-            case 2 :
-                System.out.println("Enter new course name: ");
-                String newName = scan.nextLine();
-                c.setCourseName(newName);
-            case 3 :
+        if(choice2 == 1){
+            String newCode = "";
+            while (true){
+                scan.nextLine();
+                System.out.print("Enter the new course code: ");
+                newCode = scan.nextLine();
+                if (!newCode.isEmpty()){
+                    break;
+                } else {
+                    System.out.println("Please enter a valid course code.");
+                }
+            }
+            c.setCourseCode(newCode);
+        }
+        else if(choice2 == 2){
+            String newName = "";
+            while (true){
+                scan.nextLine();
+                System.out.print("Enter the new course name: ");
+                newName = scan.nextLine();
+                if (!newName.isEmpty()){
+                    break;
+                } else {
+                    System.out.println("Please enter a valid course name.");
+                }
+            }
+            c.setCourseName(newName);
+        }
+        else if(choice2 == 3){
+            List schools = (List<School>)java.util.Arrays.asList(School.values());
+            int schoolInt;
+            School school;
+            while (true) {
+                System.out.println("Course School: ");
+                for (int i=1;i<=schools.size();i++){
+                    System.out.println(i+". "+ schools.get(i-1).toString());
+                }
+                System.out.print("Enter Choice for new School: ");
+                try {
+                    schoolInt = scan.nextInt();
+                    if (schoolInt <= schools.size() && schoolInt >=1) {
+                        school = (School)schools.get(schoolInt-1);
+                        break;
+                    } else {
+                        System.out.println("Please input an integer between 1-"+ schools.size()+1);
+                    }
+                } catch (Exception e){
+                    System.out.println("Please input an integer");
+                    scan.nextLine();
+                }
+            }
+            c.setSchool(school);
+            scan.nextLine();
+        }
+        else if(choice2 == 4){
                 System.out.println("Select which index you want to change");
                 ArrayList<String> cg = c.getCourseGroup();
-                for(int j=0;j<cg.size();j++){
-                    System.out.print(cg.get(j));
+                for(int j=1;j<=cg.size();j++){
+                    System.out.println(j + ". " +  cg.get(j-1));
                 }
+                System.out.print("\n");
                 System.out.println("Your choice (1-" + cg.size() +  "): ");
                 int cgInt = scan.nextInt();
-                String cgString = cg.get(cgInt);
+                String cgString = cg.get(cgInt-1);
                 CourseGroup cgIndex = courseManager.getCourseGroup(cgString);
+                cgIndex.printInfo();
                 System.out.println("What do you want to change");
                 System.out.println("1. Index Number");
                 System.out.println("2. Vacancy");
                 System.out.print("Your choice: ");
                 int indexInt = scan.nextInt();
-                switch(indexInt){
-                    case 1 :
-                        System.out.println("Enter new index number: ");
-                        String newNumber = scan.nextLine();
-                        cgIndex.setIndexNumber(newNumber);
-                    case 2 :
+                if(indexInt == 1){
+                    String newNumber = "";
+                    while (true){
+                        scan.nextLine();
+                        System.out.print("Enter the new index number: ");
+                        newNumber = scan.nextLine();
+                        if (!newNumber.isEmpty()){
+                            break;
+                        } else {
+                            System.out.println("Please enter a valid index number.");
+                        }
+                    }
+                    cgIndex.setIndexNumber(newNumber);
+                    cg.set(cgInt-1,newNumber);
+                }
+                else if(indexInt == 2){
+                    int newVacancy = 10;
+                    try {
                         System.out.println("Enter new vacancy: ");
-                        int newVacancy = scan.nextInt();
-                        cgIndex.setVacancy(newVacancy);
+                        newVacancy = scan.nextInt();
+                    } catch (Exception e){
+                        System.out.println("Please enter a valid integer.");
+                    }    
+                    cgIndex.setVacancy(newVacancy);
+                }
             }
+
         }
-    }
 
     /**
      * UI for checking vacancies.
@@ -713,11 +838,11 @@ public class AdminApp {
         Course c = courseManager.getCourseByCode(courseCode);
         ArrayList<String> cg = c.getCourseGroup();
         for(int j=0;j<cg.size();j++){
-            System.out.print(cg.get(j));
+            System.out.println((j+1)+ cg.get(j));
         }
         System.out.println("Select which index you want to check the vacancy: ");
         int choice2 = scan.nextInt();
-        String courseGroup = cg.get(choice2);
+        String courseGroup = cg.get(choice2-1);
         CourseGroup courseNum = courseManager.getCourseGroup(courseGroup);
         System.out.println("Vacancies available : "+ courseNum.getVacancy());
     }
