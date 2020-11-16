@@ -267,7 +267,7 @@ public class CourseManager {
         for (Course c : courses.values()) {
             System.out.print(i+".\t");
 			c.printCourse();
-			ArrayList<String> cg = c.getCourseGroup();
+			ArrayList<String> cg = c.getCourseGroups();
 			for(int j=0;j<cg.size();j++){
 				System.out.print(cg.get(j) + "\t");
 			}

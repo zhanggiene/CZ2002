@@ -38,12 +38,11 @@ public class StudentApp {
         System.out.println("| 99. Quit                                   |");
         System.out.println("=============================================");
         System.out.print("Option: ");
-        int option = 0;
+		int option = 0;
         while(!scan.hasNextInt()) {
 			System.out.println("Please input numbers between 1 - 6 or 99 only.\nOption: ");
-			option = scan.nextInt();
         }
-        
+        option = scan.nextInt();
         switch(option) {
         	case 1: addMenu();
         		break;
@@ -91,7 +90,7 @@ public class StudentApp {
     	System.out.println("|Please select the course you wish to add:     |");
     	System.out.println("================================================");
     	System.out.print("Option: ");
-        while(scan.hasNextInt()) {
+        while(!scan.hasNextInt()) {
         	System.out.println("Please input numbers between 1 - "+ availableCourse.size()+" or 99 only.\nOption: ");
         }
         int option = scan.nextInt();
@@ -112,7 +111,7 @@ public class StudentApp {
 	        System.out.println("|Please select the course group you wish to add:     |");
 	    	System.out.println("================================================");
 	    	System.out.print("Option: ");
-	        while(scan.hasNextInt()) {
+	        while(!scan.hasNextInt()) {
 	        	System.out.println("Please input numbers between 1 - "+ availableCG.size()+" or 99 only.\nOption: ");
 	        }
 	        option = scan.nextInt();
@@ -148,7 +147,7 @@ public class StudentApp {
         }    
         System.out.print("|99. Return to previous menu. ");
         System.out.print("Option: ");
-        while(scan.hasNextInt()) {
+        while(!scan.hasNextInt()) {
         	System.out.println("Please input numbers between 1 - "+ studentregcourse.size()+" or 99 only.\nOption: ");
         }
         int option = scan.nextInt();

@@ -676,19 +676,19 @@ public class AdminApp {
                     type = TypeOfLesson.LABORATORY;
                 }
                 scan.nextLine();
-                System.out.print("Select what day : ");
+                System.out.print("Select what day (Monday 1,... Friday 5): ");
                 int day = scan.nextInt();
                 scan.nextLine();
-                System.out.print("Select start time : ");
+                System.out.print("Select start time (HHMM 24 HOUR FORMAT): ");
                 int start = scan.nextInt();
                 scan.nextLine();
-                System.out.print("Select end time : ");
+                System.out.print("Select end time (HHMM 24 HOUR FORMAT): ");
                 int end = scan.nextInt();
                 scan.nextLine();
                 System.out.print("Select location : ");
                 String loc = scan.nextLine();
                 PeriodClass period;
-                if (day > 0 && day < 7 && start > 0 && end > 0 && !loc.isEmpty()){
+                if (day > 0 && day <= 5 && start > 0 && start < 2400 && end > 0 && end < 2400 && !loc.isEmpty()){
                     period = new PeriodClass(type,day,start,end,loc);
                     courseNum.addLesson(period);
                 } else{
@@ -709,117 +709,135 @@ public class AdminApp {
     public void updateCourse(){
         Scanner scan = new Scanner(System.in);
         String[] courseCodes = courseManager.getCourseCodeList();
-        courseManager.printAllRecord();
-        System.out.println("Enter which course you want to update: ");
-        int choice = scan.nextInt();
-        String courseCode = courseCodes[choice -1];
-        Course c = courseManager.getCourseByCode(courseCode);
-        
-        System.out.println("Select which particular you want to update");
-        System.out.println("1. Course Code");
-        System.out.println("2. Course Name");
-        System.out.println("3. School");
-        System.out.println("4. Index Specific");
-        System.out.print("Your choice :");
-        int choice2 = scan.nextInt();
+        int choice;
+        do{
+            courseManager.printAllRecord();
+            System.out.println("Enter which course you want to update (Enter -1 to quit): ");
+            choice = scan.nextInt();
+            Course c;
+            if (choice != -1){
+                String courseCode = courseCodes[choice -1];
+                c = courseManager.getCourseByCode(courseCode);
+            }
+            else{
+                break;
+            }
+            
+            System.out.println("Select which particular you want to update");
+            System.out.println("1. Course Code");
+            System.out.println("2. Course Name");
+            System.out.println("3. School");
+            System.out.println("4. Index Specific");
+            System.out.print("Your choice :");
+            int choice2 = scan.nextInt();
 
-        if(choice2 == 1){
-            String newCode = "";
-            while (true){
-                scan.nextLine();
-                System.out.print("Enter the new course code: ");
-                newCode = scan.nextLine();
-                if (!newCode.isEmpty()){
-                    break;
-                } else {
-                    System.out.println("Please enter a valid course code.");
-                }
-            }
-            c.setCourseCode(newCode);
-        }
-        else if(choice2 == 2){
-            String newName = "";
-            while (true){
-                scan.nextLine();
-                System.out.print("Enter the new course name: ");
-                newName = scan.nextLine();
-                if (!newName.isEmpty()){
-                    break;
-                } else {
-                    System.out.println("Please enter a valid course name.");
-                }
-            }
-            c.setCourseName(newName);
-        }
-        else if(choice2 == 3){
-            List schools = (List<School>)java.util.Arrays.asList(School.values());
-            int schoolInt;
-            School school;
-            while (true) {
-                System.out.println("Course School: ");
-                for (int i=1;i<=schools.size();i++){
-                    System.out.println(i+". "+ schools.get(i-1).toString());
-                }
-                System.out.print("Enter Choice for new School: ");
-                try {
-                    schoolInt = scan.nextInt();
-                    if (schoolInt <= schools.size() && schoolInt >=1) {
-                        school = (School)schools.get(schoolInt-1);
+            if(choice2 == 1){
+                String newCode = "";
+                while (true){
+                    scan.nextLine();
+                    System.out.print("Enter the new course code: ");
+                    newCode = scan.nextLine();
+                    if (!newCode.isEmpty()){
                         break;
                     } else {
-                        System.out.println("Please input an integer between 1-"+ schools.size()+1);
+                        System.out.println("Please enter a valid course code.");
                     }
-                } catch (Exception e){
-                    System.out.println("Please input an integer");
-                    scan.nextLine();
                 }
+                c.setCourseCode(newCode);
             }
-            c.setSchool(school);
-            scan.nextLine();
-        }
-        else if(choice2 == 4){
-                System.out.println("Select which index you want to change");
-                ArrayList<String> cg = c.getCourseGroup();
-                for(int j=1;j<=cg.size();j++){
-                    System.out.println(j + ". " +  cg.get(j-1));
+            else if(choice2 == 2){
+                String newName = "";
+                while (true){
+                    scan.nextLine();
+                    System.out.print("Enter the new course name: ");
+                    newName = scan.nextLine();
+                    if (!newName.isEmpty()){
+                        break;
+                    } else {
+                        System.out.println("Please enter a valid course name.");
+                    }
                 }
-                System.out.print("\n");
-                System.out.println("Your choice (1-" + cg.size() +  "): ");
-                int cgInt = scan.nextInt();
-                String cgString = cg.get(cgInt-1);
-                CourseGroup cgIndex = courseManager.getCourseGroup(cgString);
-                cgIndex.printInfo();
-                System.out.println("What do you want to change");
-                System.out.println("1. Index Number");
-                System.out.println("2. Vacancy");
-                System.out.print("Your choice: ");
-                int indexInt = scan.nextInt();
-                if(indexInt == 1){
-                    String newNumber = "";
-                    while (true){
-                        scan.nextLine();
-                        System.out.print("Enter the new index number: ");
-                        newNumber = scan.nextLine();
-                        if (!newNumber.isEmpty()){
+                c.setCourseName(newName);
+            }
+            else if(choice2 == 3){
+                List schools = (List<School>)java.util.Arrays.asList(School.values());
+                int schoolInt;
+                School school;
+                while (true) {
+                    System.out.println("Course School: ");
+                    for (int i=1;i<=schools.size();i++){
+                        System.out.println(i+". "+ schools.get(i-1).toString());
+                    }
+                    System.out.print("Enter Choice for new School: ");
+                    try {
+                        schoolInt = scan.nextInt();
+                        if (schoolInt <= schools.size() && schoolInt >=1) {
+                            school = (School)schools.get(schoolInt-1);
                             break;
                         } else {
-                            System.out.println("Please enter a valid index number.");
+                            System.out.println("Please input an integer between 1-"+ schools.size()+1);
                         }
-                    }
-                    cgIndex.setIndexNumber(newNumber);
-                    cg.set(cgInt-1,newNumber);
-                }
-                else if(indexInt == 2){
-                    int newVacancy = 10;
-                    try {
-                        System.out.println("Enter new vacancy: ");
-                        newVacancy = scan.nextInt();
                     } catch (Exception e){
-                        System.out.println("Please enter a valid integer.");
-                    }    
-                    cgIndex.setVacancy(newVacancy);
+                        System.out.println("Please input an integer");
+                        scan.nextLine();
+                    }
                 }
+                c.setSchool(school);
+                scan.nextLine();
             }
+            else if(choice2 == 4){
+                    System.out.println("Select which index you want to change");
+                    ArrayList<String> cg = c.getCourseGroups();
+                    for(int j=1;j<=cg.size();j++){
+                        System.out.println(j + ". " +  cg.get(j-1));
+                    }
+                    System.out.print("\n");
+                    System.out.println("Your choice (1-" + cg.size() +  "): ");
+                    int cgInt = scan.nextInt();
+                    String cgString = cg.get(cgInt-1);
+                    CourseGroup cgIndex = courseManager.getCourseGroup(cgString);
+                    cgIndex.printInfo();
+                    int indexInt;
+                    do{
+                    System.out.println("What do you want to change");
+                    System.out.println("1. Index Number");
+                    System.out.println("2. Size");
+                    System.out.print("Your choice: ");
+                    indexInt = scan.nextInt();
+                    if(indexInt == 1){
+                        String newNumber = "";
+                        while (true){
+                            scan.nextLine();
+                            System.out.print("Enter the new index number: ");
+                            newNumber = scan.nextLine();
+                            if (!newNumber.isEmpty()){
+                                break;
+                            } else {
+                                System.out.println("Please enter a valid index number.");
+                            }
+                        }
+                        cgIndex.setIndexNumber(newNumber);
+                        cg.set(cgInt-1,newNumber);
+                    }
+                    else if(indexInt == 2){
+                        ArrayList<String> cgStud = cgIndex.getStudents();
+                        int newVacancy = 10;
+                        try {
+                            System.out.println("Enter new size: ");
+                            newVacancy = scan.nextInt();
+                            if(newVacancy < cgStud.size()){
+                                System.out.println("Number of vacancy must exceed number of student");
+                            }
+                            else{
+                                cgIndex.setVacancy(newVacancy);
+                            }
+                        } catch (Exception e){
+                            System.out.println("Please enter a valid integer.");
+                        }    
+                    }
+                }while(indexInt != -1);
+                }
+        } while(choice != -1);
 
         }
 
@@ -836,15 +854,25 @@ public class AdminApp {
         int choice = scan.nextInt();
         String courseCode = courseCodes[choice -1];
         Course c = courseManager.getCourseByCode(courseCode);
-        ArrayList<String> cg = c.getCourseGroup();
-        for(int j=0;j<cg.size();j++){
-            System.out.println((j+1)+ cg.get(j));
-        }
+        ArrayList<String> cg = c.getCourseGroups();
         System.out.println("Select which index you want to check the vacancy: ");
-        int choice2 = scan.nextInt();
-        String courseGroup = cg.get(choice2-1);
-        CourseGroup courseNum = courseManager.getCourseGroup(courseGroup);
-        System.out.println("Vacancies available : "+ courseNum.getVacancy());
+        for(int j=0;j<cg.size();j++){
+            System.out.println((j+1)+ ". " + cg.get(j));
+        }
+        System.out.println("Your choice (1-" + cg.size() +  "): ");
+        int choice2;
+        try{
+            choice2 = scan.nextInt();
+            if(choice2>=1 && choice2 <= cg.size()){
+                String courseGroup = cg.get(choice2-1);
+                CourseGroup courseNum = courseManager.getCourseGroup(courseGroup);
+                System.out.println("Vacancies available : "+ courseNum.getVacancy() +"/" + courseNum.getTotalSize());
+            } else{
+                System.out.println("Please enter within range");
+            }
+        } catch(Exception e){
+            System.out.println("Please enter valid integer");
+        }
     }
 
     
