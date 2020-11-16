@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMessage;
      */
 public class EmailNotificationManager {
 
-    private Hashtable<String, String> EmailDataBase = new Hashtable<String, String>();
+    public Hashtable<String, String> EmailDataBase = new Hashtable<String, String>();
     private String fileName = "email.txt";
     private File file;
     private Properties props;
@@ -130,9 +130,26 @@ public class EmailNotificationManager {
     {
         assert studentExist(studentId);
         EmailDataBase.put(studentId, email);
-        this.pw.println(studentId+" "+ email);
-        System.out.println("Student email added successfuly");
-        System.out.println(studentId+" "+email);
+        save();
+    }
+
+
+    private void save() {
+        this.file = new File(this.fileName);
+        try {
+            this.fw = new FileWriter(this.file, false);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        this.pw=new PrintWriter(this.fw);
+        for (Map.Entry<String, String> entry : EmailDataBase.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            this.pw.println(key+" "+value);
+            
+            // ...
+        }
         this.pw.close();
     }
 
@@ -153,6 +170,9 @@ public class EmailNotificationManager {
      */
     public static void main(String[] args) {
         EmailNotificationManager manager=new EmailNotificationManager();
-        manager.sendEmail("U1920187L", "test1", "hi test123");
+        //manager.add("123","123");
+        //manager.add("456","456");
+        //System.out.println(manager.EmailDataBase);
+        //manager.sendEmail("U1920187L", "test1", "hi test123");
     }
 }
