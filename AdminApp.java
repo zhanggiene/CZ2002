@@ -399,7 +399,7 @@ public class AdminApp {
                 if (schoolInt==-1){
                     return;
                 } else if (schoolInt <= schools.size() && schoolInt >=1) {
-                    school = (School)schools.get(schoolInt);
+                    school = (School)schools.get(schoolInt-1);
                     break;
                 } else {
                     System.out.println("Please input an integer between 1-"+ schools.size());
