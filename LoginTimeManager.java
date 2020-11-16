@@ -55,8 +55,6 @@ public class LoginTimeManager {
     {
         ft = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
         loadLoginPeriods();
-        System.out.println("EnumMap: "+TimeMap);
-        System.out.println(TimeMap.get(School.SCSE));
     }
 
     private void save()
