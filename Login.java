@@ -75,7 +75,7 @@ public class Login {
                 else
                 {
                     // not within the time
-                    System.out.println("sorry, not in the correct time");
+                    System.out.println("sorry, not in the correct time.");
                     input.close();
                     
 
