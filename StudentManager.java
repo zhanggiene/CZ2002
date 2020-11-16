@@ -132,7 +132,7 @@ public class StudentManager {
     public static void main(String args[]){
         //testing code
         StudentManager studentManager = new StudentManager();
-        studentManager.addStudent(new Student("John Doe", "U1234567B", School.SCSE, Gender.MALE, "Chinese"));
+        //studentManager.addStudent(new Student("John Doe", "U1234567B", School.SCSE, Gender.MALE, "Chinese"));
         //studentManager.addStudent(new Student("Jane Doe", "U2234567B", School.EEE, Gender.FEMALE, "Singaporean"));
         studentManager.printAllRecord();
     }

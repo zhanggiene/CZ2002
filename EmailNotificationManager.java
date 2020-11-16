@@ -35,6 +35,7 @@ public class EmailNotificationManager {
     public EmailNotificationManager() {
         try {
             this.file = new File(this.fileName);
+            this.file.createNewFile();
             loadFile();
             this.fw = new FileWriter(this.file, true);
             this.pw=new PrintWriter(this.fw);

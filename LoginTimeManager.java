@@ -55,6 +55,8 @@ public class LoginTimeManager {
     {
         ft = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
         loadLoginPeriods();
+        System.out.println("EnumMap: "+TimeMap);
+        System.out.println(TimeMap.get(School.SCSE));
     }
 
     private void save()
@@ -95,6 +97,29 @@ public class LoginTimeManager {
         this.save();
 
         // save
+    }
+
+    public boolean isValidTime(String start, String end)
+    {
+        try {
+            Date time1 = ft.parse(start);
+            Date time2 = ft.parse(end);
+            if (time1.after(time2))
+            {
+                return false;
+
+            }
+            else
+            {
+                return true;
+            }
+        }
+        catch (ParseException e) {
+            System.out.println("the format is wrong");
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     
@@ -147,6 +172,11 @@ public class LoginTimeManager {
      */
     public boolean isInside(School studentSchool, Date currentTime) {
         ArrayList<Date> interval = TimeMap.get(studentSchool);
+        if (interval==null)
+        {
+            return false;
+        }
+        
 
         return currentTime.after(interval.get(0)) && currentTime.before(interval.get(1));
 
@@ -172,7 +202,19 @@ public class LoginTimeManager {
     public static void main(String[] args) {
 
         LoginTimeManager timemanager=new LoginTimeManager();
+        SimpleDateFormat ft =new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
+        Date timeTemp;
+        try {
+            timeTemp = ft.parse("2020-11-19 17:00");
+            System.out.println(timemanager.isInside(School.SCSE,timeTemp));
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            
+        }
         //timemanager.add(School.SCSE,"2020-10-19 16:00","2020-10-19 17:00");
+        
+
         timemanager.printAllAccessPeriod();
         
     }

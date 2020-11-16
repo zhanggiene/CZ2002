@@ -62,6 +62,8 @@ public class Login {
             if (mypass.isCorrectStudent(userName, new String(passwordArray)))
             {
                 School schoolOfStudent=studentManager.getSchool(userName);
+                System.out.println("school of Student is "+schoolOfStudent);
+                timeManager.printAllAccessPeriod();
                 if (timeManager.isInside(schoolOfStudent,new Date()))
                 {
                     // within the time

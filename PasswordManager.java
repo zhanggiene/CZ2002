@@ -152,8 +152,8 @@ public class PasswordManager {
     {
         PasswordManager mypass=new PasswordManager();
         //mypass.add("U1920187L","1920187scse");
-        mypass.add("U1920187L","192017scse");
-        System.out.println(mypass.isCorrectStudent("U1920187L","1920187scse"));
+        //mypass.add("U1920187L","192017scse");
+        System.out.println(mypass.isCorrectStudent("U1234567B","student"));
 
     }
 
