@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.time.DayOfWeek;
 
 
@@ -10,7 +11,7 @@ import java.time.DayOfWeek;
 enum TypeOfLesson {
     LABORATORY,TUTORIAL,LECTURE
 }
-public class PeriodClass {
+public class PeriodClass implements Serializable{
     DayOfWeek dayOfWeek;
     int startTime;
     int endTime;

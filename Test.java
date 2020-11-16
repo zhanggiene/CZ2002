@@ -1,5 +1,3 @@
-import java.time.DayOfWeek;
-
 /**
  * This class populates the database for testing
  * @author Wang Li Rong
@@ -66,12 +64,15 @@ public class Test {
         // For confirmation
         courseManager.printAllRecord();
 
+        //c) Add lesson
         // Add lesson1
         PeriodClass lesson1 = new PeriodClass(TypeOfLesson.LECTURE, 1, 13, 14, "lt23");
         courseGroup1.addLesson(lesson1);
         // Add lesson2
         PeriodClass lesson2 = new PeriodClass(TypeOfLesson.TUTORIAL, 2, 13, 14, "lt26C");
         courseGroup1.addLesson(lesson2);
+
+        courseManager.save();
 
         // For confirmation
         courseGroup1.printInfo();

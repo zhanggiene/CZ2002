@@ -32,7 +32,7 @@ public class StudentManager {
         save();
     }
 
-    private void save()
+    public void save()
     {
         try {
             FileOutputStream fop=new FileOutputStream("./"+this.FileName);
