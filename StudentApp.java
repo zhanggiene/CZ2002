@@ -78,7 +78,7 @@ public class StudentApp {
 			int confirmedCourseAU = crsmgr.getCourseByCode(confirmedCourse.get(i)).getCourseAU();
 			totalAU += confirmedCourseAU;
 		}
-
+		i = 1;
     	availableCourse = crsmgr.getCourseList(); //coursemanager method to retrieve all courses
     	String[] courseID = new String[availableCourse.size()];
     	for(Entry<String, Course> item: availableCourse.entrySet()) {
