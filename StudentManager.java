@@ -80,7 +80,7 @@ public class StudentManager {
 
     public void printAllRecord() {
         System.out.println("List of Students: ");
-        System.out.println("\tName     \tGender\tNationality\t");
+        System.out.println("\tName     \tGender\tNationality\tSchool");
         int i=1;
         for (Student s : studentAccounts.values()) {
             System.out.print(i+".\t");
