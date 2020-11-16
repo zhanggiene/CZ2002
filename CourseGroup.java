@@ -78,6 +78,7 @@ public class CourseGroup implements Serializable{
 			studentsWaiting.add(matricNumber);
 		else
 			students.add(matricNumber);
+			vacancy -= students.size();
 	}
 
 	//updated by WY
