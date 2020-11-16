@@ -54,7 +54,7 @@ public class CourseGroup implements Serializable{
 	}
 
 	public void setVacancy(int newVacancy){
-		this.vacancy = newVacancy;
+		this.totalSize= newVacancy;
 	}
 
 	//updated by WY
