@@ -43,9 +43,21 @@ public class CourseManager {
 		save();
 	}
 
+	public void updateCourse(Course course, String oldName, String newName){
+		courses.put(newName,course);
+		courses.remove(oldName);
+		save();
+	}
+
 	public void addCourseGroup(CourseGroup courseGroup)
 	{
 		courseGroups.put(courseGroup.getIndexNumber(),courseGroup);
+		save();
+	}
+
+	public void updateCourseGroup(CourseGroup courseGroup, String oldName, String newName){
+		courseGroups.put(newName,courseGroup);
+		courseGroups.remove(oldName);
 		save();
 	}
 
