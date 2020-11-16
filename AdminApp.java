@@ -676,19 +676,47 @@ public class AdminApp {
                     type = TypeOfLesson.LABORATORY;
                 }
                 scan.nextLine();
+
+                int day = 1;
                 System.out.print("Select what day (Monday 1,... Friday 5): ");
-                int day = scan.nextInt();
+                try{
+                    day = scan.nextInt();
+                } catch(Exception e){
+                    System.out.println("Please enter a valid integer.");
+                }
                 scan.nextLine();
+
+                int start = 0;
                 System.out.print("Select start time (HHMM 24 HOUR FORMAT): ");
-                int start = scan.nextInt();
+                try{
+                    start = scan.nextInt();
+                } catch(Exception e){
+                    System.out.println("Please enter a valid integer.");
+                }
                 scan.nextLine();
+                
+                int end = 0;
                 System.out.print("Select end time (HHMM 24 HOUR FORMAT): ");
-                int end = scan.nextInt();
+                try{
+                    end = scan.nextInt();
+                } catch(Exception e){
+                    System.out.println("Please enter a valid integer.");
+                }
                 scan.nextLine();
-                System.out.print("Select location : ");
-                String loc = scan.nextLine();
+                
+                String loc = "";
+                while (true){
+                    System.out.print("Select location : ");
+                    loc = scan.nextLine();
+                    if (!loc.isEmpty()){
+                        break;
+                    } else {
+                        System.out.println("Please enter a valid course name.");
+                    }
+                }
+                
                 PeriodClass period;
-                if (day > 0 && day <= 5 && start > 0 && start < 2400 && end > 0 && end < 2400 && !loc.isEmpty()){
+                if (day > 0 && day <= 5 && start >= 0 && start < 2400 && end >= 0 && end < 2400 && !loc.isEmpty()){
                     period = new PeriodClass(type,day,start,end,loc);
                     courseNum.addLesson(period);
                 } else{
@@ -712,11 +740,12 @@ public class AdminApp {
         int choice;
         do{
             courseManager.printAllRecord();
-            System.out.println("Enter which course you want to update (Enter -1 to quit): ");
+            System.out.print("Enter which course you want to update (Enter -1 to quit): ");
             choice = scan.nextInt();
             Course c;
+            String courseCode;
             if (choice != -1){
-                String courseCode = courseCodes[choice -1];
+                courseCode = courseCodes[choice -1];
                 c = courseManager.getCourseByCode(courseCode);
             }
             else{
@@ -744,6 +773,8 @@ public class AdminApp {
                     }
                 }
                 c.setCourseCode(newCode);
+                courseManager.updateCourse(c, courseCode, newCode);
+                courseManager.save();
             }
             else if(choice2 == 2){
                 String newName = "";
@@ -758,6 +789,7 @@ public class AdminApp {
                     }
                 }
                 c.setCourseName(newName);
+                courseManager.save();
             }
             else if(choice2 == 3){
                 List schools = (List<School>)java.util.Arrays.asList(School.values());
@@ -783,6 +815,7 @@ public class AdminApp {
                     }
                 }
                 c.setSchool(school);
+                courseManager.save();
                 scan.nextLine();
             }
             else if(choice2 == 4){
@@ -818,6 +851,8 @@ public class AdminApp {
                         }
                         cgIndex.setIndexNumber(newNumber);
                         cg.set(cgInt-1,newNumber);
+                        courseManager.updateCourseGroup(cgIndex, cgString , newNumber);
+                        courseManager.save();
                     }
                     else if(indexInt == 2){
                         ArrayList<String> cgStud = cgIndex.getStudents();
@@ -830,6 +865,7 @@ public class AdminApp {
                             }
                             else{
                                 cgIndex.setVacancy(newVacancy);
+                                courseManager.save();
                             }
                         } catch (Exception e){
                             System.out.println("Please enter a valid integer.");
