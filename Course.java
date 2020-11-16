@@ -71,10 +71,6 @@ public class Course implements Serializable{
 		return null;
 	}
 
-	public ArrayList<String> getCourseGroup() {
-		return courseGroups;
-	}
-
     //Now each coursegroup has a totalSize instead
     // public void changeSize(int newSize)
     // {
