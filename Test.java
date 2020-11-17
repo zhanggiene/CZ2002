@@ -32,7 +32,6 @@ public class Test {
         // For confirmation
         timeManager.printAllAccessPeriod();
 
-        //TODO: After running this, only the first student gets recorded in emailNotificationManager and passWordManager
         //3. Add student
         //Adds first student to studentmanager, passwordManager and EmailNotificationManager
         Student student1 = new Student("studentname1", "U1234567B", 
@@ -66,10 +65,10 @@ public class Test {
 
         //c) Add lesson
         // Add lesson1
-        PeriodClass lesson1 = new PeriodClass(TypeOfLesson.LECTURE, 1, 13, 14, "lt23");
+        PeriodClass lesson1 = new PeriodClass(TypeOfLesson.LECTURE, 1, 1300, 1400, "lt23");
         courseGroup1.addLesson(lesson1);
         // Add lesson2
-        PeriodClass lesson2 = new PeriodClass(TypeOfLesson.TUTORIAL, 2, 13, 14, "lt26C");
+        PeriodClass lesson2 = new PeriodClass(TypeOfLesson.TUTORIAL, 2, 1300, 1400, "lt26C");
         courseGroup1.addLesson(lesson2);
 
         courseManager.save();
