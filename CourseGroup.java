@@ -67,28 +67,26 @@ public class CourseGroup implements Serializable{
 		return confirmed;
 	}
 
-	/**
-	 * Returns true if the enrolment was successful
-	 * Returns false if student was added into waitlist
-	 * @param matricNumber
-	 */
-	public Boolean enrol(String matricNumber){
+	public void enrol(String matricNumber){
 		//if there is still vacancy add the student
 		if(vacancy>=1){
 			students.add(matricNumber);
-			vacancy--;
-			return true;
+			vacancy --;
 		}
 		else { //if no more vacancy, then add the student to the waiting list
 			studentsWaiting.add(matricNumber);
-			return false;
 		}
 	}
 
 	//updated by WY
-	//updated by Wang Li Rong
 	public boolean isWaitlistStudent(String matricNumber){
-		return studentsWaiting.contains(matricNumber);
+		boolean waiting =false;
+		for(int i=0; i<=studentsWaiting.size(); i++){
+			if(matricNumber == studentsWaiting.get(i)){
+				waiting = true;
+			}
+		}
+		return waiting;
 	}
 	//updated by WY
 	public void removeWaitlistStudent(String matricNumber) {
@@ -131,7 +129,6 @@ public class CourseGroup implements Serializable{
 				students.remove(matricNumber); //remove current student
 				String firstInWaitlist = studentsWaiting.get(0);
 				students.add(firstInWaitlist);
-				studentsWaiting.remove(0);
 				//no change in vacancy
 				return firstInWaitlist;
 			}

@@ -41,7 +41,6 @@ public class StudentApp {
 		int option = 0;
         while(!scan.hasNextInt()) {
 			System.out.println("Please input numbers between 1 - 6 or 99 only.\nOption: ");
-			scan.nextLine();
         }
         option = scan.nextInt();
         switch(option) {
@@ -73,19 +72,17 @@ public class StudentApp {
     	System.out.println("=================Add Course Page================");
     	
 		int i = 1;
-		//calculate student's current AU
 		int totalAU = 0;
 		ArrayList<String> confirmedCourse = new ArrayList<String> (loginStudent.getConfirmedCourseGroups().values());
 		for(i=i-1; i<confirmedCourse.size(); i++){
 			int confirmedCourseAU = crsmgr.getCourseByCode(confirmedCourse.get(i)).getCourseAU();
 			totalAU += confirmedCourseAU;
 		}
-		//show all possible courses
 		i = 1;
     	availableCourse = crsmgr.getCourseList(); //coursemanager method to retrieve all courses
     	String[] courseID = new String[availableCourse.size()];
     	for(Entry<String, Course> item: availableCourse.entrySet()) {
-    		System.out.println("|"+i+". "+ item.getKey() +" " + item.getValue().getName());
+    		System.out.print("|"+i+". "+ item.getKey() +" " + item.getValue().getName());
     		courseID[i-1] = item.getKey();
     		i++;
     	}
@@ -95,24 +92,24 @@ public class StudentApp {
     	System.out.print("Option: ");
         while(!scan.hasNextInt()) {
         	System.out.println("Please input numbers between 1 - "+ availableCourse.size()+" or 99 only.\nOption: ");
-			scan.nextLine();
-		}
+        }
         int option = scan.nextInt();
         if(option != 99) {
-			//shows all possible coursegroups 
 	        String selectedCourseID = availableCourse.get(courseID[option-1]).getcourseCode();
 			if (loginStudent.getConfirmedCourseGroups().values().contains(selectedCourseID)){
 				System.out.println("You have already registered for this course!");
 				showMenu();
 			} else {
-				ArrayList<String> availableCG = crsmgr.getCourseGroupsOfCourse(selectedCourseID);
+				Map<String, CourseGroup> availableCG = crsmgr.getCourseGroup();
 				System.out.println("=================Add Course Group Page================"); 
 				i = 1;
 				String[] matchCG = new String[availableCG.size()];
-				for(String courseGroupIndex: availableCG) {
-					CourseGroup courseGroup = crsmgr.getCourseGroup(courseGroupIndex);
-					System.out.println("|"+i+". "+courseGroup.getIndexNumber()  + " " + courseGroup.getLessons());
-					matchCG[i-1] = courseGroup.getIndexNumber();    		
+				for(Map.Entry<String, CourseGroup> item: availableCG.entrySet()) {
+					CourseGroup check = item.getValue();
+					if(check.getCourseCode().equals(selectedCourseID)) {
+						System.out.println("|"+i+". "+item.getKey() + " " + check.getIndexNumber() + " " + check.getLessons());
+						matchCG[i-1] = item.getKey();    		
+					}
 					i++;
 				}
 				System.out.println("|Please select the course group you wish to add:     |");
@@ -120,32 +117,16 @@ public class StudentApp {
 				System.out.print("Option: ");
 				while(!scan.hasNextInt()) {
 					System.out.println("Please input numbers between 1 - "+ availableCG.size()+" or 99 only.\nOption: ");
-					scan.nextLine();
 				}
 				option = scan.nextInt();
 				if(option != 99) {
 					int addedCourseAU = crsmgr.getCourseByCode(selectedCourseID).getCourseAU();
 					totalAU += addedCourseAU;
-					
-					//check if student is already in the waitlist to prevent spamming
-					if (crsmgr.getCourseGroup(matchCG[option-1]).isWaitlistStudent(loginStudent.getMatriculationNumber())){
-						System.out.println("You are already in the waitlist of this course group!");
-						showMenu();
-					} else if (isClashing(matchCG[option-1])){
-						System.out.println("Cannot add this index because of timetable clashes.");
-						showMenu();
-					}
-					// check if student has has AU under 21
-					else if (totalAU <=21){
-						Boolean result = crsmgr.enrol(loginStudent.getMatriculationNumber(), matchCG[option-1]);
-						//if the enrolment is succesful for coursemanager, add to student also
-						if (result){
-							stdmgr.enrol(loginStudent.getMatriculationNumber(), matchCG[option-1], selectedCourseID);
-							System.out.println("You have added course group: "+matchCG[option-1]);
-						} // if enrolment was unsuccessfully, this means that student is in waitlit
-						else {
-							System.out.println(matchCG[option-1]+" is full, you will be added to the waitlist. ");
-						}
+					if(totalAU <=21){
+						crsmgr.enrol(loginStudent, availableCG.get(matchCG[option-1]));
+						crsmgr.save();
+						stdmgr.save();
+						System.out.println("You have added course group: "+matchCG[option-1]);
 						addMenu();
 					}
 					else {
@@ -175,15 +156,13 @@ public class StudentApp {
         System.out.print("Option: ");
         while(!scan.hasNextInt()) {
         	System.out.println("Please input numbers between 1 - "+ studentregcourse.size()+" or 99 only.\nOption: ");
-			scan.nextLine();
-		}
+        }
         int option = scan.nextInt();
         if(option != 99) {
         	String addedStudentFromWaitlist = dropCourseGroup(matchCG[option-1]);
         	System.out.print("You have dropped course group: "+matchCG[option-1]+".");
 			//if there was a student added from waitlist
 			if (addedStudentFromWaitlist != null){
-				stdmgr.enrol(addedStudentFromWaitlist, matchCG[option-1], crsmgr.getCourseGroup(matchCG[option-1]).getCourseCode());
 				//send an email
 				emailNotificationManager.sendEmail(addedStudentFromWaitlist, "New course added from your waitlist", matchCG[option-1]+" has been added. ");
 			}
@@ -195,12 +174,7 @@ public class StudentApp {
     
     //Updated by WY
     private String dropCourseGroup(String courseGroup) {
-		String result = crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatriculationNumber());
-		boolean result2 = stdmgr.dropCourseGroup(loginStudent.getMatriculationNumber(), courseGroup);
-		if (!result2){
-			System.out.println("Student does not have course group");
-		}
-		return result;   	
+    	return crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatriculationNumber());   	
     }
     
     public void printMenu() {
@@ -217,7 +191,7 @@ public class StudentApp {
     	}
     	System.out.println("==========================================================");
     	System.out.println("Press any key to return to previous menu.");
-    	scan.nextLine();
+    	scan.next();
     	showMenu();
     }
     
@@ -275,18 +249,6 @@ public class StudentApp {
 		System.out.println("Press any key to return to main menu");
 		scan.nextLine();
 		showMenu();
-	}
-
-	private boolean isClashing(String newCourseGroupIndex){
-		ArrayList<String> confirmedCourse = new ArrayList<String> (loginStudent.getConfirmedCourseGroups().keySet());
-		//go through all couseGroups of student
-		for (String courseGroup : confirmedCourse){
-			//check for clashes
-			if (crsmgr.isClashing(courseGroup, newCourseGroupIndex)){
-				return true;
-			}
-		}
-		return false;
 	}
     
 }
