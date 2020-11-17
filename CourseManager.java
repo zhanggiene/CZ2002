@@ -14,7 +14,6 @@ import java.time.DayOfWeek;
 public class CourseManager {
 	private Map<String, Course> courses; 
 	private Map<String, CourseGroup> courseGroups;
-
 	private Map<String, String[]> swapIndex;
 	//course
 
@@ -133,7 +132,6 @@ public class CourseManager {
 	 */
 	public String dropCourseGroup(String index, String matric) {
 		return courseGroups.get(index).removeFromConfirmedStudent(matric);
-		
 	}
 
 	/**
@@ -251,7 +249,6 @@ public class CourseManager {
 		}
 	}
 	//Created by WY
-	//check 
 	public boolean checkSwap() {
 		boolean swapped = false;
 		for(Map.Entry<String, String[]> item : swapIndex.entrySet()) {
@@ -260,15 +257,8 @@ public class CourseManager {
 					courseGroups.get(item.getKey()).swapStudent(item.getValue()[1], item.getValue()[0]);
 					courseGroups.get(item2.getKey()).swapStudent(item.getValue()[0], item.getValue()[1]);
 					StudentManager stdmgr = new StudentManager();
-					CourseGroup currentindex = courseGroups.get(item.getKey());
-					CourseGroup newindex = courseGroups.get(item2.getKey());
-					if(isClashing(currentindex, newindex)){
-						System.out.println("There is a clash. Please check the timetable again.");
-						swapped = false;
-					}else{
-						stdmgr.checkSwap(item.getValue()[0], item.getKey(), item.getValue()[1], item2.getKey());
-						swapped = true;
-					}
+					stdmgr.checkSwap(item.getValue()[0], item.getKey(), item.getValue()[1], item2.getKey());
+					swapped = true;
 					break;
 				}
 			}
@@ -284,19 +274,19 @@ public class CourseManager {
 
 	public void printAllRecord() {
         System.out.println("List of Courses: ");
-        System.out.println("\tCourse Code\tSchool\tCourse Name");
-        int i=1;
+        System.out.println("\tCourse Code\tSchool\tCourse Name\tAU\tIndex");
+		int i=1;
         for (Course c : courses.values()) {
             System.out.print(i+".\t");
-            c.printCourse();
+			c.printCourse();
 			ArrayList<String> cg = c.getCourseGroups();
-			for(int k = 0; k < cg.size(); k++){
-				System.out.print(" "+ cg.get(k));
+			for(int j=0;j<cg.size();j++){
+				System.out.print(cg.get(j) + "\t");
 			}
-			System.out.println(" ");
+			System.out.print("\n");
             i++;
         }
-	}
+    }
 	/**
 	 * Check if course exist
 	 * @param courseCode

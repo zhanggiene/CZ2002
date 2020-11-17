@@ -70,36 +70,31 @@ public class StudentApp {
     
     public void addMenu() {
     	System.out.println("=================Add Course Page================");
-    	int option = 0;
+    	
 		int i = 1;
 		int totalAU = 0;
 		ArrayList<String> confirmedCourse = new ArrayList<String> (loginStudent.getConfirmedCourseGroups().values());
 		for(i=i-1; i<confirmedCourse.size(); i++){
-			Course currentcourse = crsmgr.getCourseByCode(confirmedCourse.get(i));
-			if(currentcourse != null){
-				int confirmedCourseAU = currentcourse.getCourseAU();
-				totalAU += confirmedCourseAU;
-			}			
+			int confirmedCourseAU = crsmgr.getCourseByCode(confirmedCourse.get(i)).getCourseAU();
+			totalAU += confirmedCourseAU;
 		}
 		i = 1;
     	availableCourse = crsmgr.getCourseList(); //coursemanager method to retrieve all courses
     	String[] courseID = new String[availableCourse.size()];
     	for(Entry<String, Course> item: availableCourse.entrySet()) {
-    		System.out.println("|"+i+". "+ item.getKey() +" " + item.getValue().getName());
+    		System.out.print("|"+i+". "+ item.getKey() +" " + item.getValue().getName());
     		courseID[i-1] = item.getKey();
     		i++;
     	}
-    	System.out.println("|99. Return to previous menu. ");
+    	System.out.print("|99. Return to previous menu. ");
     	System.out.println("|Please select the course you wish to add:     |");
     	System.out.println("================================================");
     	System.out.print("Option: ");
-         	try{
-				option = scan.nextInt();
-			}catch(Exception e){
-				System.out.println("Please input numbers between 1 - "+ availableCourse.size()+" or 99 only.\nOption: ");
-				option = scan.nextInt();
-			}
-        if(option != 99 && (option > 0 && option <= availableCourse.size())) {
+        while(!scan.hasNextInt()) {
+        	System.out.println("Please input numbers between 1 - "+ availableCourse.size()+" or 99 only.\nOption: ");
+        }
+        int option = scan.nextInt();
+        if(option != 99) {
 	        String selectedCourseID = availableCourse.get(courseID[option-1]).getcourseCode();
 			if (loginStudent.getConfirmedCourseGroups().values().contains(selectedCourseID)){
 				System.out.println("You have already registered for this course!");
@@ -107,9 +102,8 @@ public class StudentApp {
 			} else {
 				Map<String, CourseGroup> availableCG = crsmgr.getCourseGroup();
 				System.out.println("=================Add Course Group Page================"); 
-				i = 1;	
-				if(availableCG.size() <= 0){
-					String[] matchCG = new String[availableCG.size()];
+				i = 1;
+				String[] matchCG = new String[availableCG.size()];
 				for(Map.Entry<String, CourseGroup> item: availableCG.entrySet()) {
 					CourseGroup check = item.getValue();
 					if(check.getCourseCode().equals(selectedCourseID)) {
@@ -119,24 +113,15 @@ public class StudentApp {
 					i++;
 				}
 				System.out.println("|Please select the course group you wish to add:     |");
-				System.out.println("|99. Return to previous menu. ");
 				System.out.println("================================================");
 				System.out.print("Option: ");
-				try{
-					option = scan.nextInt();
-				}catch(Exception e){
+				while(!scan.hasNextInt()) {
 					System.out.println("Please input numbers between 1 - "+ availableCG.size()+" or 99 only.\nOption: ");
-					option = scan.nextInt();
 				}
-				if(option != 99 && (option > 0 && option <= availableCG.size())) {
-					int addedCourseAU = 0;
-					try{
-						addedCourseAU = crsmgr.getCourseByCode(selectedCourseID).getCourseAU();
-					}catch(Exception e){
-						e.printStackTrace();
-					}
-						totalAU += addedCourseAU;
-					
+				option = scan.nextInt();
+				if(option != 99) {
+					int addedCourseAU = crsmgr.getCourseByCode(selectedCourseID).getCourseAU();
+					totalAU += addedCourseAU;
 					if(totalAU <=21){
 						crsmgr.enrol(loginStudent, availableCG.get(matchCG[option-1]));
 						crsmgr.save();
@@ -149,10 +134,6 @@ public class StudentApp {
 						showMenu();
 					}
 				}
-				}else{
-					System.out.println("There are not available course groups for this course.");
-					showMenu();
-				}
 			}
         }else {
         	showMenu();
@@ -160,7 +141,6 @@ public class StudentApp {
     }
     
     public void dropMenu() {
-		int option = 0;
     	System.out.println("|Please select the course group you wish to drop:     |");
     	System.out.println("================================================");
     	System.out.println("|Course Group \t Course Code");
@@ -172,15 +152,13 @@ public class StudentApp {
         		matchCG[i-1] = item.getKey();    		
         	i++;
         }    
-        System.out.println("|99. Return to previous menu. ");
+        System.out.print("|99. Return to previous menu. ");
         System.out.print("Option: ");
-		try{
-		option = scan.nextInt();
-		}catch(Exception e){
+        while(!scan.hasNextInt()) {
         	System.out.println("Please input numbers between 1 - "+ studentregcourse.size()+" or 99 only.\nOption: ");
-		}
-        
-        if(option != 99 && (option > 0 && option <= studentregcourse.size())) {
+        }
+        int option = scan.nextInt();
+        if(option != 99) {
         	String addedStudentFromWaitlist = dropCourseGroup(matchCG[option-1]);
         	System.out.print("You have dropped course group: "+matchCG[option-1]+".");
 			//if there was a student added from waitlist
@@ -196,7 +174,6 @@ public class StudentApp {
     
     //Updated by WY
     private String dropCourseGroup(String courseGroup) {
-		loginStudent.dropCourseGroups(courseGroup);
     	return crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatriculationNumber());   	
     }
     
@@ -214,9 +191,8 @@ public class StudentApp {
     	}
     	System.out.println("==========================================================");
     	System.out.println("Press any key to return to previous menu.");
-		scan.nextLine();
-			showMenu();
-		
+    	scan.next();
+    	showMenu();
     }
     
     public void checkIndex() {
@@ -228,9 +204,8 @@ public class StudentApp {
     	 }
     	 System.out.println("==========================================================");
      	System.out.println("Press any key to return to previous menu.");
-		 scan.nextLine();
-			showMenu();
-		
+     	scan.next();
+     	showMenu();
     }
     
     public void swopIndex() {
@@ -242,9 +217,8 @@ public class StudentApp {
         String matric2 = scan.next();
         crsmgr.addSwap(courseID, loginStudent.getMatriculationNumber(), matric2);
     	System.out.println("|Your registered course group will be updated if successful.\nPress any key to return to previous menu.");
-        scan.nextLine();
-			showMenu();
-        
+        scan.next();
+        showMenu();
 	}
 	
 	/**
@@ -269,11 +243,12 @@ public class StudentApp {
 			System.out.println("---------------------------------------------------------");
 			System.out.print("Press any key to continue to the next course...");
 			scan.nextLine();
+			scan.nextLine();
 		}
 		System.out.println("End of Time Table");
-		System.out.println("Press Enter to return to main menu");
-		scan.next();
-			showMenu();
+		System.out.println("Press any key to return to main menu");
+		scan.nextLine();
+		showMenu();
 	}
     
 }

@@ -17,7 +17,6 @@ public class PeriodClass implements Serializable{
     int endTime;
     String location;
     TypeOfLesson typeOfLesson;
-    static final long serialVersionUID = 8509715140262640597L;
 
     public PeriodClass(TypeOfLesson type, int weekday,int start,int end,String location)
     {

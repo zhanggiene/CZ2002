@@ -10,7 +10,7 @@ public class StudentManager {
 
     // reference https://stackoverflow.com/questions/30013292/how-do-i-write-multiple-objects-to-the-serializable-file-and-read-them-when-the
 
-   private Hashtable<String, Student> studentAccounts = new Hashtable<String, Student>();
+   private Hashtable<String, Student> studentAccounts;
     private String FileName="StudentData.bin";
 
     StudentManager(){
@@ -49,13 +49,26 @@ public class StudentManager {
     private void loadData()
     {
         try {
-            FileInputStream fis=new FileInputStream("./"+this.FileName);
+            File yourFile = new File(this.FileName);
+            if(!yourFile.exists()){
+                yourFile.createNewFile();
+                this.studentAccounts=new Hashtable<String, Student>();
+
+              }
+
+              else
+              {
+
+                FileInputStream fis=new FileInputStream(yourFile);
             ObjectInputStream ois=new ObjectInputStream(fis);
             //WriteObject wo=null;
             //WriteObject[] woj=new WriteObject[5];
     
             this.studentAccounts=(Hashtable<String, Student>) ois.readObject();
             ois.close();
+
+              }
+            
     
         }
         catch (Exception e) {
@@ -67,7 +80,7 @@ public class StudentManager {
 
     public void printAllRecord() {
         System.out.println("List of Students: ");
-        System.out.println("\tName     \tGender\tNationality\t");
+        System.out.println("\tName     \tGender\tNationality\tSchool");
         int i=1;
         for (Student s : studentAccounts.values()) {
             System.out.print(i+".\t");
@@ -84,7 +97,8 @@ public class StudentManager {
 
     public boolean studentExist(String metricNumber)
     {
-        return studentAccounts.contains(metricNumber);
+        return studentAccounts.containsKey(metricNumber);
+
     }
     
     
@@ -118,8 +132,8 @@ public class StudentManager {
     public static void main(String args[]){
         //testing code
         StudentManager studentManager = new StudentManager();
-        studentManager.addStudent(new Student("John Doe", "U1234567B", School.SCSE, Gender.MALE, "Chinese"));
-        studentManager.addStudent(new Student("Jane Doe", "U2234567B", School.EEE, Gender.FEMALE, "Singaporean"));
+        //studentManager.addStudent(new Student("John Doe", "U1234567B", School.SCSE, Gender.MALE, "Chinese"));
+        //studentManager.addStudent(new Student("Jane Doe", "U2234567B", School.EEE, Gender.FEMALE, "Singaporean"));
         studentManager.printAllRecord();
     }
     
