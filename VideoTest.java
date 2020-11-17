@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -16,15 +17,12 @@ public class VideoTest {
 
     public static void main(String args[]) {
         VideoTest videoTest = new VideoTest();
-        // videoTest.addAccessPeriods();
-        // videoTest.addAllStudents();
-        // videoTest.addAllCourses();
-        // videoTest.addAllCourseGroups();
-        // videoTest.addAllLessons();
-        // videoTest.enrolAllStudents();      
-        videoTest.courseManager.printAllRecord();
-        videoTest.courseManager.getCourseGroup("10197").removeFromConfirmedStudent("U1920187L");
-        videoTest.courseManager.save();
+        videoTest.addAccessPeriods();
+        videoTest.addAllStudents();
+        videoTest.addAllCourses();
+        videoTest.addAllCourseGroups();
+        videoTest.addAllLessons();
+        videoTest.enrolAllStudents(); 
     }
 
     /**

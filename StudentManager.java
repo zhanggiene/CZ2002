@@ -133,29 +133,29 @@ public class StudentManager {
     }
 
     
-    
-    /** 
-     * @param matric1
-     * @param coursegroup1
-     * @param matric2
-     * @param coursegroup2
-     * @return boolean
-     */
-    //updated by WY
-	public boolean checkSwap(String matric1, String coursegroup1, String matric2, String coursegroup2) {
-		boolean swapped = false;
-		for(Map.Entry<String, Student> item : studentAccounts.entrySet()) {
-			if(item.getValue().getMatriculationNumber() == matric1) {
-				item.getValue().swapIndex(coursegroup2, coursegroup1);
-				swapped = true;
-			}else
-			if(item.getValue().getMatriculationNumber() == matric2) {
-				item.getValue().swapIndex(coursegroup1, coursegroup2);
-				swapped = true;
-			}
-		}
-		return swapped;
-	}
+    //not needed since we are checking up front
+    // /** 
+    //  * @param matric1
+    //  * @param coursegroup1
+    //  * @param matric2
+    //  * @param coursegroup2
+    //  * @return boolean
+    //  */
+    // //updated by WY
+	// public boolean checkSwap(String matric1, String coursegroup1, String matric2, String coursegroup2) {
+	// 	boolean swapped = false;
+	// 	for(Map.Entry<String, Student> item : studentAccounts.entrySet()) {
+	// 		if(item.getValue().getMatriculationNumber() == matric1) {
+	// 			item.getValue().swapIndex(coursegroup2, coursegroup1);
+	// 			swapped = true;
+	// 		}else
+	// 		if(item.getValue().getMatriculationNumber() == matric2) {
+	// 			item.getValue().swapIndex(coursegroup1, coursegroup2);
+	// 			swapped = true;
+	// 		}
+	// 	}
+	// 	return swapped;
+	// }
 
     
     /** 

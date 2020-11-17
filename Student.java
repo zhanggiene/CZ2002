@@ -71,10 +71,10 @@ public class Student implements Serializable
     	return confirmedCourseGroups;
     }
     
-    public void swapIndex(String group1, String group2) {//group1 = new, group2 = old
-    	String coursecode = confirmedCourseGroups.get(group2);
-    	confirmedCourseGroups.remove(group2);
-    	confirmedCourseGroups.put(group1, coursecode);
+    public void swapIndex(String newGroup, String oldGroup) {//group1 = new, group2 = old
+    	String coursecode = confirmedCourseGroups.get(oldGroup);
+    	confirmedCourseGroups.remove(oldGroup);
+    	confirmedCourseGroups.put(newGroup, coursecode);
     }
     
     public String getMatriculationNumber()

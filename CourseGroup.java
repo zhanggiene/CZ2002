@@ -100,11 +100,11 @@ public class CourseGroup implements Serializable{
 		}
 	}
 	
-	public void swapStudent(String matric1, String matric2) {
+	public void swapStudent(String matricToRemove, String matricToAdd) {
 		for(int i = 0; i < students.size(); i++) {
-			if(students.get(i) == matric1) {
+			if(students.get(i) == matricToRemove) {
 				students.remove(i);
-				enrol(matric2);
+				enrol(matricToAdd);
 				break;
 			}
 		}

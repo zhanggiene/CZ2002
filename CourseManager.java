@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.time.DayOfWeek;
 
 /**
      * validate the correct timing of registering for students. 
@@ -14,7 +13,7 @@ import java.time.DayOfWeek;
 public class CourseManager {
 	private Map<String, Course> courses; 
 	private Map<String, CourseGroup> courseGroups;
-	private Map<String, String[]> swapIndex;
+	public Map<String, String[]> swapIndex;
 	//course
 
 	private String CourseFile="CourseData.bin" ;
@@ -32,10 +31,7 @@ public class CourseManager {
 		}
 		if (this.swapIndex == null){
 			this.swapIndex = new HashMap<String, String[]>();
-		} else {
-			checkSwap();
-		}
-
+		} 
 	}
 	public void addCourse(Course course)
 	{
@@ -77,7 +73,7 @@ public class CourseManager {
 	public ArrayList<String[]> getVacancies(){
 		ArrayList<String[]> crsvacancies = new ArrayList<String[]>();
 		for(Map.Entry<String, CourseGroup> item: courseGroups.entrySet()) {
-			String[] temp = {item.getKey(), Integer.toString(item.getValue().getVacancy())};
+			String[] temp = {item.getKey(), Integer.toString(item.getValue().getVacancy()), Integer.toString(item.getValue().getTotalSize())};
 			crsvacancies.add(temp);
 		}
 		return crsvacancies;
@@ -109,6 +105,25 @@ public class CourseManager {
 	public Map<String, CourseGroup> getCourseGroup()
 	{
 		return courseGroups;
+	}
+
+	/**
+	 * 
+	 * @return Returns Swaps Relevant to the student in 
+	 * 			[[courseIndex, Student], [courseCode, senderMatricNumber]] form
+	 */
+	//Limitation is that someone may override the previous swap for the same course
+	public ArrayList<String[]> getSwapsForStudent(String matricNumber){
+		ArrayList<String[]> returnList = new ArrayList<>();
+		for (Map.Entry<String, String[]> item : swapIndex.entrySet()){
+			String matric1 = item.getValue()[0]; //sender
+			String matric2 = item.getValue()[1]; //receiver
+			if (matric2.equals(matricNumber)){//if the currentStudent is receiver
+				String[] entry= {item.getKey(), matric1, matric2};
+				returnList.add(entry);
+			}
+		}
+		return returnList;
 	}
 
 
@@ -253,27 +268,35 @@ public class CourseManager {
 		}
 	}
 	//Created by WY
-	public boolean checkSwap() {
-		boolean swapped = false;
-		for(Map.Entry<String, String[]> item : swapIndex.entrySet()) {
-			for(Map.Entry<String, String[]> item2 : swapIndex.entrySet()) {
-				if(item.getValue()[0] == item2.getValue()[1] && item.getValue()[1] == item2.getValue()[0]) {
-					courseGroups.get(item.getKey()).swapStudent(item.getValue()[1], item.getValue()[0]);
-					courseGroups.get(item2.getKey()).swapStudent(item.getValue()[0], item.getValue()[1]);
-					StudentManager stdmgr = new StudentManager();
-					stdmgr.checkSwap(item.getValue()[0], item.getKey(), item.getValue()[1], item2.getKey());
-					swapped = true;
-					break;
-				}
-			}
-		}
+	//not needed since we are checking up front
+	// public boolean checkSwap() {
+	// 	boolean swapped = false;
+	// 	for(Map.Entry<String, String[]> item : swapIndex.entrySet()) {
+	// 		for(Map.Entry<String, String[]> item2 : swapIndex.entrySet()) {
+	// 			if(item.getValue()[0] == item2.getValue()[1] && item.getValue()[1] == item2.getValue()[0]) {
+	// 				courseGroups.get(item.getKey()).swapStudent(item.getValue()[1], item.getValue()[0]);
+	// 				courseGroups.get(item2.getKey()).swapStudent(item.getValue()[0], item.getValue()[1]);
+	// 				StudentManager stdmgr = new StudentManager();
+	// 				stdmgr.checkSwap(item.getValue()[0], item.getKey(), item.getValue()[1], item2.getKey());
+	// 				swapped = true;
+	// 				break;
+	// 			}
+	// 		}
+	// 	}
 
-		return swapped;
-	}
+	// 	return swapped;
+	// }
 	
-	public void addSwap(String courseID, String matric1, String matric2) {
-		String[] temp = {matric1, matric2};
-		swapIndex.put(courseID, temp);
+	public void addSwap(String courseFromID,String courseToID, String matric1, String matric2) {
+		String[] value = {matric1, matric2};
+		String key = courseFromID+" "+courseToID;
+		swapIndex.put(key, value);
+		save();
+	}
+
+	public void removeSwap(String key){
+		swapIndex.remove(key);
+		save();
 	}
 
 	public void printAllRecord() {
