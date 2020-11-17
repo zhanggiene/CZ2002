@@ -68,17 +68,14 @@ public class CourseGroup implements Serializable{
 	}
 
 	public void enrol(String matricNumber){
-		//still need to add logic 
-		//If length of confirmedStudents is >= vacancy, add student to waitlist
-		//If length of confirmedStudents is <vacancy, add student to confirmedStudents 
-		//list and add this index to Student with addToConfirmedIndex
-		//this is just testing code
-
-		if(students.size() >= vacancy)
-			studentsWaiting.add(matricNumber);
-		else
+		//if there is still vacancy add the student
+		if(vacancy>=1){
 			students.add(matricNumber);
-			vacancy -= students.size();
+			vacancy --;
+		}
+		else { //if no more vacancy, then add the student to the waiting list
+			studentsWaiting.add(matricNumber);
+		}
 	}
 
 	//updated by WY
@@ -117,17 +114,36 @@ public class CourseGroup implements Serializable{
 
 	//removed confirmed student and add first student from waiting list
 	//updated by WY 
+	//updated by Wang Li Rong
 	public String removeFromConfirmedStudent(String matricNumber){
-		for(int i = 0; i < students.size(); i++) {
-			if(students.get(i) == matricNumber) {
-				students.remove(i);
-				String waitlistStudent = studentsWaiting.get(0);
-				enrol(studentsWaiting.get(0));
-				studentsWaiting.remove(0);
-				return waitlistStudent;
+		//if there are no students in waitlist
+		if (studentsWaiting.size() <=0){
+			//if the student is in the courseGroup
+			if (students.contains(matricNumber)){
+				students.remove(matricNumber);
+				vacancy++; //1 more vacancy freed up
+			}
+		} else { //if there are waitlist students
+			//if the student is in the courseGroup
+			if (students.contains(matricNumber)){
+				students.remove(matricNumber); //remove current student
+				String firstInWaitlist = studentsWaiting.get(0);
+				students.add(firstInWaitlist);
+				//no change in vacancy
+				return firstInWaitlist;
 			}
 		}
 		return null;
+		// for(int i = 0; i < students.size(); i++) {
+		// 	if(students.get(i) == matricNumber) {
+		// 		students.remove(i);
+		// 		String waitlistStudent = studentsWaiting.get(0);
+		// 		enrol(studentsWaiting.get(0));
+		// 		studentsWaiting.remove(0);
+		// 		return waitlistStudent;
+		// 	}
+		// }
+		// return null;
 	}
 
 	public void addLesson(PeriodClass lesson){

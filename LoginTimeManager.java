@@ -41,6 +41,12 @@ enum School {
         public String toString() {
             return "SPMS";
         }
+    },
+    NBS {
+        @Override
+        public String toString() {
+            return "NBS";
+        }
     };
 }
 

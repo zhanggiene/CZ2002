@@ -178,7 +178,8 @@ public class StudentApp {
     }
     
     public void printMenu() {
-    	loginStudent.printRegisterCourse();
+		loginStudent.printRegisterCourse();
+		showMenu();
     }
     
     public void checkVacancies() {
@@ -241,6 +242,7 @@ public class StudentApp {
 			}
 			System.out.println("---------------------------------------------------------");
 			System.out.print("Press any key to continue to the next course...");
+			scan.nextLine();
 			scan.nextLine();
 		}
 		System.out.println("End of Time Table");
