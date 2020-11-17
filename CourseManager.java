@@ -44,8 +44,8 @@ public class CourseManager {
 	}
 
 	public void updateCourse(Course course, String oldName, String newName){
-		courses.put(newName,course);
 		courses.remove(oldName);
+		courses.put(newName,course);
 		save();
 	}
 
@@ -56,8 +56,8 @@ public class CourseManager {
 	}
 
 	public void updateCourseGroup(CourseGroup courseGroup, String oldName, String newName){
-		courseGroups.put(newName,courseGroup);
 		courseGroups.remove(oldName);
+		courseGroups.put(newName,courseGroup);
 		save();
 	}
 

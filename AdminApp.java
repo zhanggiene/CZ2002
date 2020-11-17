@@ -736,19 +736,15 @@ public class AdminApp {
 
     public void updateCourse(){
         Scanner scan = new Scanner(System.in);
-        String[] courseCodes = courseManager.getCourseCodeList();
-        int choice;
+        String Schoice;
         do{
             courseManager.printAllRecord();
-            System.out.print("Enter which course you want to update (Enter -1 to quit): ");
-            choice = scan.nextInt();
+            System.out.println("Enter course code you want to update (Enter exit to quit): ");
+            Schoice = scan.nextLine();
             Course c;
-            String courseCode;
-            if (choice != -1){
-                courseCode = courseCodes[choice -1];
-                c = courseManager.getCourseByCode(courseCode);
-            }
-            else{
+            if(!Schoice.equals("exit")){
+                c = courseManager.getCourseByCode(Schoice);
+            }else{
                 break;
             }
             
@@ -773,7 +769,7 @@ public class AdminApp {
                     }
                 }
                 c.setCourseCode(newCode);
-                courseManager.updateCourse(c, courseCode, newCode);
+                courseManager.updateCourse(c, Schoice, newCode);
                 courseManager.save();
             }
             else if(choice2 == 2){
@@ -819,19 +815,19 @@ public class AdminApp {
                 scan.nextLine();
             }
             else if(choice2 == 4){
-                    System.out.println("Select which index you want to change");
-                    ArrayList<String> cg = c.getCourseGroups();
-                    for(int j=1;j<=cg.size();j++){
-                        System.out.println(j + ". " +  cg.get(j-1));
-                    }
-                    System.out.print("\n");
-                    System.out.println("Your choice (1-" + cg.size() +  "): ");
-                    int cgInt = scan.nextInt();
-                    String cgString = cg.get(cgInt-1);
-                    CourseGroup cgIndex = courseManager.getCourseGroup(cgString);
-                    cgIndex.printInfo();
-                    int indexInt;
-                    do{
+                System.out.println("Select which index you want to change");
+                ArrayList<String> cg = c.getCourseGroups();
+                for(int j=1;j<=cg.size();j++){
+                    System.out.println(j + ". " +  cg.get(j-1));
+                }
+                System.out.print("\n");
+                System.out.println("Your choice (1-" + cg.size() +  "): ");
+                int cgInt = scan.nextInt();
+                String cgString = cg.get(cgInt-1);
+                CourseGroup cgIndex = courseManager.getCourseGroup(cgString);
+                cgIndex.printInfo();
+                int indexInt;
+                do{
                     System.out.println("What do you want to change");
                     System.out.println("1. Index Number");
                     System.out.println("2. Size");
@@ -870,10 +866,13 @@ public class AdminApp {
                         } catch (Exception e){
                             System.out.println("Please enter a valid integer.");
                         }    
+                    } else if(indexInt == -1){
+                        break;
                     }
                 }while(indexInt != -1);
-                }
-        } while(choice != -1);
+                scan.nextLine();
+            } 
+    }while(!Schoice.equals("exit"));
 
         }
 
