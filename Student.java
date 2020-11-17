@@ -56,6 +56,15 @@ public class Student implements Serializable
     {
         this.confirmedCourseGroups.put(courseGroup, courseCode);
     }
+
+    public boolean removeFromConfirmedCourseGroups(String courseGroupIndex)
+    {   
+        if (confirmedCourseGroups.containsKey(courseGroupIndex)){
+            this.confirmedCourseGroups.remove(courseGroupIndex);
+            return true;
+        }
+        return false;
+    }
     
     //Updated by WY
     public HashMap<String,String> getConfirmedCourseGroups (){

@@ -16,12 +16,12 @@ public class VideoTest {
 
     public static void main(String args[]) {
         VideoTest videoTest = new VideoTest();
-        videoTest.addAccessPeriods();
-        videoTest.addAllStudents();
-        videoTest.addAllCourses();
-        videoTest.addAllCourseGroups();
-        videoTest.addAllLessons();
-        videoTest.enrolAllStudents();     
+        // videoTest.addAccessPeriods();
+        // videoTest.addAllStudents();
+        // videoTest.addAllCourses();
+        // videoTest.addAllCourseGroups();
+        // videoTest.addAllLessons();
+        // videoTest.enrolAllStudents();     
 
     }
 
@@ -71,6 +71,7 @@ public class VideoTest {
     private void addAccessPeriods() {
         timeManager.add(School.SCSE, "2020-11-16 09:00", "2020-11-17 09:00");
         timeManager.add(School.SPMS, "2020-11-10 09:00", "2020-11-30 09:00");
+        timeManager.add(School.NBS, "2020-11-10 09:00", "2020-11-30 09:00");
         // For confimation
         timeManager.printAllAccessPeriod();
     }

@@ -100,6 +100,38 @@ public class StudentManager {
         return studentAccounts.containsKey(metricNumber);
 
     }
+
+    /**
+     * @author Wang Li Rong
+     * @param matricNumber
+     * @return True: course is added to student succesfully
+     *         False: course was not added to student successfully
+     */
+    public boolean enrol(String matricNumber, String courseGroupIndex, String courseCode){
+        //check that student is in the system
+        if (studentAccounts.containsKey(matricNumber)){
+            studentAccounts.get(matricNumber).addToCourseGroups(courseGroupIndex, courseCode);
+            save(); //since there is a change in the database
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @param studentMatricNumber
+     * @param courseGroupIndex
+     * @return True: course is successfully dropped
+     */
+    public boolean dropCourseGroup(String studentMatricNumber, String courseGroupIndex){
+        if (studentExist(studentMatricNumber)){
+            boolean result = studentAccounts.get(studentMatricNumber).removeFromConfirmedCourseGroups(courseGroupIndex);
+            save();
+            return result;
+        }
+        return false;
+    }
+
     
     
     /** 
