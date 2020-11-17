@@ -96,8 +96,28 @@ public class Student implements Serializable
     }
 
     /**
+     * Change a coursegroup index in confirmedCourseGroups
+     * @author Wang Li Rong
+     */
+    public void setCourseGroup(String oldCourseGroupIndex, String newCourseGroupIndex){
+        String courseCode = confirmedCourseGroups.get(oldCourseGroupIndex);
+        confirmedCourseGroups.remove(oldCourseGroupIndex);
+        confirmedCourseGroups.put(newCourseGroupIndex, courseCode);
+    }
+
+    /**
+     * Change a course code in confirmedCourseGroups
+     * @author Wang Li Rong
+     */
+    public void setCourseCode(String courseGroupIndex, String newCourseCode){
+        confirmedCourseGroups.remove(courseGroupIndex);
+        confirmedCourseGroups.put(courseGroupIndex, newCourseCode);
+    }
+
+
+    /**
      * Format to print student
-     * @Li Rong
+     * @author Wang Li Rong
      */
     public void printStudent(){
         System.out.println(name+"\t"+gender+"\t"+nationality+"\t"+this.school);
@@ -114,5 +134,7 @@ public class Student implements Serializable
     	}
     	System.out.println("================================================");
     }
+
+    
     
 }

@@ -183,6 +183,7 @@ public class StudentApp {
         	System.out.print("You have dropped course group: "+matchCG[option-1]+".");
 			//if there was a student added from waitlist
 			if (addedStudentFromWaitlist != null){
+				stdmgr.enrol(addedStudentFromWaitlist, matchCG[option-1], crsmgr.getCourseGroup(matchCG[option-1]).getCourseCode());
 				//send an email
 				emailNotificationManager.sendEmail(addedStudentFromWaitlist, "New course added from your waitlist", matchCG[option-1]+" has been added. ");
 			}

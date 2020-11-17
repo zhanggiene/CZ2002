@@ -131,6 +131,7 @@ public class CourseGroup implements Serializable{
 				students.remove(matricNumber); //remove current student
 				String firstInWaitlist = studentsWaiting.get(0);
 				students.add(firstInWaitlist);
+				studentsWaiting.remove(0);
 				//no change in vacancy
 				return firstInWaitlist;
 			}

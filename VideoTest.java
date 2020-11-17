@@ -21,8 +21,10 @@ public class VideoTest {
         // videoTest.addAllCourses();
         // videoTest.addAllCourseGroups();
         // videoTest.addAllLessons();
-        // videoTest.enrolAllStudents();     
-
+        // videoTest.enrolAllStudents();      
+        videoTest.courseManager.printAllRecord();
+        videoTest.courseManager.getCourseGroup("10197").removeFromConfirmedStudent("U1920187L");
+        videoTest.courseManager.save();
     }
 
     /**
