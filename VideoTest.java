@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.print.DocFlavor.STRING;
-
 /**
  * This class populates the data bases for the video
  * @author Wang Li Rong
