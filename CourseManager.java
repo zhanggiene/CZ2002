@@ -13,7 +13,7 @@ import java.util.Map;
 public class CourseManager {
 	private Map<String, Course> courses; 
 	private Map<String, CourseGroup> courseGroups;
-	public Map<String, String[]> swapIndex;
+	private Map<String, String[]> swapIndex;
 	//course
 
 	private String CourseFile="CourseData.bin" ;
