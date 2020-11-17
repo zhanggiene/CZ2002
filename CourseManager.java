@@ -43,9 +43,9 @@ public class CourseManager {
 		save();
 	}
 
-	public void updateCourse(Course course, String oldName, String newName){
-		courses.remove(oldName);
-		courses.put(newName,course);
+	public void updateCourse(Course course, String oldCourseCode, String newCourseCode){
+		courses.remove(oldCourseCode);
+		courses.put(newCourseCode,course);
 		save();
 	}
 
@@ -55,9 +55,9 @@ public class CourseManager {
 		save();
 	}
 
-	public void updateCourseGroup(CourseGroup courseGroup, String oldName, String newName){
-		courseGroups.remove(oldName);
-		courseGroups.put(newName,courseGroup);
+	public void updateCourseGroup(CourseGroup courseGroup, String oldIndex, String newIndex){
+		courseGroups.remove(oldIndex);
+		courseGroups.put(newIndex,courseGroup);
 		save();
 	}
 
@@ -85,12 +85,14 @@ public class CourseManager {
 
 	/** enrol student into a course	
 	 * @author Wei Yao
+	 * Updated by Wang Li Rong
+	 * Returns boolean telling the user if the coursemanager enrolled successfully
      */
-	public void enrol(Student student,CourseGroup index)
+	public boolean enrol(String matricNumber , String index)
 	{
-		courseGroups.get(index.getIndexNumber()).enrol(student.getMatriculationNumber());
-		student.addToCourseGroups(index.getIndexNumber(), index.getCourseCode());
-		save();
+		Boolean result = courseGroups.get(index).enrol(matricNumber);
+		save(); //since there is a change in the database
+		return result;
 	}
 
 	/** retreive course group (index) object
@@ -131,7 +133,9 @@ public class CourseManager {
 	 * Updated by Wang Li Rong
 	 */
 	public String dropCourseGroup(String index, String matric) {
-		return courseGroups.get(index).removeFromConfirmedStudent(matric);
+		String result = courseGroups.get(index).removeFromConfirmedStudent(matric);
+		save();
+		return result;
 	}
 
 	/**
@@ -298,21 +302,18 @@ public class CourseManager {
 	}
 	
 	
-	public boolean isClashing(CourseGroup currentindex, CourseGroup newindex){	
-		boolean clash = false;
-		for(PeriodClass item: currentindex.getLessons()){//load first lesson.
-			for(PeriodClass item2: newindex.getLessons()){//compare starttime of first lesson to other lessons in new index
-				if(item.getStartTime() >= item2.startTime && item.getStartTime() < item2.getEndTime()){
-					clash = true;
-					return clash;
-				}
-				if(item.getEndTime() > item2.startTime && item.getStartTime() <= item2.getEndTime()){
-					clash = true;
-					return clash;
+	//Updated by Wang Li Rong to use two courseGroup indexes instead of coursegroup itself
+	public boolean isClashing(String currentCourseGroupIndex, String newCourseGroupIndex){	
+		CourseGroup currentCourseGroup = courseGroups.get(currentCourseGroupIndex);
+		CourseGroup newCourseGroup = courseGroups.get(newCourseGroupIndex);
+		for(PeriodClass item: currentCourseGroup.getLessons()){//load first lesson.
+			for(PeriodClass item2: newCourseGroup.getLessons()){//compare starttime of first lesson to other lessons in new index
+				if (item.hasClash(item2)){
+					return true;
 				}
 			}
 		}
-		return clash;
+		return false;
 	}
 
 	/*

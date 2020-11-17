@@ -719,6 +719,7 @@ public class AdminApp {
                 if (day > 0 && day <= 5 && start >= 0 && start < 2400 && end >= 0 && end < 2400 && !loc.isEmpty()){
                     period = new PeriodClass(type,day,start,end,loc);
                     courseNum.addLesson(period);
+                    courseManager.save();
                 } else{
                     throw new RuntimeException("Particulars not filled up");
                 }
@@ -743,10 +744,16 @@ public class AdminApp {
             Schoice = scan.nextLine();
             Course c;
             if(!Schoice.equals("exit")){
-                c = courseManager.getCourseByCode(Schoice);
+                if (courseManager.getCourseByCode(Schoice)==null){
+                    System.out.println("Please enter valid course code!");
+                    break;
+                } else{
+                    c=courseManager.getCourseByCode(Schoice);
+                }
             }else{
                 break;
             }
+            
             
             System.out.println("Select which particular you want to update");
             System.out.println("1. Course Code");
@@ -768,9 +775,8 @@ public class AdminApp {
                         System.out.println("Please enter a valid course code.");
                     }
                 }
-                c.setCourseCode(newCode);
-                courseManager.updateCourse(c, Schoice, newCode);
-                courseManager.save();
+                System.out.println(c.getcourseCode());
+                updateCourseCodesOfAllStudents(c.getcourseCode(), newCode);
             }
             else if(choice2 == 2){
                 String newName = "";
@@ -847,7 +853,7 @@ public class AdminApp {
                         }
                         cgIndex.setIndexNumber(newNumber);
                         cg.set(cgInt-1,newNumber);
-                        courseManager.updateCourseGroup(cgIndex, cgString , newNumber);
+                        updateIndexesOfAllStudents(cgIndex.getIndexNumber(), newNumber);
                         courseManager.save();
                     }
                     else if(indexInt == 2){
@@ -1043,6 +1049,35 @@ public class AdminApp {
             System.out.println("---------------------------------------");
         }
     }
+
+    /**
+     * @author Wang Li Rong
+     */
+    private void updateIndexesOfAllStudents(String oldCourseGroupIndex, String newCourseGroupIndex){
+        CourseGroup courseGroup = courseManager.getCourseGroup(oldCourseGroupIndex);
+        for (String matricNumber: courseGroup.getStudents()){
+            studentManager.getStudent(matricNumber).setCourseGroup(oldCourseGroupIndex,newCourseGroupIndex);
+        }
+        studentManager.save();
+        courseGroup.setIndexNumber(newCourseGroupIndex);
+        courseManager.updateCourseGroup(courseGroup, oldCourseGroupIndex , newCourseGroupIndex);
+    }
+
+    private void updateCourseCodesOfAllStudents(String oldCourseCode, String newCourseCode){
+        Course course = courseManager.getCourseByCode(oldCourseCode);
+        for (String courseGroup : courseManager.getCourseGroupsOfCourse(oldCourseCode)){
+            ArrayList<String> students = courseManager.getCourseGroup(courseGroup).getStudents();
+            for (String matricNumber: students){
+                Student student = studentManager.getStudent(matricNumber);
+                student.setCourseCode(courseGroup, newCourseCode);
+            }
+        }
+        studentManager.save();
+        course.setCourseCode(newCourseCode);
+        courseManager.updateCourse(course, oldCourseCode, newCourseCode);
+        courseManager.save();
+    }
+
     
 
 }
