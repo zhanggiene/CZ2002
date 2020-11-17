@@ -56,6 +56,11 @@ public class Student implements Serializable
     {
         this.confirmedCourseGroups.put(courseGroup, courseCode);
     }
+    //Updated by WY
+    public void dropCourseGroups(String courseGroup)
+    {
+        this.confirmedCourseGroups.remove(courseGroup);
+    }
     
     //Updated by WY
     public HashMap<String,String> getConfirmedCourseGroups (){

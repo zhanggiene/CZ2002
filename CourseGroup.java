@@ -57,6 +57,23 @@ public class CourseGroup implements Serializable{
 		this.totalSize= newVacancy;
 	}
 
+/* 	private void setVacancy(int newVacancy){//this is to set new vacancy. Please do not use this. Use setTotalSize
+		this.vacancy += newVacancy;
+	}
+
+	public boolean setTotalSize(int newTotalSize){//please use this to increase the size and it will update the available vacancy.
+		boolean set = false;
+		if(newTotalSize < students.size()){
+			set = false;
+		}else{
+			int difference = newTotalSize - totalSize;
+			setVacancy(difference);
+			this.totalSize = newTotalSize;
+			set = true;
+		}	
+		return set;
+	} */
+
 	//updated by WY
 	public boolean isConfirmedStudent(String matricNumber){
 		boolean confirmed = false;
@@ -77,6 +94,16 @@ public class CourseGroup implements Serializable{
 			studentsWaiting.add(matricNumber);
 		}
 	}
+
+/* 	//updated by WY
+	public void enrol(String matricNumber){
+		if(vacancy <= 0)
+			studentsWaiting.add(matricNumber);
+		else{
+			students.add(matricNumber);
+			vacancy -= 1;
+		}
+	} */
 
 	//updated by WY
 	public boolean isWaitlistStudent(String matricNumber){
@@ -114,6 +141,7 @@ public class CourseGroup implements Serializable{
 
 	//removed confirmed student and add first student from waiting list
 	//updated by WY 
+
 	//updated by Wang Li Rong
 	public String removeFromConfirmedStudent(String matricNumber){
 		//if there are no students in waitlist
@@ -143,7 +171,7 @@ public class CourseGroup implements Serializable{
 		// 		return waitlistStudent;
 		// 	}
 		// }
-		// return null;
+		// return null;	
 	}
 
 	public void addLesson(PeriodClass lesson){
