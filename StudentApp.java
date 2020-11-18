@@ -114,7 +114,7 @@ public class StudentApp {
 				String[] matchCG = new String[availableCG.size()];
 				for(String courseGroupIndex: availableCG) {
 					CourseGroup courseGroup = crsmgr.getCourseGroup(courseGroupIndex);
-					System.out.println("|"+i+". "+courseGroup.getIndexNumber()  + " " + courseGroup.getLessons());
+					System.out.println("|"+i+". "+courseGroup.getIndexNumber()  + " " + courseGroup.getLessons()+"   vacancy/total vacancy: "+courseGroup.getVacancy()+"/"+courseGroup.getTotalSize());
 					matchCG[i-1] = courseGroup.getIndexNumber();    		
 					i++;
 				}

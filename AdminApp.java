@@ -50,7 +50,7 @@ public class AdminApp {
             System.out.println("| 1. Add Student Access Period          |");
             System.out.println("| 2. Edit Student Access Period         |");
             System.out.println("| 3. Add Student                        |");
-            System.out.println("| 4. Add Course                         |");
+            System.out.println("| 4. Add Course/Indexes                 |");
             System.out.println("| 5. Update Course                      |");
             System.out.println("| 6. Check Index Vacancy                |");
             System.out.println("| 7. Print Student List By Index Number |");
@@ -851,9 +851,10 @@ public class AdminApp {
                                 System.out.println("Please enter a valid index number.");
                             }
                         }
+                        
+                        updateIndexesOfAllStudents(cgIndex.getIndexNumber(), newNumber);
                         cgIndex.setIndexNumber(newNumber);
                         cg.set(cgInt-1,newNumber);
-                        updateIndexesOfAllStudents(cgIndex.getIndexNumber(), newNumber);
                         courseManager.save();
                     }
                     else if(indexInt == 2){

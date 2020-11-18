@@ -56,7 +56,7 @@ public class Test {
         
 
         //b) Add courseGroup1 to courseManager and course1
-        CourseGroup courseGroup1 = new CourseGroup("DSAI1", 25, "CZ2002");
+        CourseGroup courseGroup1 = new CourseGroup("DSAI1", 1, "CZ2002");
         course1.addCourseGroup("DSAI1");
         courseManager.addCourseGroup(courseGroup1);
 
