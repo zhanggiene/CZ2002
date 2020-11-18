@@ -56,16 +56,25 @@ public class Student implements Serializable
     {
         this.confirmedCourseGroups.put(courseGroup, courseCode);
     }
+
+    public boolean removeFromConfirmedCourseGroups(String courseGroupIndex)
+    {   
+        if (confirmedCourseGroups.containsKey(courseGroupIndex)){
+            this.confirmedCourseGroups.remove(courseGroupIndex);
+            return true;
+        }
+        return false;
+    }
     
     //Updated by WY
     public HashMap<String,String> getConfirmedCourseGroups (){
     	return confirmedCourseGroups;
     }
     
-    public void swapIndex(String group1, String group2) {//group1 = new, group2 = old
-    	String coursecode = confirmedCourseGroups.get(group2);
-    	confirmedCourseGroups.remove(group2);
-    	confirmedCourseGroups.put(group1, coursecode);
+    public void swapIndex(String newGroup, String oldGroup) {//group1 = new, group2 = old
+    	String coursecode = confirmedCourseGroups.get(oldGroup);
+    	confirmedCourseGroups.remove(oldGroup);
+    	confirmedCourseGroups.put(newGroup, coursecode);
     }
     
     public String getMatriculationNumber()
@@ -87,8 +96,28 @@ public class Student implements Serializable
     }
 
     /**
+     * Change a coursegroup index in confirmedCourseGroups
+     * @author Wang Li Rong
+     */
+    public void setCourseGroup(String oldCourseGroupIndex, String newCourseGroupIndex){
+        String courseCode = confirmedCourseGroups.get(oldCourseGroupIndex);
+        confirmedCourseGroups.remove(oldCourseGroupIndex);
+        confirmedCourseGroups.put(newCourseGroupIndex, courseCode);
+    }
+
+    /**
+     * Change a course code in confirmedCourseGroups
+     * @author Wang Li Rong
+     */
+    public void setCourseCode(String courseGroupIndex, String newCourseCode){
+        confirmedCourseGroups.remove(courseGroupIndex);
+        confirmedCourseGroups.put(courseGroupIndex, newCourseCode);
+    }
+
+
+    /**
      * Format to print student
-     * @Li Rong
+     * @author Wang Li Rong
      */
     public void printStudent(){
         System.out.println(name+"\t"+gender+"\t"+nationality+"\t"+this.school);
@@ -105,5 +134,7 @@ public class Student implements Serializable
     	}
     	System.out.println("================================================");
     }
+
+    
     
 }

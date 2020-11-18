@@ -719,6 +719,7 @@ public class AdminApp {
                 if (day > 0 && day <= 5 && start >= 0 && start < 2400 && end >= 0 && end < 2400 && !loc.isEmpty()){
                     period = new PeriodClass(type,day,start,end,loc);
                     courseNum.addLesson(period);
+                    courseManager.save();
                 } else{
                     throw new RuntimeException("Particulars not filled up");
                 }
@@ -736,21 +737,23 @@ public class AdminApp {
 
     public void updateCourse(){
         Scanner scan = new Scanner(System.in);
-        String[] courseCodes = courseManager.getCourseCodeList();
-        int choice;
+        String Schoice;
         do{
             courseManager.printAllRecord();
-            System.out.print("Enter which course you want to update (Enter -1 to quit): ");
-            choice = scan.nextInt();
+            System.out.println("Enter course code you want to update (Enter exit to quit): ");
+            Schoice = scan.nextLine();
             Course c;
-            String courseCode;
-            if (choice != -1){
-                courseCode = courseCodes[choice -1];
-                c = courseManager.getCourseByCode(courseCode);
-            }
-            else{
+            if(!Schoice.equals("exit")){
+                if (courseManager.getCourseByCode(Schoice)==null){
+                    System.out.println("Please enter valid course code!");
+                    break;
+                } else{
+                    c=courseManager.getCourseByCode(Schoice);
+                }
+            }else{
                 break;
             }
+            
             
             System.out.println("Select which particular you want to update");
             System.out.println("1. Course Code");
@@ -772,9 +775,8 @@ public class AdminApp {
                         System.out.println("Please enter a valid course code.");
                     }
                 }
-                c.setCourseCode(newCode);
-                courseManager.updateCourse(c, courseCode, newCode);
-                courseManager.save();
+                System.out.println(c.getcourseCode());
+                updateCourseCodesOfAllStudents(c.getcourseCode(), newCode);
             }
             else if(choice2 == 2){
                 String newName = "";
@@ -819,19 +821,19 @@ public class AdminApp {
                 scan.nextLine();
             }
             else if(choice2 == 4){
-                    System.out.println("Select which index you want to change");
-                    ArrayList<String> cg = c.getCourseGroups();
-                    for(int j=1;j<=cg.size();j++){
-                        System.out.println(j + ". " +  cg.get(j-1));
-                    }
-                    System.out.print("\n");
-                    System.out.println("Your choice (1-" + cg.size() +  "): ");
-                    int cgInt = scan.nextInt();
-                    String cgString = cg.get(cgInt-1);
-                    CourseGroup cgIndex = courseManager.getCourseGroup(cgString);
-                    cgIndex.printInfo();
-                    int indexInt;
-                    do{
+                System.out.println("Select which index you want to change");
+                ArrayList<String> cg = c.getCourseGroups();
+                for(int j=1;j<=cg.size();j++){
+                    System.out.println(j + ". " +  cg.get(j-1));
+                }
+                System.out.print("\n");
+                System.out.println("Your choice (1-" + cg.size() +  "): ");
+                int cgInt = scan.nextInt();
+                String cgString = cg.get(cgInt-1);
+                CourseGroup cgIndex = courseManager.getCourseGroup(cgString);
+                cgIndex.printInfo();
+                int indexInt;
+                do{
                     System.out.println("What do you want to change");
                     System.out.println("1. Index Number");
                     System.out.println("2. Size");
@@ -851,7 +853,7 @@ public class AdminApp {
                         }
                         cgIndex.setIndexNumber(newNumber);
                         cg.set(cgInt-1,newNumber);
-                        courseManager.updateCourseGroup(cgIndex, cgString , newNumber);
+                        updateIndexesOfAllStudents(cgIndex.getIndexNumber(), newNumber);
                         courseManager.save();
                     }
                     else if(indexInt == 2){
@@ -870,10 +872,13 @@ public class AdminApp {
                         } catch (Exception e){
                             System.out.println("Please enter a valid integer.");
                         }    
+                    } else if(indexInt == -1){
+                        break;
                     }
                 }while(indexInt != -1);
-                }
-        } while(choice != -1);
+                scan.nextLine();
+            } 
+    }while(!Schoice.equals("exit"));
 
         }
 
@@ -1044,6 +1049,35 @@ public class AdminApp {
             System.out.println("---------------------------------------");
         }
     }
+
+    /**
+     * @author Wang Li Rong
+     */
+    private void updateIndexesOfAllStudents(String oldCourseGroupIndex, String newCourseGroupIndex){
+        CourseGroup courseGroup = courseManager.getCourseGroup(oldCourseGroupIndex);
+        for (String matricNumber: courseGroup.getStudents()){
+            studentManager.getStudent(matricNumber).setCourseGroup(oldCourseGroupIndex,newCourseGroupIndex);
+        }
+        studentManager.save();
+        courseGroup.setIndexNumber(newCourseGroupIndex);
+        courseManager.updateCourseGroup(courseGroup, oldCourseGroupIndex , newCourseGroupIndex);
+    }
+
+    private void updateCourseCodesOfAllStudents(String oldCourseCode, String newCourseCode){
+        Course course = courseManager.getCourseByCode(oldCourseCode);
+        for (String courseGroup : courseManager.getCourseGroupsOfCourse(oldCourseCode)){
+            ArrayList<String> students = courseManager.getCourseGroup(courseGroup).getStudents();
+            for (String matricNumber: students){
+                Student student = studentManager.getStudent(matricNumber);
+                student.setCourseCode(courseGroup, newCourseCode);
+            }
+        }
+        studentManager.save();
+        course.setCourseCode(newCourseCode);
+        courseManager.updateCourse(course, oldCourseCode, newCourseCode);
+        courseManager.save();
+    }
+
     
 
 }

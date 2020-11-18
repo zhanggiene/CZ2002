@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-
-import javax.print.DocFlavor.STRING;
 
 /**
  * This class populates the data bases for the video
@@ -23,8 +22,7 @@ public class VideoTest {
         videoTest.addAllCourses();
         videoTest.addAllCourseGroups();
         videoTest.addAllLessons();
-        videoTest.enrolAllStudents();     
-
+        videoTest.enrolAllStudents(); 
     }
 
     /**
@@ -73,6 +71,7 @@ public class VideoTest {
     private void addAccessPeriods() {
         timeManager.add(School.SCSE, "2020-11-16 09:00", "2020-11-17 09:00");
         timeManager.add(School.SPMS, "2020-11-10 09:00", "2020-11-30 09:00");
+        timeManager.add(School.NBS, "2020-11-10 09:00", "2020-11-30 09:00");
         // For confimation
         timeManager.printAllAccessPeriod();
     }

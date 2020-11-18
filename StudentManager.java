@@ -100,30 +100,62 @@ public class StudentManager {
         return studentAccounts.containsKey(metricNumber);
 
     }
-    
-    
-    /** 
-     * @param matric1
-     * @param coursegroup1
-     * @param matric2
-     * @param coursegroup2
-     * @return boolean
+
+    /**
+     * @author Wang Li Rong
+     * @param matricNumber
+     * @return True: course is added to student succesfully
+     *         False: course was not added to student successfully
      */
-    //updated by WY
-	public boolean checkSwap(String matric1, String coursegroup1, String matric2, String coursegroup2) {
-		boolean swapped = false;
-		for(Map.Entry<String, Student> item : studentAccounts.entrySet()) {
-			if(item.getValue().getMatriculationNumber() == matric1) {
-				item.getValue().swapIndex(coursegroup2, coursegroup1);
-				swapped = true;
-			}else
-			if(item.getValue().getMatriculationNumber() == matric2) {
-				item.getValue().swapIndex(coursegroup1, coursegroup2);
-				swapped = true;
-			}
-		}
-		return swapped;
-	}
+    public boolean enrol(String matricNumber, String courseGroupIndex, String courseCode){
+        //check that student is in the system
+        if (studentAccounts.containsKey(matricNumber)){
+            studentAccounts.get(matricNumber).addToCourseGroups(courseGroupIndex, courseCode);
+            save(); //since there is a change in the database
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @param studentMatricNumber
+     * @param courseGroupIndex
+     * @return True: course is successfully dropped
+     */
+    public boolean dropCourseGroup(String studentMatricNumber, String courseGroupIndex){
+        if (studentExist(studentMatricNumber)){
+            boolean result = studentAccounts.get(studentMatricNumber).removeFromConfirmedCourseGroups(courseGroupIndex);
+            save();
+            return result;
+        }
+        return false;
+    }
+
+    
+    //not needed since we are checking up front
+    // /** 
+    //  * @param matric1
+    //  * @param coursegroup1
+    //  * @param matric2
+    //  * @param coursegroup2
+    //  * @return boolean
+    //  */
+    // //updated by WY
+	// public boolean checkSwap(String matric1, String coursegroup1, String matric2, String coursegroup2) {
+	// 	boolean swapped = false;
+	// 	for(Map.Entry<String, Student> item : studentAccounts.entrySet()) {
+	// 		if(item.getValue().getMatriculationNumber() == matric1) {
+	// 			item.getValue().swapIndex(coursegroup2, coursegroup1);
+	// 			swapped = true;
+	// 		}else
+	// 		if(item.getValue().getMatriculationNumber() == matric2) {
+	// 			item.getValue().swapIndex(coursegroup1, coursegroup2);
+	// 			swapped = true;
+	// 		}
+	// 	}
+	// 	return swapped;
+	// }
 
     
     /** 
