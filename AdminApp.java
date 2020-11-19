@@ -115,7 +115,6 @@ public class AdminApp {
 
     /**
      * UI for adding student access period.
-     * 
      * @author Wang Li Rong
      */
     private void addStudentAccessPeriod() {
@@ -867,7 +866,7 @@ public class AdminApp {
                                 System.out.println("Number of vacancy must exceed number of student");
                             }
                             else{
-                                cgIndex.setVacancy(newVacancy);
+                                cgIndex.setTotalSize(newVacancy);
                                 courseManager.save();
                             }
                         } catch (Exception e){
@@ -1052,6 +1051,10 @@ public class AdminApp {
     }
 
     /**
+     * This function updates the index number for all students in the index 
+     * as well as updates the index of the course group in course manager
+     * @param oldCourseGroupIndex
+     * @param newCourseGroupIndex
      * @author Wang Li Rong
      */
     private void updateIndexesOfAllStudents(String oldCourseGroupIndex, String newCourseGroupIndex){
@@ -1064,6 +1067,13 @@ public class AdminApp {
         courseManager.updateCourseGroup(courseGroup, oldCourseGroupIndex , newCourseGroupIndex);
     }
 
+    /**
+     * This method updates the course codes of all students in the course
+     * as well as updates the course of the course in course manager
+     * @param oldCourseCode
+     * @param newCourseCode
+     * @author Wang Li Rong
+     */
     private void updateCourseCodesOfAllStudents(String oldCourseCode, String newCourseCode){
         Course course = courseManager.getCourseByCode(oldCourseCode);
         for (String courseGroup : courseManager.getCourseGroupsOfCourse(oldCourseCode)){

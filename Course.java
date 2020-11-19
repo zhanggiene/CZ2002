@@ -1,6 +1,9 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Course is an entity class storing all information about the course
+ */
 public class Course implements Serializable{
     private String courseCode; //CZ2002
     private String name;
@@ -19,35 +22,37 @@ public class Course implements Serializable{
         this.courseGroups = new ArrayList<>();
     
     }
-
-    
-
+    /**
+     * Getter for course code
+     * @return course code string
+     */
     public String getcourseCode()
     {
         return this.courseCode;
     }
     
+    /**
+     * Setter for course code
+     */
     public void setCourseCode(String newCode){
         this.courseCode = newCode;
     }
 
+    /**
+     * Setter for course name
+     * @param newName
+     */
     public void setCourseName (String newName){
         this.name = newName;
     }
 
+    /**
+     * Adds index of courseGroup to list of course groups
+     * @param courseGroup
+     */
     public void addCourseGroup(String courseGroup)
     {
         courseGroups.add(courseGroup);
-    }
-
-    // public ArrayList<String> getIndexes()
-    // {
-    //     return this.indexes;
-    // }
-
-    public boolean courseGroupExist(String courseGroupIndex)
-    {
-        return courseGroups.contains(courseGroupIndex);
     }
 
     /**
@@ -61,44 +66,36 @@ public class Course implements Serializable{
 
     /**
      * Format to print Course
-     * Andrew
+     * @author Andrew
      */
     public void printCourse(){
         System.out.print(courseCode+"\t"+school+"\t"+name+"\t" + courseAU + "\t");
     }
     
-    public CourseGroup getCourseGroup(int i) {
-		return null;
-	}
-
-    //Now each coursegroup has a totalSize instead
-    // public void changeSize(int newSize)
-    // {
-    //     this.totalSize=newSize;
-    // }
-
-    // public String toString()
-    // {
-    //     return Integer.toString(this.totalSize);
-    // }
 
      /**
      * Getter for name of course
      * @author Wang Li Rong
-     * @return
+     * @return name of course
      */
     public String getName(){
         return this.name;
     }
 
     /**
+     * Getter for AUs
      * @author Wenyu
-     * @return
+     * @return number of AUs for this course
      */
     public int getCourseAU(){
         return this.courseAU;
     }
 
+    /**
+     * Setter for School of this course
+     * @author Andrew
+     * @param school
+     */
     public void setSchool(School school){
         this.school = school;
     }
