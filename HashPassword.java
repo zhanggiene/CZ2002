@@ -39,10 +39,4 @@ public class HashPassword{
         return "error";
         
     }
-    
-    public static void main(String[] args)
-    {
-        String password="password";
-            System.out.println(hashPassword(password));
-    }
 }

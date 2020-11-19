@@ -7,16 +7,16 @@ import java.util.regex.Pattern;
 
 /**
  * Interface that an admin see after login 
- * Functionalities include: 
- * 1. Adding and Editting Student Access Period 
- * 2. Adding students 
- * 3. Adding courses 
- * 4. Updating courses 
- * 5. Checking index vacancy 
- * 6. Printing Student List By Index Number 
- * 7. Printing Student List By Course
+ * <li>Functionalities include: 
+ * <li> 1. Adding and Editting Student Access Period 
+ * <li>2. Adding students 
+ * <li>3. Adding courses 
+ * <li>4. Updating courses 
+ * <li>5. Checking index vacancy 
+ * <li>6. Printing Student List By Index Number 
+ * <li>7. Printing Student List By Course
  * 
- * @author Wang Li Rong
+ * @author Wang Li Rong and Andrew
  */
 public class AdminApp {
     StudentManager studentManager;

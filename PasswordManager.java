@@ -33,6 +33,10 @@ public class PasswordManager {
 
     }
 
+    /**
+     * Load records of passwords of each student
+     * @author zhu yan
+     */
     private void loadFile() {
         try {
             Scanner rd = new Scanner(this.file);
@@ -56,6 +60,7 @@ public class PasswordManager {
      * 
      * @param studentId unique student id
      * @param passWord  rawpassword
+     * @author zhu yan
      */
     public void add(String studentId, String passWord)
 
@@ -69,6 +74,10 @@ public class PasswordManager {
         save();
     }
 
+    /**
+     * Saves all password records
+     * @author zhu yan
+     */
     private void save() {
         this.file = new File(this.fileName);
         try {
@@ -92,6 +101,7 @@ public class PasswordManager {
     /** check if the student is already in the database
      * @param studentID
      * @return Boolean
+     * @author zhu yan
      */
     public Boolean studentExist(String studentID)
     {
@@ -99,10 +109,12 @@ public class PasswordManager {
     }
 
     
-    /** check the correctness of the password typed by student and compare it against passwords database
+    /** 
+     * check the correctness of the password typed by student and compare it against passwords database
      * @param studentId
      * @param passWord
      * @return Boolean
+     * @author zhu yan
      */
     public Boolean isCorrectStudent(String studentId, String passWord)
     {
@@ -125,10 +137,12 @@ public class PasswordManager {
         }
     }
     
-    /**  verify the correctness of the admin password
+    /**  
+     * verify the correctness of the admin password
      * @param admin
      * @param adminPass
      * @return Boolean
+     * @author zhu yan
      */
     public Boolean isCorrectAdmin(String admin,String adminPass)
     {
@@ -139,6 +153,7 @@ public class PasswordManager {
     /** check if it is admin or student
      * @param name
      * @return Boolean    return true if it is admin account
+     * @author zhu yan
      */
     public Boolean isAdmin(String name)
     {
@@ -150,26 +165,5 @@ public class PasswordManager {
         else{
             return false;
         }
-    }
-
-    
-    /** 
-     * @param args
-     */
-    public static void main(String[] args)
-    {
-        PasswordManager mypass=new PasswordManager();
-        //mypass.add("U1920187L","1920187scse");
-        //mypass.add("U1234567L","1920187scse");
-        //System.out.println(mypass.isCorrectStudent("U1234567L","1920187scse"));
-        //System.out.println(mypass.my_dict);
-        mypass.add("U1234560L","1920187scse");
-        System.out.println(mypass.my_dict);
-
-    }
-
-
-
-
-    
+    }    
 }

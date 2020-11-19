@@ -4,6 +4,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+/**
+ * Interface that a student see after login 
+ * <li>Functionalities include: 
+ * <li>1. Add Course Group
+ * <li>2. Drop Course Group
+ * <li>3. Check/Print Courses Registered
+ * <li>4. Check Vacancies Available  
+ * <li>5. Check Index Number of Course
+ * <li>6. Swop Index Number with Another Student 
+ * <li>7. Accept Swop Request
+ * <li>8. View Confirmed Time Table
+ * 
+ * @author Wei Yao and Wen Yu
+ */
 public class StudentApp {
 	private Scanner scan = new Scanner(System.in);
 	private Student loginStudent;
@@ -20,12 +34,20 @@ public class StudentApp {
 		crsmgr=courseManager;
 		this.emailNotificationManager=emailNotificationManager;
 		loginStudent = stdmgr.getStudent(userName);
-    }
+	}
+
+	/**
+	 * Starts the App
+	 * @author Wei Yao
+	 */
     public void start(){
     	showMenu();
-    	
     }
-    
+	
+	/**
+	 * Shows the main menu
+	 * @author Wei Yao
+	 */
     public void showMenu() {
     	System.out.println("=================Student Page================");
         System.out.println("| 1. Add Course Group                       |");
@@ -71,7 +93,15 @@ public class StudentApp {
         }
         
     }
-    
+	
+	/**
+	 * UI for adding a course
+	 * <li> 1. Checks if student has exceeded 21 AU
+	 * <li> 2. Checks if student is already in the course
+	 * <li> 3. Checks if student is already in the waitlist
+	 * <li> 4. Checks if student has a clashing time table
+	 * @author Wei Yao, Wen Yu, Wang Li Rong
+	 */
     public void addMenu() {
     	System.out.println("=================Add Course Page================");
     	
@@ -104,7 +134,8 @@ public class StudentApp {
         if(option != 99) {
 			//shows all possible coursegroups 
 	        String selectedCourseID = availableCourse.get(courseID[option-1]).getcourseCode();
-			if (loginStudent.getConfirmedCourseGroups().values().contains(selectedCourseID)){
+			//checks if student is in the course
+			if (loginStudent.isInCourse(selectedCourseID)){
 				System.out.println("You have already registered for this course!");
 				showMenu();
 			} else {
@@ -129,11 +160,11 @@ public class StudentApp {
 				if(option != 99) {
 					int addedCourseAU = crsmgr.getCourseByCode(selectedCourseID).getCourseAU();
 					totalAU += addedCourseAU;
-					
 					//check if student is already in the waitlist to prevent spamming
 					if (crsmgr.getCourseGroup(matchCG[option-1]).isWaitlistStudent(loginStudent.getMatriculationNumber())){
 						System.out.println("You are already in the waitlist of this course group!");
 						showMenu();
+					//checks for time table clashes
 					} else if (isClashing(matchCG[option-1])){
 						System.out.println("Cannot add this index because of timetable clashes.");
 						showMenu();
@@ -141,7 +172,7 @@ public class StudentApp {
 					// check if student has has AU under 21
 					else if (totalAU <=21){
 						Boolean result = crsmgr.enrol(loginStudent.getMatriculationNumber(), matchCG[option-1]);
-						//if the enrolment is succesful for coursemanager, add to student also
+						//if the enrolment is succesful for coursemanager, add course to student also
 						if (result){
 							stdmgr.enrol(loginStudent.getMatriculationNumber(), matchCG[option-1], selectedCourseID);
 							System.out.println("You have added course group: "+matchCG[option-1]);
@@ -161,7 +192,13 @@ public class StudentApp {
         	showMenu();
         }    	
     }
-    
+	
+	/**
+	 * UI for dropping a course. Only shows course groups a student is in
+	 * <li> If there is another student in waitlist, also add the course to the student
+	 *      and notify them via email
+	 * @author Wei Yao and Wang Li Rong
+	 */
     public void dropMenu() {
     	System.out.println("|Please select the course group you wish to drop:     |");
     	System.out.println("================================================");
@@ -195,8 +232,13 @@ public class StudentApp {
         	showMenu();
         }
     }
-    
-    //Updated by WY
+	
+	/**
+	 * Drops course group in both student and the course
+	 * @param courseGroup
+	 * @return string: matriculation number of waitlist student
+	 *         null: if there is no waitlist student to add
+	 */
     private String dropCourseGroup(String courseGroup) {
 		String result = crsmgr.dropCourseGroup(courseGroup, loginStudent.getMatriculationNumber());
 		boolean result2 = stdmgr.dropCourseGroup(loginStudent.getMatriculationNumber(), courseGroup);
@@ -205,12 +247,20 @@ public class StudentApp {
 		}
 		return result;   	
     }
-    
+	
+	/**
+	 * UI to print out all registered courses of a student
+	 * @author Wei Yao
+	 */
     public void printMenu() {
 		loginStudent.printRegisterCourse();
 		showMenu();
     }
-    
+	
+	/**
+	 * UI to check vacanies of course groups
+	 * @author Wei Yao
+	 */
     public void checkVacancies() {
     	System.out.println("|These are the vacancies for all available course groups |");
     	System.out.println("==========================================================");
@@ -223,7 +273,10 @@ public class StudentApp {
     	scan.nextLine();
     	showMenu();
     }
-    
+	
+	/**
+	 * UI to check all indexes of a course
+	 */
     public void checkIndex() {
     	System.out.println("|These are the indexes for all available course groups     |");
     	System.out.println("==========================================================");
@@ -236,7 +289,13 @@ public class StudentApp {
      	scan.next();
      	showMenu();
     }
-    
+	
+	/**
+	 * UI to swop indexes
+	 * <li> 1. Checks for clashes in both students
+	 * <li> 2. Checks that both student have the indexes they want to trade
+	 * @author Wei Yao and Wang Li Rong
+	 */
     public void swopIndex() {
 
 		System.out.println("================Swap Index Menu=========================");
@@ -270,11 +329,15 @@ public class StudentApp {
 			//check for clashes
 			currentStudentClash = crsmgr.isClashing(courseGroup, courseToID);
 		}
+		//check if current student has the index they want to trade
 		if (!currentStudentHasIndex){
 			System.out.println("You do not have the index to swop with the other student.");
-		} else if (currentStudentClash){
+		} 
+		//check if current student would have clashes in their timetable if they swop
+		else if (currentStudentClash){
 			System.out.println("Swopping courses will cause a clash in your timetable");
-		} else{
+		} 
+		else{
 			System.out.println("|Please enter matric number of the student you wish to swap with: ");
 			String matric2 = scan.next();
 			while (stdmgr.getStudent(matric2)==null){
@@ -296,10 +359,12 @@ public class StudentApp {
 				//check for clashes
 				otherStudentClash = crsmgr.isClashing(courseGroup, courseToID);
 			}
-			
+			//check if other student has the index they want to trade
 			if (!otherStudentHasIndex){
 				System.out.println("The other student does not have the index to swap with you");
-			} else if (otherStudentClash){
+			} 
+			//checks if other student has clashes in their time table if they swop
+			else if (otherStudentClash){
 				System.out.println("Swopping courses will cause a clash in other student's timetable");
 			} else {
 				crsmgr.addSwap(courseFromID,courseToID, loginStudent.getMatriculationNumber(), matric2);
@@ -311,6 +376,11 @@ public class StudentApp {
         showMenu();
 	}
 
+	/**
+	 * UI to accept swop requests from another student
+	 * <li> Checks for correct input
+	 * @author Wang Li Rong
+	 */
 	private void acceptSwap(){
 		ArrayList<String[]> swapArrayList = crsmgr.getSwapsForStudent(loginStudent.getMatriculationNumber());
 		System.out.println("\tFrom To\tSender\tReceiver");
@@ -329,33 +399,16 @@ public class StudentApp {
 		if (option != -1){
 			if (option >=1 && option <=swapArrayList.size()){
 				String[] selection = swapArrayList.get(option-1);
-				
-				//from is the index of the sender
-				//to is index of receiver
-				//get [fromIndex, toIndex]
-				String[] indexArray = selection[0].split(" ");
-				//do the swap
-				//change record in the coursegroup
-				//for the first coursegroup, remove the first student from fromIndex
-				crsmgr.getCourseGroup(indexArray[0]).swapStudent(selection[1], selection[2]);
-				//for the second coursegroup, remove the second student from ToIndex
-				crsmgr.getCourseGroup(indexArray[1]).swapStudent(selection[2], selection[1]);
-
-				//now change the record in the student as well
-				//first student (sender)
-				stdmgr.getStudent(selection[1]).swapIndex(indexArray[1], indexArray[0]);
-				//second student (receiver)
-				stdmgr.getStudent(selection[2]).swapIndex(indexArray[0], indexArray[1]);
-				//save
-				stdmgr.save();
-				crsmgr.save();
+				//do the swap for course
+				crsmgr.swap(selection);
+				//now swap in the student as well
+				stdmgr.swap(selection);
 				//remove the swap from database
 				crsmgr.removeSwap(selection[0]);
 			} else {
 				System.out.println("Invalid option");
 			}
 		}
-
 		showMenu();
 	}
 	/**
@@ -388,10 +441,17 @@ public class StudentApp {
 		showMenu();
 	}
 
+	/**
+	 * Check if there are clashes between the current student's timetable 
+	 * and their newly added index
+	 * @param newCourseGroupIndex
+	 * @return true: there are clashes
+	 *        <li> false: there are no clashes
+	 */
 	private boolean isClashing(String newCourseGroupIndex){
-		ArrayList<String> confirmedCourse = new ArrayList<String> (loginStudent.getConfirmedCourseGroups().keySet());
+		ArrayList<String> confirmedCourseGroups = new ArrayList<String> (loginStudent.getConfirmedCourseGroups().keySet());
 		//go through all couseGroups of student
-		for (String courseGroup : confirmedCourse){
+		for (String courseGroup : confirmedCourseGroups){
 			//check for clashes
 			if (crsmgr.isClashing(courseGroup, newCourseGroupIndex)){
 				return true;

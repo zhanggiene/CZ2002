@@ -45,6 +45,9 @@ public class EmailNotificationManager {
         }
         setup();
     }
+    /**
+     * Setup for email notification
+     */
     private void setup()
     {
         props = new Properties();
@@ -62,6 +65,9 @@ public class EmailNotificationManager {
 
     }
 
+    /**
+     * Loads file of emails and matriculation numbers
+     */
     private void loadFile()
     {
         try{
@@ -85,7 +91,8 @@ public class EmailNotificationManager {
     }
 
     
-    /**  send email with subject and content to student using metriculationNUmber to identidy the student. 
+    /**  
+     * send email with subject and content to student using matriculationNUmber to identidy the student. 
      * @param studentMetriculationNumber
      * @param Subject
      * @param Content
@@ -120,8 +127,9 @@ public class EmailNotificationManager {
     }
 
     
-    /**   assume the studentID does not exist in the database to avoid duplicate
-     *   add studentId and its associated email to the database
+    /**   
+     * assume the studentID does not exist in the database to avoid duplicate
+     * add studentId and its associated email to the database
      * @param studentId
      * @param email
      */
@@ -134,12 +142,14 @@ public class EmailNotificationManager {
     }
 
 
+    /**
+     * Saves the emails recorded in the system
+     */
     private void save() {
         this.file = new File(this.fileName);
         try {
             this.fw = new FileWriter(this.file, false);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         this.pw=new PrintWriter(this.fw);
@@ -154,7 +164,8 @@ public class EmailNotificationManager {
     }
 
     
-    /** check is the student has email address in the database
+    /** 
+     * check is the student has email address in the database
      * @param metriculationNumber
      * @return boolean
      */
@@ -162,17 +173,5 @@ public class EmailNotificationManager {
     {
         return EmailDataBase.contains(metriculationNumber);
 
-    }
-
-    
-    /** 
-     * @param args
-     */
-    public static void main(String[] args) {
-        EmailNotificationManager manager=new EmailNotificationManager();
-        //manager.add("123","123");
-        //manager.add("456","456");
-        //System.out.println(manager.EmailDataBase);
-        //manager.sendEmail("U1920187L", "test1", "hi test123");
     }
 }

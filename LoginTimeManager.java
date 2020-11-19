@@ -6,11 +6,10 @@ import java.util.EnumMap;
 import java.io.*;
 
 
+    
 /**
-     * validate the correct timing of registering for students. 
-     * serve as a database of correct timing for each school
-     * @author zhang zhuyan
-     */
+ * Schools in the system
+ */
 enum School {
     SCSE {
         @Override
@@ -50,7 +49,11 @@ enum School {
     };
 }
 
-
+/**
+ * validate the correct timing of registering for students. 
+ * serve as a database of correct timing for each school
+ * @author zhang zhuyan
+ */
 public class LoginTimeManager {
 
     private EnumMap<School, ArrayList<Date>> TimeMap;
@@ -63,6 +66,10 @@ public class LoginTimeManager {
         loadLoginPeriods();
     }
 
+    /**
+     * Saves all records
+     * @author zhu yan
+     */
     private void save()
     {
         try {
@@ -83,6 +90,7 @@ public class LoginTimeManager {
      * @param schoolName  schoolName of Type School
      * @param start       start of type String "2020-10-19 16:00"
      * @param end         type String eg  "2020-10-19 16:00"
+     * @author zhu yan
      */
     public void add(School schoolName, String start, String end) {
 
@@ -99,10 +107,12 @@ public class LoginTimeManager {
         }
 
         this.save();
-
-        // save
     }
 
+    /**
+     * Checks if the format is correct for time
+     * @author zhu yan
+     */
     public boolean isValidTime(String start, String end)
     {
         try {
@@ -111,7 +121,6 @@ public class LoginTimeManager {
             if (time1.after(time2))
             {
                 return false;
-
             }
             else
             {
@@ -128,25 +137,27 @@ public class LoginTimeManager {
 
     
     /** 
-     * @return ArrayList
+     * Returns list of school that already have a login period set
+     * @return ArrayList of schools that already have a login period
+     * @author Wang Li Rong
+     * @author zhu yan
      */
-    public ArrayList getSchoolsWithLoginPeriod(){
+    public ArrayList<School> getSchoolsWithLoginPeriod(){
         return new ArrayList<>(this.TimeMap.keySet());
     }
 
     /**
      * load data from local data, must use this method after initialization 
      * it is private as it will load automatically upon initialization
+     * @author zhu yan
      */
     private void loadLoginPeriods()
     {
         try {
             File yourFile = new File(this.FileName);
             if(!yourFile.exists()){
-
                 yourFile.createNewFile();
                 this.TimeMap=new EnumMap<School,ArrayList<Date>>(School.class);
-
               }
 
               else
@@ -155,13 +166,9 @@ public class LoginTimeManager {
                 ObjectInputStream ois=new ObjectInputStream(fis);
                 //WriteObject wo=null;
                 //WriteObject[] woj=new WriteObject[5];
-        
                 this.TimeMap=(EnumMap<School, ArrayList<Date>>) ois.readObject();
                 ois.close();
               }
-
-            
-    
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -170,9 +177,11 @@ public class LoginTimeManager {
 
     
     /** 
+     * Checks if it is within the allowed time frame
      * @param studentSchool  school type of student of type School
      * @param currentTime   the time of login of type Date
      * @return boolean      true if it is within the allowed time frame
+     * @author zhu yan
      */
     public boolean isInside(School studentSchool, Date currentTime) {
         ArrayList<Date> interval = TimeMap.get(studentSchool);
@@ -180,14 +189,12 @@ public class LoginTimeManager {
         {
             return false;
         }
-        
-
         return currentTime.after(interval.get(0)) && currentTime.before(interval.get(1));
 
     }
     /**
      * print start and end access time for each school. 
-     * 
+     * @author zhu yan
      */
     public void printAllAccessPeriod()
     {
@@ -201,32 +208,4 @@ public class LoginTimeManager {
     }
 
     }
-
-    
-    /** 
-     * @param args
-     */
-    public static void main(String[] args) {
-
-        LoginTimeManager timemanager=new LoginTimeManager();
-        /*SimpleDateFormat ft =new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
-        Date timeTemp;
-        try {
-            timeTemp = ft.parse("2020-11-19 17:00");
-            System.out.println(timemanager.isInside(School.SCSE,timeTemp));
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            
-        }
-        //timemanager.add(School.SCSE,"2020-10-19 16:00","2020-10-19 17:00");
-        */
-        
-
-        timemanager.printAllAccessPeriod();
-        
-    }
-
 }
-
-//     edit(sch)

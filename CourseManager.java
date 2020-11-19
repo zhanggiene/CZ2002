@@ -338,5 +338,24 @@ public class CourseManager {
 		}
 		return false;
 	}
+
+	/**
+	 * Does swap for 2 students using swap entry
+	 * @param swapEntry
+	 * @author Wang Li Rong
+	 */
+	public void swap(String[] swapEntry){
+        //from is the index of the sender
+        //to is index of receiver
+        //get [fromIndex, toIndex]
+        String[] indexArray = swapEntry[0].split(" ");
+        //do the swap
+        //change record in the coursegroup
+        //for the first coursegroup, remove the first student from fromIndex
+        getCourseGroup(indexArray[0]).swapStudent(swapEntry[1], swapEntry[2]);
+        //for the second coursegroup, remove the second student from ToIndex
+		getCourseGroup(indexArray[1]).swapStudent(swapEntry[2], swapEntry[1]);
+		save();
+    }
 }
 

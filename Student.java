@@ -2,6 +2,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Enum for gender of student
+ */
 enum Gender {
     FEMALE{
         @Override
@@ -17,6 +20,9 @@ enum Gender {
     }
 }
 
+/**
+ * Entity class for student stores the details of the student eg. name, matriculation number...
+ */
 public class Student implements Serializable
 {
     private String name;
@@ -27,8 +33,6 @@ public class Student implements Serializable
     // arraylist containing tuples containing index and its corresponding class code
     private HashMap<String,String> confirmedCourseGroups; //course-group(index), course-code
     private static final long serialVersionUID = 3L;
-    
-    
     
     public Student(String name,
                    String matricNumber,
@@ -43,6 +47,10 @@ public class Student implements Serializable
         this.confirmedCourseGroups = new HashMap<>();
     }
     
+    /**
+     * Returns string representation of student
+     * @return string representation of student
+     */
     public String toString() {
         return name+" "+matricNumber;
     }
@@ -66,30 +74,39 @@ public class Student implements Serializable
         return false;
     }
     
-    //Updated by WY
+    /**
+     * Returns hashmap of confirmed course groups student is in
+     * @author Wei Yao
+     * @return hashmap of confirmed course groups student is in (index: course code)
+     */
     public HashMap<String,String> getConfirmedCourseGroups (){
     	return confirmedCourseGroups;
     }
     
+    /**
+     * Changes a index of the student
+     * @author Wei Yao
+     */
     public void swapIndex(String newGroup, String oldGroup) {//group1 = new, group2 = old
     	String coursecode = confirmedCourseGroups.get(oldGroup);
     	confirmedCourseGroups.remove(oldGroup);
     	confirmedCourseGroups.put(newGroup, coursecode);
     }
     
+    /**
+     * Getter for matricultion number
+     * @return matricultion number
+     * @author Wei Yao
+     */
     public String getMatriculationNumber()
     {
         return matricNumber;
     }
-
-    /*
-    public Boolean CheckClashes(String index)
-    {
-
-        return false;
-    }
-    */
     
+    /**
+     * Getter for school
+     * @author Wei Yao
+     */
     public School getSchool()
     {
         return school;
@@ -114,6 +131,15 @@ public class Student implements Serializable
         confirmedCourseGroups.put(courseGroupIndex, newCourseCode);
     }
 
+    /**
+     * Checks if student is already in the course
+     * @param courseGroupIndex
+     * @return
+     */
+    public boolean isInCourse(String courseGroupIndex){
+        return confirmedCourseGroups.containsValue(courseGroupIndex);
+    }
+
 
     /**
      * Format to print student
@@ -122,7 +148,10 @@ public class Student implements Serializable
     public void printStudent(){
         System.out.println(name+"\t"+gender+"\t"+nationality+"\t"+this.school);
     }
-    //Updated by WY
+    /**
+     * Prints out all registered course groups of a student
+     * @author Wei Yao
+     */
     public void printRegisterCourse() {
     	System.out.println("|Your registered course groups     |");
     	System.out.println("================================================");
@@ -134,7 +163,5 @@ public class Student implements Serializable
     	}
     	System.out.println("================================================");
     }
-
-    
     
 }
