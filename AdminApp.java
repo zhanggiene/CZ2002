@@ -153,52 +153,38 @@ public class AdminApp {
         String time;
         String startDateTime = null;
         String endDateTime = null;
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        while (progress1){
-            try {
-                //start date
-                System.out.println("Press b to go back");
-                System.out.println("Choice of start date: (YYYY-MM-DD)");
-                date = scan.next();
-                if (date.equals("b")){break;}
 
-                //start time
-                System.out.println("Choice of start time: (HH:MM)");
-                time = scan.next();
-                if (time.equals("b")){break;}
+        boolean incorrectFormat = true;
 
-                //check correct format
-                startDateTime = date + " " + time;
-                df.parse(startDateTime);
+        while (incorrectFormat){
+            //start date
+            System.out.println("Press b to go back");
+            System.out.println("Choice of start date: (YYYY-MM-DD)");
+            date = scan.next();
+            if (date.equals("b")){break;}
 
-                progress2=true;
-                progress1=false;
+            //start time
+            System.out.println("Choice of start time: (HH:MM)");
+            time = scan.next();
+            if (time.equals("b")){break;}
 
-            } catch (Exception e){
-                System.out.println("Wrong Format of Input!");
-            }
-        }
+            startDateTime = date + " " + time;
 
-        while (progress2) {
-            try {
-                //end date
-                System.out.println("Choice of end date: (YYYY-MM-DD)");
-                date = scan.next();
-                if (date.equals("b")){break;}
+            //end date
+            System.out.println("Choice of end date: (YYYY-MM-DD)");
+            date = scan.next();
+            if (date.equals("b")){break;}
 
-                //end time
-                System.out.println("Choice of end time: (HH:MM)");
-                time = scan.next();
-                if (time.equals("b")){break;}
+            //end time
+            System.out.println("Choice of end time: (HH:MM)");
+            time = scan.next();
+            if (time.equals("b")){break;}
 
-                //check correct format
-                endDateTime = date + " " + time;
-                df.parse(endDateTime);
+            endDateTime = date + " " + time;
 
-                progress2=false;
-
-            } catch (Exception e){
-                System.out.println("Wrong Format of Input!");
+            incorrectFormat = !timeManager.isValidTime(startDateTime, endDateTime);
+            if (incorrectFormat){
+                System.out.println("Start time must be before end time!");
             }
         }
 
@@ -252,54 +238,38 @@ public class AdminApp {
         String time;
         String startDateTime = null;
         String endDateTime = null;
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        
+        boolean incorrectFormat = true;
 
-        while (progress1) {
-            try {
-                //start date
-                System.out.println("Press b to go back");
-                System.out.println("Choice of start date: (YYYY-MM-DD)");
-                date = scan.next();
-                if (date.equals("b")){break;}
+        while (incorrectFormat){
+            //start date
+            System.out.println("Press b to go back");
+            System.out.println("Choice of start date: (YYYY-MM-DD)");
+            date = scan.next();
+            if (date.equals("b")){break;}
 
-                //start time
-                System.out.println("Choice of start time: (HH:MM)");
-                time = scan.next();
-                if (time.equals("b")){break;}
+            //start time
+            System.out.println("Choice of start time: (HH:MM)");
+            time = scan.next();
+            if (time.equals("b")){break;}
 
-                //check correct format
-                startDateTime = date + " " + time;
-                df.parse(startDateTime);
+            startDateTime = date + " " + time;
 
-                progress2=true;
-                progress1=false;
+            //end date
+            System.out.println("Choice of end date: (YYYY-MM-DD)");
+            date = scan.next();
+            if (date.equals("b")){break;}
 
-            } catch (Exception e){
-                System.out.println("Wrong Format of Input!");
-                scan.nextLine(); //clear buffer
-            }
-        }
+            //end time
+            System.out.println("Choice of end time: (HH:MM)");
+            time = scan.next();
+            if (time.equals("b")){break;}
 
-        while (progress2) {
-            try {
-                //end date
-                System.out.println("Choice of end date: (YYYY-MM-DD)");
-                date = scan.next();
-                if (date.equals("b")){break;}
+            endDateTime = date + " " + time;
 
-                //end time
-                System.out.println("Choice of end time: (HH:MM)");
-                time = scan.next();
-                if (time.equals("b")){break;}
-
-                //check correct format
-                endDateTime = date + " " + time;
-                df.parse(endDateTime);
-
-                progress2=false;
-
-            } catch (Exception e){
-                System.out.println("Wrong Format of Input!");
+            incorrectFormat = !timeManager.isValidTime(startDateTime, endDateTime);
+            if (incorrectFormat){
+                System.out.println("Start time must be before end time!");
             }
         }
 
