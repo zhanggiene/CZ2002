@@ -9,7 +9,7 @@ import java.util.Map;
      * Manages the adding and dropping of courses
 	 * @author Weiyao
      */
-public class CourseManager extends Manager{
+public class CourseManager{
 	private Map<String, Course> courses; 
 	private Map<String, CourseGroup> courseGroups;
 	private Map<String, String[]> swapIndex;

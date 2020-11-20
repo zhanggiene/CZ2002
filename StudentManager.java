@@ -5,7 +5,7 @@ import java.util.*;
  data base for students objects
 * @author zhang zhuyan
 */
-public class StudentManager extends Manager{
+public class StudentManager {
 
     // reference https://stackoverflow.com/questions/30013292/how-do-i-write-multiple-objects-to-the-serializable-file-and-read-them-when-the
 

@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
      provide functionality for sending emails. it is also the email database 
      * @author zhang zhuyan
      */
-public class EmailNotificationManager extends Manager{
+public class EmailNotificationManager {
 
     public Hashtable<String, String> EmailDataBase = new Hashtable<String, String>();
     private String fileName = "email.txt";

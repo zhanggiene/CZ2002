@@ -54,7 +54,7 @@ enum School {
  * serve as a database of correct timing for each school
  * @author zhang zhuyan
  */
-public class LoginTimeManager extends Manager{
+public class LoginTimeManager{
 
     private EnumMap<School, ArrayList<Date>> TimeMap;
     private SimpleDateFormat ft;
