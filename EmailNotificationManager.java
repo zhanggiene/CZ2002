@@ -15,7 +15,7 @@ import javax.mail.internet.MimeMessage;
      provide functionality for sending emails. it is also the email database 
      * @author zhang zhuyan
      */
-public class EmailNotificationManager {
+public class EmailNotificationManager extends Manager{
 
     public Hashtable<String, String> EmailDataBase = new Hashtable<String, String>();
     private String fileName = "email.txt";
@@ -36,7 +36,7 @@ public class EmailNotificationManager {
         try {
             this.file = new File(this.fileName);
             this.file.createNewFile();
-            loadFile();
+            load();
             this.fw = new FileWriter(this.file, true);
             this.pw=new PrintWriter(this.fw);
         } catch (IOException e) {
@@ -68,7 +68,7 @@ public class EmailNotificationManager {
     /**
      * Loads file of emails and matriculation numbers
      */
-    private void loadFile()
+    private void load()
     {
         try{
             Scanner rd=new Scanner(this.file);

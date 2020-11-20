@@ -5,7 +5,7 @@ import java.util.*;
  data base for students objects
 * @author zhang zhuyan
 */
-public class StudentManager {
+public class StudentManager extends Manager{
 
     // reference https://stackoverflow.com/questions/30013292/how-do-i-write-multiple-objects-to-the-serializable-file-and-read-them-when-the
 
@@ -13,7 +13,7 @@ public class StudentManager {
     private String FileName="StudentData.bin";
 
     StudentManager(){
-        loadData();
+        load();
     }
     
     /** 
@@ -58,7 +58,7 @@ public class StudentManager {
      * Load all data
      * @author zhu yan
      */
-    private void loadData()
+    private void load()
     {
         try {
             File yourFile = new File(this.FileName);

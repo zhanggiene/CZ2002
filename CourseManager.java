@@ -9,7 +9,7 @@ import java.util.Map;
      * Manages the adding and dropping of courses
 	 * @author Weiyao
      */
-public class CourseManager {
+public class CourseManager extends Manager{
 	private Map<String, Course> courses; 
 	private Map<String, CourseGroup> courseGroups;
 	private Map<String, String[]> swapIndex;
@@ -21,7 +21,7 @@ public class CourseManager {
 
 	public CourseManager()
 	{
-		loadData();
+		load();
 		if (this.courses == null){
 			this.courses = new HashMap<String, Course>();
 		}
@@ -233,7 +233,7 @@ public class CourseManager {
 	 * Load data from the bin files
 	 * @author zhu yan
 	 */
-	private void loadData()
+	private void load()
 	{
 		try {
 			FileInputStream fisCourse=new FileInputStream("./"+this.CourseFile);

@@ -9,7 +9,7 @@ import java.io.*;
  * @author zhang zhuyan
  */
 
-public class PasswordManager {
+public class PasswordManager extends Manager {
 
     public Hashtable<String, String> my_dict = new Hashtable<String, String>();
     private String fileName = "password.txt";

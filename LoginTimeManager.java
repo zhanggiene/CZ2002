@@ -54,7 +54,7 @@ enum School {
  * serve as a database of correct timing for each school
  * @author zhang zhuyan
  */
-public class LoginTimeManager {
+public class LoginTimeManager extends Manager{
 
     private EnumMap<School, ArrayList<Date>> TimeMap;
     private SimpleDateFormat ft;
@@ -63,7 +63,7 @@ public class LoginTimeManager {
     public LoginTimeManager()
     {
         ft = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
-        loadLoginPeriods();
+        load();
     }
 
     /**
@@ -111,6 +111,9 @@ public class LoginTimeManager {
 
     /**
      * Checks if the format is correct for time
+     * @param start       start of type String "2020-10-19 16:00"
+     * @param end         type String eg  "2020-10-19 16:00"
+     * @return            return true if the start is before the end time. 
      * @author zhu yan
      */
     public boolean isValidTime(String start, String end)
@@ -151,7 +154,7 @@ public class LoginTimeManager {
      * it is private as it will load automatically upon initialization
      * @author zhu yan
      */
-    private void loadLoginPeriods()
+    private void load()
     {
         try {
             File yourFile = new File(this.FileName);
@@ -192,6 +195,28 @@ public class LoginTimeManager {
         return currentTime.after(interval.get(0)) && currentTime.before(interval.get(1));
 
     }
+
+
+        /** 
+     * Checks if the current student log in too early or too late
+     * @param studentSchool  school type of student of type School
+     * @param currentTime   the time of login of type Date
+     * @return boolean      true if it is before the allocated time
+     *                      false if it is after the allocated time.
+     * @author zhu yan
+     */
+
+
+    public boolean isEarly(School studentSchool,Date currentTime)
+    {
+        ArrayList<Date> interval = TimeMap.get(studentSchool);
+        if (interval==null)
+        {
+            return false;
+        }
+        return currentTime.before(interval.get(0));
+    
+    }
     /**
      * print start and end access time for each school. 
      * @author zhu yan
@@ -207,5 +232,12 @@ public class LoginTimeManager {
         } 
     }
 
+    }
+    public void PrintSchoolAcessTime(School a)
+    {
+        if(this.TimeMap!=null && TimeMap.get(a)!=null )
+        {
+            System.out.println(a+": from      "+TimeMap.get(a).get(0)+"  to       "+TimeMap.get(a).get(1));  
+    }
     }
 }

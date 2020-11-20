@@ -225,7 +225,7 @@ public class StudentApp {
 			if (addedStudentFromWaitlist != null){
 				stdmgr.enrol(addedStudentFromWaitlist, matchCG[option-1], crsmgr.getCourseGroup(matchCG[option-1]).getCourseCode());
 				//send an email
-				emailNotificationManager.sendEmail(addedStudentFromWaitlist, "New course added from your waitlist", matchCG[option-1]+" has been added. ");
+				emailNotificationManager.sendEmail(addedStudentFromWaitlist, "New course added from your waitlist", "Congradulation\n"+matchCG[option-1]+" has been added . ");
 			}
 			dropMenu();
         }else {
