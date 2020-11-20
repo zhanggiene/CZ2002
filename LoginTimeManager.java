@@ -131,8 +131,7 @@ public class LoginTimeManager extends Manager{
             }
         }
         catch (ParseException e) {
-            System.out.println("the format is wrong");
-            e.printStackTrace();
+            System.out.println("Wrong Format of Input!");
             return false;
         }
 

@@ -125,13 +125,19 @@ public class StudentApp {
     	System.out.print("|99. Return to previous menu. ");
     	System.out.println("|Please select the course you wish to add:     |");
     	System.out.println("================================================");
-    	System.out.print("Option: ");
-        while(!scan.hasNextInt()) {
-        	System.out.println("Please input numbers between 1 - "+ availableCourse.size()+" or 99 only.\nOption: ");
+		System.out.print("Option: ");
+		int option;
+		while (true){
+			if (scan.hasNextInt()){
+				option = scan.nextInt();
+				if ((option<=availableCourse.size() && option>0) || option == 99){
+					break;
+				}
+			}
+			System.out.println("Please input numbers between 1 - "+ availableCourse.size()+" or 99 only.\nOption: ");
 			scan.nextLine();
 		}
-        int option = scan.nextInt();
-        if(option != 99) {
+        if(option<=availableCourse.size() && option>0) {
 			//shows all possible coursegroups 
 	        String selectedCourseID = availableCourse.get(courseID[option-1]).getcourseCode();
 			//checks if student is in the course
@@ -149,6 +155,7 @@ public class StudentApp {
 					matchCG[i-1] = courseGroup.getIndexNumber();    		
 					i++;
 				}
+				System.out.print("|99. Return to previous menu. ");
 				System.out.println("|Please select the course group you wish to add:     |");
 				System.out.println("================================================");
 				System.out.print("Option: ");
@@ -157,6 +164,10 @@ public class StudentApp {
 					scan.nextLine();
 				}
 				option = scan.nextInt();
+				while ((option>availableCG.size() || option<0) && option != 99){
+					System.out.println("Please input numbers between 1 - "+ availableCG.size()+" or 99 only.\nOption: ");
+					option = scan.nextInt();
+				}
 				if(option != 99) {
 					int addedCourseAU = crsmgr.getCourseByCode(selectedCourseID).getCourseAU();
 					totalAU += addedCourseAU;
@@ -187,6 +198,9 @@ public class StudentApp {
 						showMenu();
 					}
 				}
+				else {
+					showMenu();
+				}
 			}
         }else {
         	showMenu();
@@ -212,13 +226,19 @@ public class StudentApp {
         	i++;
         }    
         System.out.print("|99. Return to previous menu. ");
-        System.out.print("Option: ");
-        while(!scan.hasNextInt()) {
-        	System.out.println("Please input numbers between 1 - "+ studentregcourse.size()+" or 99 only.\nOption: ");
+		System.out.print("Option: ");
+		int option;
+		while (true){
+			if (scan.hasNextInt()){
+				option = scan.nextInt();
+				if ((option<=studentregcourse.size() && option>0) || option == 99){
+					break;
+				}
+			}
+			System.out.println("Please input numbers between 1 - "+ studentregcourse.size()+" or 99 only.\nOption: ");
 			scan.nextLine();
 		}
-        int option = scan.nextInt();
-        if(option != 99) {
+        if(option<=studentregcourse.size() && option>0) {
         	String addedStudentFromWaitlist = dropCourseGroup(matchCG[option-1]);
         	System.out.print("You have dropped course group: "+matchCG[option-1]+".");
 			//if there was a student added from waitlist
@@ -372,7 +392,6 @@ public class StudentApp {
 				scan.next();
 			}
 		} 
-	
         showMenu();
 	}
 
@@ -389,25 +408,30 @@ public class StudentApp {
 			System.out.println(i+". "+swap[0]+"\t"+swap[1]+"\t"+swap[2]);
 			i++;
 		}
-		System.out.println("Enter choice number to accept (-1 to go back to menu)");
+		System.out.println("Enter choice number to accept (99 to go back to menu)");
 		int option;
 		while (!scan.hasNextInt()){
-			System.out.println("Please enter valid int.");
+			System.out.println("Please input numbers between 1 - "+ swapArrayList.size()+" or 99 only.\nOption: ");
 			scan.nextLine();
 		}
-		option = scan.nextInt();
-		if (option != -1){
-			if (option >=1 && option <=swapArrayList.size()){
-				String[] selection = swapArrayList.get(option-1);
-				//do the swap for course
-				crsmgr.swap(selection);
-				//now swap in the student as well
-				stdmgr.swap(selection);
-				//remove the swap from database
-				crsmgr.removeSwap(selection[0]);
-			} else {
-				System.out.println("Invalid option");
+		while (true){
+			if (scan.hasNextInt()){
+				option = scan.nextInt();
+				if ((option<=swapArrayList.size() && option>0) || option == 99){
+					break;
+				}
 			}
+			System.out.println("Please input numbers between 1 - "+ swapArrayList.size()+" or 99 only.\nOption: ");
+			scan.nextLine();
+		}
+		if (option <=swapArrayList.size() && option>0){
+			String[] selection = swapArrayList.get(option-1);
+			//do the swap for course
+			crsmgr.swap(selection);
+			//now swap in the student as well
+			stdmgr.swap(selection);
+			//remove the swap from database
+			crsmgr.removeSwap(selection);
 		}
 		showMenu();
 	}

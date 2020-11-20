@@ -282,9 +282,23 @@ public class CourseManager extends Manager{
 	/**
 	 * Removes a swap
 	 * @param key
+	 * @author Wang Li Rong
 	 */
-	public void removeSwap(String key){
+	public void removeSwap(String[] selection){
+		String key = selection[0];
+		//remove the current request
 		swapIndex.remove(key);
+		//checks if there is a duplicate request from the other person and remove it
+		String[] arrayKey = key.split(" "); //index 0(from) 1(to) from sender's perspective
+		String otherKey = arrayKey[1] +" "+ arrayKey[0];
+		//if there is another request with the swapped other key
+		if (swapIndex.containsKey(otherKey)){
+			//if this is the correct pair
+			if (selection[1].equals(swapIndex.get(otherKey)[1]) && selection[2].equals(swapIndex.get(otherKey)[0])){
+				//remove it
+				swapIndex.remove(otherKey);
+			}
+		}
 		save();
 	}
 
