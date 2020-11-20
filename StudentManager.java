@@ -1,26 +1,23 @@
 import java.io.*;
 import java.util.*;
 
-import javax.print.DocFlavor.STRING;
-
 /**
-     data base for students objects
-     * @author zhang zhuyan
-     */
-
+ data base for students objects
+* @author zhang zhuyan
+*/
 public class StudentManager {
 
     // reference https://stackoverflow.com/questions/30013292/how-do-i-write-multiple-objects-to-the-serializable-file-and-read-them-when-the
 
-   private Hashtable<String, Student> studentAccounts = new Hashtable<String, Student>();
+   private Hashtable<String, Student> studentAccounts;
     private String FileName="StudentData.bin";
 
     StudentManager(){
         loadData();
-
     }
     
-    /** retreive student object from database
+    /** 
+     * retreive student object from database
      * @param metriculationNumber
      * @return Student
      */
@@ -29,37 +26,55 @@ public class StudentManager {
         return studentAccounts.get(metriculationNumber);
     }
 
+    /**
+     * Add a new student
+     * @param student
+     * @author zhu yan
+     */
     public void addStudent(Student student)
     {
         studentAccounts.put(student.getMatriculationNumber(),student);
         save();
     }
 
-    private void save()
+    /**
+     * Save all records
+     * @author zhu yan
+     */
+    public void save()
     {
         try {
             FileOutputStream fop=new FileOutputStream("./"+this.FileName);
             ObjectOutputStream oos=new ObjectOutputStream(fop);
             oos.writeObject(this.studentAccounts);
             oos.close();
-    
         }
          catch (Exception e) {
             e.printStackTrace();
+        }
+    }
 
-    }
-    }
+    /**
+     * Load all data
+     * @author zhu yan
+     */
     private void loadData()
     {
         try {
-            FileInputStream fis=new FileInputStream("./"+this.FileName);
-            ObjectInputStream ois=new ObjectInputStream(fis);
-            //WriteObject wo=null;
-            //WriteObject[] woj=new WriteObject[5];
-    
-            this.studentAccounts=(Hashtable<String, Student>) ois.readObject();
-            ois.close();
-    
+            File yourFile = new File(this.FileName);
+            if(!yourFile.exists()){
+                yourFile.createNewFile();
+                this.studentAccounts=new Hashtable<String, Student>();
+              }
+              else
+              {
+                FileInputStream fis=new FileInputStream(yourFile);
+                ObjectInputStream ois=new ObjectInputStream(fis);
+                //WriteObject wo=null;
+                //WriteObject[] woj=new WriteObject[5];
+                this.studentAccounts=(Hashtable<String, Student>) ois.readObject();
+                ois.close();
+              }
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -67,65 +82,85 @@ public class StudentManager {
 }
             
 
-
+    /**
+     * Print all students
+     * @author Wang Li Rong
+     */
     public void printAllRecord() {
         System.out.println("List of Students: ");
-        System.out.println("\tName     \tGender\tNationality\t");
+        System.out.println("\tName     \tGender\tNationality\tSchool");
         int i=1;
         for (Student s : studentAccounts.values()) {
             System.out.print(i+".\t");
             s.printStudent();
             i++;
         }
-
-        
     }
+
+    /**
+     * Returns the school of a student
+     * @param metricNumber
+     * @return
+     */
     School getSchool(String metricNumber)
     {
         return studentAccounts.get(metricNumber).getSchool();
     }
 
+    /**
+     * Find out if student exists
+     * @param metricNumber
+     * @return true: student exists
+     *      <li> false: student does not exist
+     * @author zhu yan
+     */
     public boolean studentExist(String metricNumber)
     {
-        return studentAccounts.contains(metricNumber);
+        return studentAccounts.containsKey(metricNumber);
 
     }
-    
-    
-    /** 
-     * @param matric1
-     * @param coursegroup1
-     * @param matric2
-     * @param coursegroup2
-     * @return boolean
-     */
-    //updated by WY
-	public boolean checkSwap(String matric1, String coursegroup1, String matric2, String coursegroup2) {
-		boolean swapped = false;
-		for(Map.Entry<String, Student> item : studentAccounts.entrySet()) {
-			if(item.getValue().getMatriculationNumber() == matric1) {
-				item.getValue().swapIndex(coursegroup2, coursegroup1);
-				swapped = true;
-			}else
-			if(item.getValue().getMatriculationNumber() == matric2) {
-				item.getValue().swapIndex(coursegroup1, coursegroup2);
-				swapped = true;
-			}
-		}
-		return swapped;
-	}
 
-    
-    /** 
-     * @param args[]
+    /**
+     * Adds course to a student
+     * @author Wang Li Rong
+     * @param matricNumber
+     * @return True: course is added to student succesfully
+     *     <li>False: course was not added to student successfully (if student does not exist in system)
      */
-    public static void main(String args[]){
-        //testing code
-        StudentManager studentManager = new StudentManager();
-        studentManager.addStudent(new Student("John Doe", "U1234567B", School.SCSE, Gender.MALE, "Chinese"));
-        studentManager.addStudent(new Student("Jane Doe", "U2234567B", School.EEE, Gender.FEMALE, "Singaporean"));
-        studentManager.printAllRecord();
+    public boolean enrol(String matricNumber, String courseGroupIndex, String courseCode){
+        //check that student is in the system
+        if (studentAccounts.containsKey(matricNumber)){
+            studentAccounts.get(matricNumber).addToCourseGroups(courseGroupIndex, courseCode);
+            save(); //since there is a change in the database
+            return true;
+        }
+        return false;
     }
-    
-    
+
+    /**
+     * Drops course from a student
+     * @param studentMatricNumber
+     * @param courseGroupIndex
+     * @return True: course is successfully dropped
+     */
+    public boolean dropCourseGroup(String studentMatricNumber, String courseGroupIndex){
+        if (studentExist(studentMatricNumber)){
+            boolean result = studentAccounts.get(studentMatricNumber).removeFromConfirmedCourseGroups(courseGroupIndex);
+            save();
+            return result;
+        }
+        return false;
+    }    
+
+    /**
+     * Does swap for 2 students
+     */
+    public void swap(String[] swapEntry){
+        String[] indexArray = swapEntry[0].split(" ");
+        //first student (sender)
+        getStudent(swapEntry[1]).swapIndex(indexArray[1], indexArray[0]);
+        //second student (receiver)
+        getStudent(swapEntry[2]).swapIndex(indexArray[0], indexArray[1]);
+        save();
+    }
 }

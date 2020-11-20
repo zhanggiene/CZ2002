@@ -1,43 +1,44 @@
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.sql.Time;
+import java.io.Serializable;
 import java.time.DayOfWeek;
 
-import java.time.format.*;
 
+    
 
 /**
-     * all the lessons are PeriodClass object, in charge of checking classes between lessons. 
-     * @author zhang zhuyan
-     */
-
-
+ * Type of lesson
+ */
 enum TypeOfLesson {
     LABORATORY,TUTORIAL,LECTURE
 }
-public class PeriodClass {
+
+/**
+ * all the lessons are PeriodClass object, in charge of checking clashes between lessons. 
+ * @author zhang zhuyan
+ */
+public class PeriodClass implements Serializable{
+    private static final long serialVersionUID = 1L;
     DayOfWeek dayOfWeek;
     int startTime;
     int endTime;
     String location;
     TypeOfLesson typeOfLesson;
 
-    public PeriodClass(int weekday,int start,int end,String location)
+    public PeriodClass(TypeOfLesson type, int weekday,int start,int end,String location)
     {
         assert start<end;
         assert start%10==0;
+        this.typeOfLesson = type;
         this.dayOfWeek=DayOfWeek.of(weekday);  
         startTime=start;
         endTime=end;
         this.location=location;
     }
 
-    
-
-    
-    /**  check with other PeriodClass to see if there is a overlap. 
+    /**  
+     * Check with other PeriodClass to see if there is a overlap. 
      * @param b     the other PeriodClass
      * @return Boolean   return true if the two period overlap on timeTable
+     * @author zhu yan
      */
     public Boolean hasClash(PeriodClass b)
     {
@@ -56,48 +57,71 @@ public class PeriodClass {
                 {
                     return false;
                 }
-
             }
-
-
         }
         return true;
-
     }
 
     
     /** 
+     * Returns day of the week the lesson is on
      * @return DayOfWeek
+     * @author zhu yan
      */
-    private DayOfWeek getDayOfWeek() {
+    public DayOfWeek getDayOfWeek() {
         return dayOfWeek;
     }
 
     
-    /** return string representation of class period for printing. 
+    /** 
+     * Return string representation of class period for printing. 
      * @return String
      */
     public String toString() {
         return this.dayOfWeek.name()+" "+Integer.toString(this.startTime)+"-"+Integer.toString(this.endTime);
       }
-
     
-    /** 
-     * @param args[]
+    /**
+     * Getter for Type of Lesson
+     * @author Wang Li Rong
+     * @return Type of Lesson
      */
-    public static void main(String args[])
-    {
-        //LocalDateTime d1=LocalDateTime.now();
-        //DateTimeFormatter dateinFull=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        //System.out.println(d1);
-        //System.out.println(d1.format(dateinFull));
-        //"07:00" 
-        //PeriodClass test1=new PeriodClass(1, 1200,1300,"lt22",);
-        //PeriodClass test2=new PeriodClass(1, 1300,1500,"lt22");
-        //System.out.println(test1);
+    public TypeOfLesson getTypeOfLesson() {
+        return typeOfLesson;
+    }
 
+    /**
+     * Getter for Start Time
+     * @author Wang Li Rong
+     * @return Start time in int format
+     */
+    public int getStartTime() {
+        return startTime;
     }
 
 
-    
+    /**
+     * Getter for End Time
+     * @author Wang Li Rong
+     * @return End time in int format
+     */
+    public int getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * Getter for location
+     * @author Wang Li Rong
+     * @return Location (String)
+     */
+    public String getLocation() {
+        return location;
+    }
+
+    /**
+     * Prints details of this lesson
+     */
+    public void printRecord(){
+        System.out.println(typeOfLesson + "\t" + dayOfWeek + "\t" + startTime + "\t" + endTime + "\t" + location);
+    }    
 }

@@ -7,16 +7,16 @@ import java.util.regex.Pattern;
 
 /**
  * Interface that an admin see after login 
- * Functionalities include: 
- * 1. Adding and Editting Student Access Period 
- * 2. Adding students 
- * 3. Adding courses 
- * 4. Updating courses 
- * 5. Checking index vacancy 
- * 6. Printing Student List By Index Number 
- * 7. Printing Student List By Course
+ * <li>Functionalities include: 
+ * <li> 1. Adding and Editting Student Access Period 
+ * <li>2. Adding students 
+ * <li>3. Adding courses 
+ * <li>4. Updating courses 
+ * <li>5. Checking index vacancy 
+ * <li>6. Printing Student List By Index Number 
+ * <li>7. Printing Student List By Course
  * 
- * @author Wang Li Rong
+ * @author Wang Li Rong and Andrew
  */
 public class AdminApp {
     StudentManager studentManager;
@@ -50,7 +50,7 @@ public class AdminApp {
             System.out.println("| 1. Add Student Access Period          |");
             System.out.println("| 2. Edit Student Access Period         |");
             System.out.println("| 3. Add Student                        |");
-            System.out.println("| 4. Add Course                         |");
+            System.out.println("| 4. Add Course/Indexes                 |");
             System.out.println("| 5. Update Course                      |");
             System.out.println("| 6. Check Index Vacancy                |");
             System.out.println("| 7. Print Student List By Index Number |");
@@ -74,28 +74,31 @@ public class AdminApp {
                     addStudentAccessPeriod();
                     break;
                 case 2:
-                    //Edit Student Access Period 
+                    // Edit Student Access Period
                     editStudentAccessPeriod();
                     break;
                 case 3:
-                    //Add Student
+                    // Add Student
                     addStudent();
                     break;
                 case 4:
-                    //Add Course
+                    // Add Course
+                    addCourse();
                     break;
                 case 5:
-                    //Update Course
+                    // Update Course
+                    updateCourse();
                     break;
                 case 6:
-                    //Check Index Vacancy 
+                    // Check Index Vacancy
+                    checkVacancy();
                     break;
                 case 7:
-                    //Print Student List By Index Number
+                    // Print Student List By Index Number
                     printStudentListByIndexNumber();
                     break;
                 case 8:
-                    //Print Student List By Course
+                    // Print Student List By Course
                     printStudentListByCourse();
                     break;
                 case 9:
@@ -104,16 +107,17 @@ public class AdminApp {
                     System.out.println("Input must be between 1-9");
             }
         } while (choice != 9);
-        
+
         sc.close();
-        System.out.println("Logging out of account...");
+        System.out.println("Exiting MyStars now....");
 
     }
+
     /**
      * UI for adding student access period.
      * @author Wang Li Rong
      */
-    private void addStudentAccessPeriod(){
+    private void addStudentAccessPeriod() {
         Scanner scan = new Scanner(System.in);
         List schools = (List<School>)java.util.Arrays.asList(School.values());
         int schoolChoice=-1;
@@ -394,7 +398,7 @@ public class AdminApp {
                 if (schoolInt==-1){
                     return;
                 } else if (schoolInt <= schools.size() && schoolInt >=1) {
-                    school = (School)schools.get(schoolInt);
+                    school = (School)schools.get(schoolInt-1);
                     break;
                 } else {
                     System.out.println("Please input an integer between 1-"+ schools.size());
@@ -490,6 +494,428 @@ public class AdminApp {
         studentManager.printAllRecord();
     }
 
+    /**
+     * UI for adding a new course.
+     * @author Andrew Wiraatmaja
+     */
+
+    private void addCourse(){
+        System.out.println("ADDING NEW COURSE/INDEX");
+        System.out.println("==========================");
+        Scanner scan = new Scanner(System.in);
+        
+        int myChoice;
+        
+        while(true){
+            System.out.println("1. Add new courses");
+            System.out.println("2. Add new index for existing courses");
+            System.out.print("Your choice (1/2) :");
+            try {
+                int choice = scan.nextInt();
+                if (choice !=1 && choice !=2){
+                    System.out.println("Please enter 1 or 2.");
+                } else{
+                    myChoice = choice;
+                    break; 
+                }
+            } catch (Exception e){
+                System.out.println("Please enter a valid integer.");
+            }
+        }
+
+        if (myChoice == 1){
+            System.out.println("Section 1/5");
+            System.out.print("Enter Course Code : ");
+            scan.nextLine();
+            String courseCode = scan.nextLine();
+            if (courseManager.courseExist(courseCode)){
+                System.out.println("Course already exists!");
+                return;
+            }
+
+            System.out.println("========================================");
+            System.out.println("Section 2/5");
+            List schools = (List<School>)java.util.Arrays.asList(School.values());
+            int schoolInt;
+            School school;
+            while (true) {
+                System.out.println("Course School: ");
+                for (int i=1;i<=schools.size();i++){
+                    System.out.println(i+". "+ schools.get(i-1).toString());
+                }
+
+                System.out.print("Enter Choice for School: ");
+                try {
+                    schoolInt = scan.nextInt();
+                    if (schoolInt <= schools.size() && schoolInt >=1) {
+                        school = (School)schools.get(schoolInt-1);
+                        break;
+                    } else {
+                        System.out.println("Please input an integer between 1-"+ schools.size()+1);
+                    }
+                } catch (Exception e){
+                    System.out.println("Please input an integer");
+                    scan.nextLine();
+                }
+            }
+            scan.nextLine();
+
+            System.out.println("========================================");
+            System.out.println("Section 3/5");
+            String courseName = "";
+            while (true){
+                System.out.print("Enter Course Name: ");
+                courseName = scan.nextLine();
+                if (!courseName.isEmpty()){
+                    break;
+                } else {
+                    System.out.println("Please enter a valid course name.");
+                }
+            }
+            
+            System.out.println("========================================");
+            System.out.println("Section 4/5");
+            int numAU = 3;
+            while (true) {
+                System.out.print("Enter Number of AU: ");
+                try {
+                    numAU = scan.nextInt();
+                    break;
+                } catch (Exception e){
+                    System.out.println("Please input an integer");
+                    scan.nextLine();
+                }
+            }
+            scan.nextLine();
+
+            if (school!=null && !courseCode.isEmpty() && !courseName.isEmpty()){
+                Course course = new Course(courseCode,courseName, school,numAU);    
+                courseManager.addCourse(course);
+            } else{
+                throw new RuntimeException("Particulars not filled up");
+            }
+
+            System.out.println("Section 5/5");
+            addIndex(courseCode);
+
+            courseManager.printAllRecord();
+        }
+        else if (myChoice == 2){
+            System.out.println("Enter course code:");
+            scan.nextLine();
+            String courseCode = scan.nextLine();
+            // check whether course code is already exists
+            if (!courseManager.courseExist(courseCode)){
+                System.out.println("Course not exists!");
+                return;
+            } else{
+                addIndex(courseCode);
+            }
+            courseManager.printAllRecord();
+        }
+
+    }
+
+    /**
+     * UI for adding a new index.
+     * @author Andrew Wiraatmaja
+     */
+
+    public void addIndex(String courseCode){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("ADDING NEW INDEX");
+        System.out.println("=========================");
+
+        String indexNum = "";
+        while (true){
+            System.out.print("Enter the index number: ");
+            indexNum = scan.nextLine();
+            if (!indexNum.isEmpty()){
+                break;
+            } else {
+                System.out.println("Please enter a valid index number.");
+            }
+        }
+
+        System.out.print("Enter the vacancies: ");
+        int vacance = 1;
+        try{
+            vacance = scan.nextInt();
+        } catch(Exception e){
+            System.out.println("Please enter a valid integer.");
+        }
+
+        CourseGroup courseNum;
+        if (!indexNum.isEmpty() && vacance > 0){
+            courseNum = new CourseGroup(indexNum,vacance, courseCode);
+            courseManager.addCourseGroup(courseNum);
+            Course c = courseManager.getCourseByCode(courseCode);   
+            c.addCourseGroup(indexNum);
+        } else{
+            throw new RuntimeException("Particulars not filled up");
+        }
+
+        boolean adding = true;
+        while(adding){
+            System.out.println("Select which lesson available");
+            System.out.println("1. Lecture");
+            System.out.println("2. Tutorial");
+            System.out.println("3. Lab");
+            System.out.println("Your choice (Enter -1 to stop adding lesson) : ");
+            int lessInt = scan.nextInt();
+            if(lessInt == -1){
+                adding = false;
+            }else{
+                TypeOfLesson type = TypeOfLesson.LECTURE; 
+                if(lessInt == 1){
+                    type = TypeOfLesson.LECTURE;
+                } else if(lessInt == 2){
+                    type = TypeOfLesson.TUTORIAL;
+                }else if(lessInt == 3){
+                    type = TypeOfLesson.LABORATORY;
+                }
+                scan.nextLine();
+
+                int day = 1;
+                System.out.print("Select what day (Monday 1,... Friday 5): ");
+                try{
+                    day = scan.nextInt();
+                } catch(Exception e){
+                    System.out.println("Please enter a valid integer.");
+                }
+                scan.nextLine();
+
+                int start = 0;
+                System.out.print("Select start time (HHMM 24 HOUR FORMAT): ");
+                try{
+                    start = scan.nextInt();
+                } catch(Exception e){
+                    System.out.println("Please enter a valid integer.");
+                }
+                scan.nextLine();
+                
+                int end = 0;
+                System.out.print("Select end time (HHMM 24 HOUR FORMAT): ");
+                try{
+                    end = scan.nextInt();
+                } catch(Exception e){
+                    System.out.println("Please enter a valid integer.");
+                }
+                scan.nextLine();
+                
+                String loc = "";
+                while (true){
+                    System.out.print("Select location : ");
+                    loc = scan.nextLine();
+                    if (!loc.isEmpty()){
+                        break;
+                    } else {
+                        System.out.println("Please enter a valid course name.");
+                    }
+                }
+                
+                PeriodClass period;
+                if (day > 0 && day <= 5 && start >= 0 && start < 2400 && end >= 0 && end < 2400 && !loc.isEmpty()){
+                    period = new PeriodClass(type,day,start,end,loc);
+                    courseNum.addLesson(period);
+                    courseManager.save();
+                } else{
+                    throw new RuntimeException("Particulars not filled up");
+                }
+                
+            }
+        }
+
+
+    }
+
+    /**
+     * UI for updating a course.
+     * @author Andrew Wiraatmaja
+     */
+
+    public void updateCourse(){
+        Scanner scan = new Scanner(System.in);
+        String Schoice;
+        do{
+            courseManager.printAllRecord();
+            System.out.println("Enter course code you want to update (Enter exit to quit): ");
+            Schoice = scan.nextLine();
+            Course c;
+            if(!Schoice.equals("exit")){
+                if (courseManager.getCourseByCode(Schoice)==null){
+                    System.out.println("Please enter valid course code!");
+                    break;
+                } else{
+                    c=courseManager.getCourseByCode(Schoice);
+                }
+            }else{
+                break;
+            }
+            
+            
+            System.out.println("Select which particular you want to update");
+            System.out.println("1. Course Code");
+            System.out.println("2. Course Name");
+            System.out.println("3. School");
+            System.out.println("4. Index Specific");
+            System.out.print("Your choice :");
+            int choice2 = scan.nextInt();
+
+            if(choice2 == 1){
+                String newCode = "";
+                while (true){
+                    scan.nextLine();
+                    System.out.print("Enter the new course code: ");
+                    newCode = scan.nextLine();
+                    if (!newCode.isEmpty()){
+                        break;
+                    } else {
+                        System.out.println("Please enter a valid course code.");
+                    }
+                }
+                System.out.println(c.getcourseCode());
+                updateCourseCodesOfAllStudents(c.getcourseCode(), newCode);
+            }
+            else if(choice2 == 2){
+                String newName = "";
+                while (true){
+                    scan.nextLine();
+                    System.out.print("Enter the new course name: ");
+                    newName = scan.nextLine();
+                    if (!newName.isEmpty()){
+                        break;
+                    } else {
+                        System.out.println("Please enter a valid course name.");
+                    }
+                }
+                c.setCourseName(newName);
+                courseManager.save();
+            }
+            else if(choice2 == 3){
+                List schools = (List<School>)java.util.Arrays.asList(School.values());
+                int schoolInt;
+                School school;
+                while (true) {
+                    System.out.println("Course School: ");
+                    for (int i=1;i<=schools.size();i++){
+                        System.out.println(i+". "+ schools.get(i-1).toString());
+                    }
+                    System.out.print("Enter Choice for new School: ");
+                    try {
+                        schoolInt = scan.nextInt();
+                        if (schoolInt <= schools.size() && schoolInt >=1) {
+                            school = (School)schools.get(schoolInt-1);
+                            break;
+                        } else {
+                            System.out.println("Please input an integer between 1-"+ schools.size()+1);
+                        }
+                    } catch (Exception e){
+                        System.out.println("Please input an integer");
+                        scan.nextLine();
+                    }
+                }
+                c.setSchool(school);
+                courseManager.save();
+                scan.nextLine();
+            }
+            else if(choice2 == 4){
+                System.out.println("Select which index you want to change");
+                ArrayList<String> cg = c.getCourseGroups();
+                for(int j=1;j<=cg.size();j++){
+                    System.out.println(j + ". " +  cg.get(j-1));
+                }
+                System.out.print("\n");
+                System.out.println("Your choice (1-" + cg.size() +  "): ");
+                int cgInt = scan.nextInt();
+                String cgString = cg.get(cgInt-1);
+                CourseGroup cgIndex = courseManager.getCourseGroup(cgString);
+                cgIndex.printInfo();
+                int indexInt;
+                do{
+                    System.out.println("What do you want to change");
+                    System.out.println("1. Index Number");
+                    System.out.println("2. Size");
+                    System.out.print("Your choice: ");
+                    indexInt = scan.nextInt();
+                    if(indexInt == 1){
+                        String newNumber = "";
+                        while (true){
+                            scan.nextLine();
+                            System.out.print("Enter the new index number: ");
+                            newNumber = scan.nextLine();
+                            if (!newNumber.isEmpty()){
+                                break;
+                            } else {
+                                System.out.println("Please enter a valid index number.");
+                            }
+                        }
+                        
+                        updateIndexesOfAllStudents(cgIndex.getIndexNumber(), newNumber);
+                        cgIndex.setIndexNumber(newNumber);
+                        cg.set(cgInt-1,newNumber);
+                        courseManager.save();
+                    }
+                    else if(indexInt == 2){
+                        ArrayList<String> cgStud = cgIndex.getStudents();
+                        int newVacancy = 10;
+                        try {
+                            System.out.println("Enter new size: ");
+                            newVacancy = scan.nextInt();
+                            if(newVacancy < cgStud.size()){
+                                System.out.println("Number of vacancy must exceed number of student");
+                            }
+                            else{
+                                cgIndex.setTotalSize(newVacancy);
+                                courseManager.save();
+                            }
+                        } catch (Exception e){
+                            System.out.println("Please enter a valid integer.");
+                        }    
+                    } else if(indexInt == -1){
+                        break;
+                    }
+                }while(indexInt != -1);
+                scan.nextLine();
+            } 
+    }while(!Schoice.equals("exit"));
+
+        }
+
+    /**
+     * UI for checking vacancies.
+     * @author Andrew Wiraatmaja
+     */
+
+    public void checkVacancy(){
+        String [] courseCodes = courseManager.getCourseCodeList();
+        Scanner scan = new Scanner(System.in);
+        courseManager.printAllRecord();
+        System.out.println("Enter which course you want to check: ");
+        int choice = scan.nextInt();
+        String courseCode = courseCodes[choice -1];
+        Course c = courseManager.getCourseByCode(courseCode);
+        ArrayList<String> cg = c.getCourseGroups();
+        System.out.println("Select which index you want to check the vacancy: ");
+        for(int j=0;j<cg.size();j++){
+            System.out.println((j+1)+ ". " + cg.get(j));
+        }
+        System.out.println("Your choice (1-" + cg.size() +  "): ");
+        int choice2;
+        try{
+            choice2 = scan.nextInt();
+            if(choice2>=1 && choice2 <= cg.size()){
+                String courseGroup = cg.get(choice2-1);
+                CourseGroup courseNum = courseManager.getCourseGroup(courseGroup);
+                System.out.println("Vacancies available : "+ courseNum.getVacancy() +"/" + courseNum.getTotalSize());
+            } else{
+                System.out.println("Please enter within range");
+            }
+        } catch(Exception e){
+            System.out.println("Please enter valid integer");
+        }
+    }
+
     
 
     /**
@@ -560,6 +986,7 @@ public class AdminApp {
             ArrayList<String> studentMatricNumbers = courseGroup.getStudents();
             int i=1;
             System.out.println("Students in "+courseGroupIndex+" : ");
+            System.out.println("\tName     \tGender\tNationality\tSchool");
             for (String matricNumber: studentMatricNumbers){
                 System.out.print(i+". ");
                 studentManager.getStudent(matricNumber).printStudent();
@@ -606,6 +1033,7 @@ public class AdminApp {
         if (progress1){
             String courseCode = courseCodes[courseInt-1];
             System.out.println("Students in "+courseCode+" : ");
+            System.out.println("\tName     \tGender\tNationality\tSchool");
             ArrayList<String> courseGroups =courseManager.getCourseGroupsOfCourse(courseCode);
             for (String courseGroupIndex: courseGroups){
                 CourseGroup courseGroup = courseManager.getCourseGroup(courseGroupIndex);
@@ -621,6 +1049,46 @@ public class AdminApp {
             System.out.println("---------------------------------------");
         }
     }
+
+    /**
+     * This function updates the index number for all students in the index 
+     * as well as updates the index of the course group in course manager
+     * @param oldCourseGroupIndex
+     * @param newCourseGroupIndex
+     * @author Wang Li Rong
+     */
+    private void updateIndexesOfAllStudents(String oldCourseGroupIndex, String newCourseGroupIndex){
+        CourseGroup courseGroup = courseManager.getCourseGroup(oldCourseGroupIndex);
+        for (String matricNumber: courseGroup.getStudents()){
+            studentManager.getStudent(matricNumber).setCourseGroup(oldCourseGroupIndex,newCourseGroupIndex);
+        }
+        studentManager.save();
+        courseGroup.setIndexNumber(newCourseGroupIndex);
+        courseManager.updateCourseGroup(courseGroup, oldCourseGroupIndex , newCourseGroupIndex);
+    }
+
+    /**
+     * This method updates the course codes of all students in the course
+     * as well as updates the course of the course in course manager
+     * @param oldCourseCode
+     * @param newCourseCode
+     * @author Wang Li Rong
+     */
+    private void updateCourseCodesOfAllStudents(String oldCourseCode, String newCourseCode){
+        Course course = courseManager.getCourseByCode(oldCourseCode);
+        for (String courseGroup : courseManager.getCourseGroupsOfCourse(oldCourseCode)){
+            ArrayList<String> students = courseManager.getCourseGroup(courseGroup).getStudents();
+            for (String matricNumber: students){
+                Student student = studentManager.getStudent(matricNumber);
+                student.setCourseCode(courseGroup, newCourseCode);
+            }
+        }
+        studentManager.save();
+        course.setCourseCode(newCourseCode);
+        courseManager.updateCourse(course, oldCourseCode, newCourseCode);
+        courseManager.save();
+    }
+
     
 
 }

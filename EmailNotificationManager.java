@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMessage;
      */
 public class EmailNotificationManager {
 
-    private Hashtable<String, String> EmailDataBase = new Hashtable<String, String>();
+    public Hashtable<String, String> EmailDataBase = new Hashtable<String, String>();
     private String fileName = "email.txt";
     private File file;
     private Properties props;
@@ -35,6 +35,7 @@ public class EmailNotificationManager {
     public EmailNotificationManager() {
         try {
             this.file = new File(this.fileName);
+            this.file.createNewFile();
             loadFile();
             this.fw = new FileWriter(this.file, true);
             this.pw=new PrintWriter(this.fw);
@@ -44,6 +45,9 @@ public class EmailNotificationManager {
         }
         setup();
     }
+    /**
+     * Setup for email notification
+     */
     private void setup()
     {
         props = new Properties();
@@ -61,6 +65,9 @@ public class EmailNotificationManager {
 
     }
 
+    /**
+     * Loads file of emails and matriculation numbers
+     */
     private void loadFile()
     {
         try{
@@ -84,12 +91,13 @@ public class EmailNotificationManager {
     }
 
     
-    /**  send email with subject and content to student using metriculationNUmber to identidy the student. 
+    /**  
+     * send email with subject and content to student using matriculationNUmber to identidy the student. 
      * @param studentMetriculationNumber
      * @param Subject
      * @param Content
      */
-    public void SendEmail(String studentMetriculationNumber,String Subject,String Content)
+    public void sendEmail(String studentMetriculationNumber,String Subject,String Content)
     {
         if (EmailDataBase.containsKey(studentMetriculationNumber))
         {
@@ -119,8 +127,9 @@ public class EmailNotificationManager {
     }
 
     
-    /**   assume the studentID does not exist in the database to avoid duplicate
-     *   add studentId and its associated email to the database
+    /**   
+     * assume the studentID does not exist in the database to avoid duplicate
+     * add studentId and its associated email to the database
      * @param studentId
      * @param email
      */
@@ -129,14 +138,34 @@ public class EmailNotificationManager {
     {
         assert studentExist(studentId);
         EmailDataBase.put(studentId, email);
-        this.pw.println(studentId+" "+ email);
-        System.out.println("Student email added successfuly");
-        System.out.println(studentId+" "+email);
+        save();
+    }
+
+
+    /**
+     * Saves the emails recorded in the system
+     */
+    private void save() {
+        this.file = new File(this.fileName);
+        try {
+            this.fw = new FileWriter(this.file, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.pw=new PrintWriter(this.fw);
+        for (Map.Entry<String, String> entry : EmailDataBase.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            this.pw.println(key+" "+value);
+            
+            // ...
+        }
         this.pw.close();
     }
 
     
-    /** check is the student has email address in the database
+    /** 
+     * check is the student has email address in the database
      * @param metriculationNumber
      * @return boolean
      */
@@ -144,14 +173,5 @@ public class EmailNotificationManager {
     {
         return EmailDataBase.contains(metriculationNumber);
 
-    }
-
-    
-    /** 
-     * @param args
-     */
-    public static void main(String[] args) {
-        EmailNotificationManager manager=new EmailNotificationManager();
-        manager.SendEmail("U1920187L", "test1", "hi test123");
     }
 }

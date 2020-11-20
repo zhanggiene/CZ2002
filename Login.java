@@ -17,6 +17,7 @@ public class Login {
         StudentManager studentManager=new StudentManager();
         LoginTimeManager timeManager=new LoginTimeManager();
         CourseManager courseManager=new CourseManager();
+        
         EmailNotificationManager emailNotificationManager = new EmailNotificationManager();
 
         Console console = System.console();
@@ -43,40 +44,32 @@ public class Login {
                 // go to admin page APP
                 AdminApp adminPage = new AdminApp(studentManager,courseManager, timeManager, emailNotificationManager, mypass);
                 adminPage.start();
-
             }
             else
             {
                 System.out.println("sorry,admin, wrong password");
             }
-
-
         }
 
         else if(mypass.studentExist(userName))
         {
-
-
             if (mypass.isCorrectStudent(userName, new String(passwordArray)))
             {
                 School schoolOfStudent=studentManager.getSchool(userName);
+                System.out.println("school of Student is "+schoolOfStudent);
+                timeManager.printAllAccessPeriod();
                 if (timeManager.isInside(schoolOfStudent,new Date()))
                 {
                     // within the time
                     // initialize student APPs
                     StudentApp studentApp=new StudentApp(userName,studentManager,courseManager, emailNotificationManager);
                     studentApp.start();
-
-
                 }
                 else
                 {
                     // not within the time
-                    System.out.println("sorry, not in the correct time");
+                    System.out.println("sorry, not in the correct time.");
                     input.close();
-                    
-
-
                 }
 
             }
@@ -87,8 +80,13 @@ public class Login {
                 input.close();
 
             }
-
-
         }
+
+        else
+                {
+                    // not within the time
+                    System.out.println("sorry,try again");
+                    input.close();
+                }
     }
 }
