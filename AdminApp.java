@@ -607,12 +607,20 @@ public class AdminApp {
             }
         }
 
-        System.out.print("Enter the vacancies: ");
         int vacance = 1;
-        try{
-            vacance = scan.nextInt();
-        } catch(Exception e){
-            System.out.println("Please enter a valid integer.");
+        while(true){
+            try{
+                System.out.print("Enter the vacancies: ");
+                vacance = scan.nextInt();
+                if(vacance > 0){
+                    break;
+                }
+                else{
+                    System.out.println("Please enter integer > 0");
+                }
+            } catch(Exception e){
+                System.out.println("Please enter a valid integer.");
+            }
         }
 
         CourseGroup courseNum;
