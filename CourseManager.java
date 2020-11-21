@@ -253,7 +253,7 @@ public class CourseManager{
 
 			}
 
-			File CourseGroupFile=new File(this.CourseFile);
+			File CourseGroupFile=new File(this.CourseGroupFile);
 			if (!CourseGroupFile.exists())
 			{
 				CourseGroupFile.createNewFile();
@@ -268,7 +268,7 @@ public class CourseManager{
 
 			}
 
-			File SwapIndexFile=new File(this.CourseFile);
+			File SwapIndexFile=new File(this.SwapIndexFile);
 			if (!SwapIndexFile.exists())
 			{
 				SwapIndexFile.createNewFile();
