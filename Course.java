@@ -56,6 +56,16 @@ public class Course implements Serializable{
     }
 
     /**
+     * Changes an index of a course group in the course
+     * @param oldCourseGroup
+     * @param newCourseGroup
+     */
+    public void setCourseGroup(String oldCourseGroup, String newCourseGroup){
+        courseGroups.remove(oldCourseGroup);
+        courseGroups.add(newCourseGroup);
+    }
+
+    /**
      * Gets list of Course Groups of a Course.
      * @author Wang Li Rong
      */

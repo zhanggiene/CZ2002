@@ -852,8 +852,8 @@ public class AdminApp {
                                 System.out.println("Please enter a valid index number.");
                             }
                         }
-                        
                         updateIndexesOfAllStudents(cgIndex.getIndexNumber(), newNumber);
+                        
                         cgIndex.setIndexNumber(newNumber);
                         cg.set(cgInt-1,newNumber);
                         courseManager.save();
@@ -1061,6 +1061,8 @@ public class AdminApp {
      */
     private void updateIndexesOfAllStudents(String oldCourseGroupIndex, String newCourseGroupIndex){
         CourseGroup courseGroup = courseManager.getCourseGroup(oldCourseGroupIndex);
+        String courseCode  = courseGroup.getCourseCode(); 
+        courseManager.getCourseByCode(courseCode).setCourseGroup(oldCourseGroupIndex, newCourseGroupIndex);
         for (String matricNumber: courseGroup.getStudents()){
             studentManager.getStudent(matricNumber).setCourseGroup(oldCourseGroupIndex,newCourseGroupIndex);
         }
