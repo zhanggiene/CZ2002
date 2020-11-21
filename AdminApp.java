@@ -664,6 +664,7 @@ public class AdminApp {
                         }
                     } catch(Exception e){
                         System.out.println("Please enter a valid integer.");
+                        scan.nextLine();
                     }
                 }
                 scan.nextLine();
@@ -681,6 +682,7 @@ public class AdminApp {
                         }
                     } catch(Exception e){
                         System.out.println("Please enter a valid integer.");
+                        scan.nextLine();
                     }
                 }
                 scan.nextLine();
@@ -698,6 +700,7 @@ public class AdminApp {
                         }
                     } catch(Exception e){
                         System.out.println("Please enter a valid integer.");
+                        scan.nextLine();
                     }
                 }
                 scan.nextLine();
