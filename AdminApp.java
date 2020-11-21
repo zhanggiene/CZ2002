@@ -655,29 +655,53 @@ public class AdminApp {
                 scan.nextLine();
 
                 int day = 1;
-                System.out.print("Select what day (Monday 1,... Friday 5): ");
-                try{
-                    day = scan.nextInt();
-                } catch(Exception e){
-                    System.out.println("Please enter a valid integer.");
+                while(true){
+                    try{
+                        System.out.print("Select what day (Monday 1,... Friday 5): ");
+                        day = scan.nextInt();
+                        if(day >= 1 && day <=5){
+                            break;
+                        }
+                        else{
+                            System.out.println("Please enter integer between 1 and 5");
+                        }
+                    } catch(Exception e){
+                        System.out.println("Please enter a valid integer.");
+                    }
                 }
                 scan.nextLine();
 
                 int start = 0;
-                System.out.print("Select start time (HHMM 24 HOUR FORMAT): ");
-                try{
-                    start = scan.nextInt();
-                } catch(Exception e){
-                    System.out.println("Please enter a valid integer.");
+                while(true){
+                    try{
+                        System.out.print("Select start time (HHMM 24 HOUR FORMAT): ");
+                        start = scan.nextInt();
+                        if(start >= 0 && start <=2400){
+                            break;
+                        }
+                        else{
+                            System.out.println("Please enter integer between 0000 and 2400");
+                        }
+                    } catch(Exception e){
+                        System.out.println("Please enter a valid integer.");
+                    }
                 }
                 scan.nextLine();
                 
                 int end = 0;
-                System.out.print("Select end time (HHMM 24 HOUR FORMAT): ");
-                try{
-                    end = scan.nextInt();
-                } catch(Exception e){
-                    System.out.println("Please enter a valid integer.");
+                while(true){
+                    try{
+                        System.out.print("Select end time (HHMM 24 HOUR FORMAT): ");
+                        end = scan.nextInt();
+                        if(end >= 0 && end <=2400){
+                            break;
+                        }
+                        else{
+                            System.out.println("Please enter integer between 0000 and 2400");
+                        }
+                    } catch(Exception e){
+                        System.out.println("Please enter a valid integer.");
+                    }
                 }
                 scan.nextLine();
                 
@@ -688,7 +712,7 @@ public class AdminApp {
                     if (!loc.isEmpty()){
                         break;
                     } else {
-                        System.out.println("Please enter a valid course name.");
+                        System.out.println("Please enter a valid location");
                     }
                 }
                 
