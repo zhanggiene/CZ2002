@@ -26,7 +26,7 @@ public class Course implements Serializable{
      * Getter for course code
      * @return course code string
      */
-    public String getcourseCode()
+    public String getCourseCode()
     {
         return this.courseCode;
     }
@@ -53,6 +53,16 @@ public class Course implements Serializable{
     public void addCourseGroup(String courseGroup)
     {
         courseGroups.add(courseGroup);
+    }
+
+    /**
+     * Changes an index of a course group in the course
+     * @param oldCourseGroup
+     * @param newCourseGroup
+     */
+    public void setCourseGroup(String oldCourseGroup, String newCourseGroup){
+        courseGroups.remove(oldCourseGroup);
+        courseGroups.add(newCourseGroup);
     }
 
     /**

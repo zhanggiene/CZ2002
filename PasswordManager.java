@@ -83,7 +83,6 @@ public class PasswordManager  {
         try {
             this.fw = new FileWriter(this.file, false);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         this.pw=new PrintWriter(this.fw);

@@ -49,6 +49,15 @@ public class CourseGroup implements Serializable{
 	}
 
 	/**
+	 * Setter for course code
+	 * @param newCourseCode
+	 * @author Wang Li Rong
+	 */
+	public void setCourseCode(String newCourseCode){
+		this.courseCode = newCourseCode;
+	}
+
+	/**
 	 * @return List of Students Matriculation Numbers
 	 * @author Wang Li Rong
 	 */
@@ -69,7 +78,9 @@ public class CourseGroup implements Serializable{
 	 * @param newTotalSize
 	 */
 	public void setTotalSize(int newTotalSize){
+		int changeInTotalSize = newTotalSize-this.totalSize;
 		this.totalSize= newTotalSize;
+		this.vacancy += changeInTotalSize;
 	}
 
 	/**

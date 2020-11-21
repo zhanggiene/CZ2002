@@ -1,5 +1,4 @@
 import java.io.*;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,38 +31,20 @@ public class CourseManager{
 	 */
 	public void addCourse(Course course)
 	{
-		courses.put(course.getcourseCode(),course);
+		courses.put(course.getCourseCode(),course);
 		save();
 	}
 
 	/**
-	 * Updates an exisitng course
-	 * @author Andrew 
-	 */
-	public void updateCourse(Course course, String oldCourseCode, String newCourseCode){
-		courses.remove(oldCourseCode);
-		courses.put(newCourseCode,course);
-		save();
-	}
-
-	/**
-	 * Adds a new course group
+	 * Adds a new course group (to an existing course)
 	 * @param courseGroup
-	 * @author Andrew
+	 * @param course
+	 * @author Andrew and Wang Li Rong
 	 */
-	public void addCourseGroup(CourseGroup courseGroup)
-	{
+	public void addCourseGroup(CourseGroup courseGroup, String courseCode){
 		courseGroups.put(courseGroup.getIndexNumber(),courseGroup);
-		save();
-	}
-
-	/**
-	 * Updates a course group
-	 * @author Andrew
-	 */
-	public void updateCourseGroup(CourseGroup courseGroup, String oldIndex, String newIndex){
-		courseGroups.remove(oldIndex);
-		courseGroups.put(newIndex,courseGroup);
+		Course course = getCourseByCode(courseCode);   
+		course.addCourseGroup(courseGroup.getIndexNumber());
 		save();
 	}
 
@@ -402,6 +383,108 @@ public class CourseManager{
         //for the second coursegroup, remove the second student from ToIndex
 		getCourseGroup(indexArray[1]).swapStudent(swapEntry[2], swapEntry[1]);
 		save();
-    }
+	}
+	
+	/**
+	 * Adds Lesson to a course group
+	 * @author Wang Li Rong
+	 * @param courseGroupIndex
+	 * @param lesson
+	 */
+	public void addLesson(String courseGroupIndex, PeriodClass lesson){
+		CourseGroup courseGroup =courseGroups.get(courseGroupIndex);
+		courseGroup.addLesson(lesson);
+        save();
+	}
+
+	/**
+	 * Set course name of an existing course
+	 * @param courseCode
+	 * @param newCourseName
+	 * @author Wang Li Rong
+	 */
+	public void setCourseName(String courseCode, String newCourseName){
+		Course course = getCourseByCode(courseCode);
+		course.setCourseName(newCourseName);
+    	save();
+	}
+
+	/**
+	 * Set school of existing course
+	 * @param courseCode
+	 * @param school
+	 * @author Wang Li Rong
+	 */
+	public void setSchool(String courseCode, School school) {
+		Course course = getCourseByCode(courseCode);
+		course.setSchool(school);
+        save();
+	}
+
+	/**
+	 * Set totalSize of an existing course group
+	 * @param courseGroupIndex
+	 * @param newTotalSize
+	 * @author Wang Li Rong
+	 */
+	public void setTotalSize(String courseGroupIndex, int newTotalSize){
+		CourseGroup courseGroup = getCourseGroup(courseGroupIndex); 
+		courseGroup.setTotalSize(newTotalSize);
+		save();
+	}
+
+	/**
+	 * Updates index of an existing course
+	 * @author Wang Li Rong and Andrew
+	 * @param oldCourseGroupIndex
+	 * @param newCourseGroupIndex
+	 */
+	public void setIndexNumber(String oldCourseGroupIndex, String newCourseGroupIndex){
+		//set the index inside the coursegroup
+		CourseGroup courseGroup = getCourseGroup(oldCourseGroupIndex);
+		courseGroup.setIndexNumber(newCourseGroupIndex);
+		//change the index inside the hashmap
+		courseGroups.remove(oldCourseGroupIndex);
+		courseGroups.put(newCourseGroupIndex,courseGroup);
+		//set the index inside the course
+		String courseCode = courseGroup.getCourseCode(); 
+        getCourseByCode(courseCode).setCourseGroup(oldCourseGroupIndex, newCourseGroupIndex);
+		save();
+	}
+
+	/**
+	 * Get list of matriculation numbers of students in the course
+	 * @param courseCode
+	 * @return list of matriculation numbers of students in the course
+	 */
+	public ArrayList<String> getStudentsOfCourse(String courseCode){
+		ArrayList<String> students = new ArrayList<>();
+		for (String courseGroup : getCourseGroupsOfCourse(courseCode)){
+			students.addAll(getCourseGroup(courseGroup).getStudents());
+		}
+		return students;
+	}
+	
+	/**
+	 * Change the course code of an existing course
+	 * @author Wang Li Rong
+	 * @param oldCourseCode
+	 * @param newCourseCode
+	 */
+	public void setCourseCode(String oldCourseCode, String newCourseCode){
+		//set the course code inside the course
+		Course course = getCourseByCode(oldCourseCode);
+		course.setCourseCode(newCourseCode);
+		//change the courseCode inside the hashmap
+		courses.remove(oldCourseCode);
+		courses.put(newCourseCode, course);
+		//set all the course codes of all coursegroups inside the course
+		for (String courseGroupIndex : course.getCourseGroups()){
+			CourseGroup courseGroup = getCourseGroup(courseGroupIndex);
+			courseGroup.setCourseCode(newCourseCode);
+		}
+		save();
+	}
+
 }
 

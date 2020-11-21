@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Enum for gender of student
@@ -126,9 +127,15 @@ public class Student implements Serializable
      * Change a course code in confirmedCourseGroups
      * @author Wang Li Rong
      */
-    public void setCourseCode(String courseGroupIndex, String newCourseCode){
-        confirmedCourseGroups.remove(courseGroupIndex);
-        confirmedCourseGroups.put(courseGroupIndex, newCourseCode);
+    public void setCourseCode(String oldCourseCode, String newCourseCode){
+        Set<String> courseGroups = confirmedCourseGroups.keySet();
+        for (String courseGroupIndex : courseGroups){
+            String courseCode = confirmedCourseGroups.get(courseGroupIndex);
+            if (courseCode == oldCourseCode){
+                confirmedCourseGroups.remove(courseGroupIndex);
+                confirmedCourseGroups.put(courseGroupIndex, newCourseCode);
+            }
+        }
     }
 
     /**

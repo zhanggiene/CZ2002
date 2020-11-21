@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -201,8 +200,7 @@ public class VideoTest {
     private void addOneIndexToCourse(String index, String courseCode) {
         // must always add the course before the index
         CourseGroup courseGroup = new CourseGroup(index, 10, courseCode);
-        courseManager.getCourseByCode(courseCode).addCourseGroup(index);
-        courseManager.addCourseGroup(courseGroup);
+        courseManager.addCourseGroup(courseGroup, courseCode);
     }
 
     /**
