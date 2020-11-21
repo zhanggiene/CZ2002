@@ -145,7 +145,7 @@ public class AdminApp {
                 progress1=true;
                 break;
             } else if (schoolChoice != schools.size()+1){
-                System.out.println("Please input an integer between 1-"+ (schools.size()+1));
+                System.out.println("Please input an integer between 1-"+ (schools.size()));
             }
         } while (schoolChoice != schools.size()+1);
 
@@ -521,7 +521,7 @@ public class AdminApp {
                         school = (School)schools.get(schoolInt-1);
                         break;
                     } else {
-                        System.out.println("Please input an integer between 1-"+ schools.size()+1);
+                        System.out.println("Please input an integer between 1-"+ (schools.size()));
                     }
                 } catch (Exception e){
                     System.out.println("Please input an integer");
@@ -810,7 +810,7 @@ public class AdminApp {
                             school = (School)schools.get(schoolInt-1);
                             break;
                         } else {
-                            System.out.println("Please input an integer between 1-"+ schools.size()+1);
+                            System.out.println("Please input an integer between 1-"+ (schools.size())+"\n");
                         }
                     } catch (Exception e){
                         System.out.println("Please input an integer");

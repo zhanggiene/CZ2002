@@ -36,7 +36,7 @@ public class EmailNotificationManager {
         try {
             this.file = new File(this.fileName);
             this.file.createNewFile();
-            loadFile();
+            load();
             this.fw = new FileWriter(this.file, true);
             this.pw=new PrintWriter(this.fw);
         } catch (IOException e) {
@@ -68,7 +68,7 @@ public class EmailNotificationManager {
     /**
      * Loads file of emails and matriculation numbers
      */
-    private void loadFile()
+    private void load()
     {
         try{
             Scanner rd=new Scanner(this.file);

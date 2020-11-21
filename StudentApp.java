@@ -245,7 +245,7 @@ public class StudentApp {
 			if (addedStudentFromWaitlist != null){
 				stdmgr.enrol(addedStudentFromWaitlist, matchCG[option-1], crsmgr.getCourseGroup(matchCG[option-1]).getCourseCode());
 				//send an email
-				emailNotificationManager.sendEmail(addedStudentFromWaitlist, "New course added from your waitlist", matchCG[option-1]+" has been added. ");
+				emailNotificationManager.sendEmail(addedStudentFromWaitlist, "New course added from your waitlist", "Congradulation\n"+matchCG[option-1]+" has been added . ");
 			}
 			dropMenu();
         }else {
@@ -302,7 +302,7 @@ public class StudentApp {
     	System.out.println("==========================================================");
     	 Map<String, CourseGroup> courseGroups = crsmgr.getCourseGroup();
     	 for(Map.Entry<String, CourseGroup> item: courseGroups.entrySet()) {
-    	    	System.out.println("|"+item.getValue().getIndexNumber()+"   "+ item.getValue().getLessons());	    	
+    	    	System.out.println("|"+item.getValue().getCourseCode()+item.getValue().getIndexNumber()+"   "+ item.getValue().getLessons());	    	
     	 }
     	 System.out.println("==========================================================");
      	System.out.println("Press any key to return to previous menu.");

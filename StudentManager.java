@@ -13,7 +13,7 @@ public class StudentManager {
     private String FileName="StudentData.bin";
 
     StudentManager(){
-        loadData();
+        load();
     }
     
     /** 
@@ -58,7 +58,7 @@ public class StudentManager {
      * Load all data
      * @author zhu yan
      */
-    private void loadData()
+    private void load()
     {
         try {
             File yourFile = new File(this.FileName);

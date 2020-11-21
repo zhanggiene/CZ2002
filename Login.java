@@ -57,7 +57,6 @@ public class Login {
             {
                 School schoolOfStudent=studentManager.getSchool(userName);
                 System.out.println("school of Student is "+schoolOfStudent);
-                timeManager.printAllAccessPeriod();
                 if (timeManager.isInside(schoolOfStudent,new Date()))
                 {
                     // within the time
@@ -65,11 +64,24 @@ public class Login {
                     StudentApp studentApp=new StudentApp(userName,studentManager,courseManager, emailNotificationManager);
                     studentApp.start();
                 }
+                else if (timeManager.isEarly(schoolOfStudent, new Date())) {
+
+                    System.out.println("sorry, you are too early.\n");
+                    System.out.println("your registration time is\n");
+                    timeManager.PrintSchoolAcessTime(schoolOfStudent);
+                    input.close();
+
+                    
+                }
+
                 else
                 {
-                    // not within the time
-                    System.out.println("sorry, not in the correct time.");
+
+                    System.out.println("sorry, you are too late.\n");
+                    System.out.println("your registration time is\n");
+                    timeManager.PrintSchoolAcessTime(schoolOfStudent);
                     input.close();
+
                 }
 
             }
