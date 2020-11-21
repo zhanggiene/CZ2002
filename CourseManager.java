@@ -22,15 +22,7 @@ public class CourseManager{
 	public CourseManager()
 	{
 		load();
-		if (this.courses == null){
-			this.courses = new HashMap<String, Course>();
-		}
-		if (this.courseGroups == null){
-			this.courseGroups = new HashMap<String, CourseGroup>();
-		}
-		if (this.swapIndex == null){
-			this.swapIndex = new HashMap<String, String[]>();
-		} 
+		
 	}
 
 	/**
@@ -230,27 +222,67 @@ public class CourseManager{
 	}
 
 	/**
-	 * Load data from the bin files
+	 * Load data from the bin files. if it is empty,create a new one.
 	 * @author zhu yan
 	 */
 	private void load()
 	{
+
+		if (this.courses == null){
+			
+		}
+		if (this.courseGroups == null){
+			this.courseGroups = new HashMap<String, CourseGroup>();
+		}
+		if (this.swapIndex == null){
+			
+		} 
 		try {
-			FileInputStream fisCourse=new FileInputStream("./"+this.CourseFile);
+			File CourseFile=new File(this.CourseFile);
+			if (!CourseFile.exists())
+			{
+				CourseFile.createNewFile();
+				this.courses = new HashMap<String, Course>();
+			}
+			else
+			{
+				FileInputStream fisCourse=new FileInputStream("./"+this.CourseFile);
 			ObjectInputStream oisCourse=new ObjectInputStream(fisCourse);
 			this.courses=( Map<String, Course>) oisCourse.readObject();
 			oisCourse.close();
-			//WriteObject wo=null;
-			//WriteObject[] woj=new WriteObject[5];
+
+			}
+
+			File CourseGroupFile=new File(this.CourseFile);
+			if (!CourseGroupFile.exists())
+			{
+				CourseGroupFile.createNewFile();
+				this.courseGroups = new HashMap<String, CourseGroup>();
+			}
+			else
+			{
 			FileInputStream fisCourseGroup=new FileInputStream("./"+this.CourseGroupFile);
 			ObjectInputStream oisCourseGroup=new ObjectInputStream(fisCourseGroup);
 			this.courseGroups=( Map<String, CourseGroup>) oisCourseGroup.readObject();
-			oisCourseGroup.close();            
-			//updated by WY
-			FileInputStream fisSwapIndexFile = new FileInputStream("./"+this.SwapIndexFile);
+			oisCourseGroup.close();      
+
+			}
+
+			File SwapIndexFile=new File(this.CourseFile);
+			if (!SwapIndexFile.exists())
+			{
+				SwapIndexFile.createNewFile();
+				this.swapIndex = new HashMap<String, String[]>();
+			}
+			else
+			{
+				FileInputStream fisSwapIndexFile = new FileInputStream("./"+this.SwapIndexFile);
 			ObjectInputStream oisSwapIndexFilep = new ObjectInputStream(fisSwapIndexFile);
 			this.swapIndex = (Map<String, String[]>) oisSwapIndexFilep.readObject();
 			oisSwapIndexFilep.close();  
+
+			}
+			
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
