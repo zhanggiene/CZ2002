@@ -640,19 +640,27 @@ public class AdminApp {
             System.out.println("2. Tutorial");
             System.out.println("3. Lab");
             System.out.println("Your choice (Enter -1 to stop adding lesson) : ");
-            int lessInt = scan.nextInt();
-            if(lessInt == -1){
-                adding = false;
-            }else{
-                TypeOfLesson type = TypeOfLesson.LECTURE; 
-                if(lessInt == 1){
-                    type = TypeOfLesson.LECTURE;
-                } else if(lessInt == 2){
-                    type = TypeOfLesson.TUTORIAL;
-                }else if(lessInt == 3){
-                    type = TypeOfLesson.LABORATORY;
+            int lessInt;
+            while (true){
+                if (scan.hasNextInt()){
+                     lessInt= scan.nextInt();
+                    if (lessInt<=TypeOfLesson.values().length && lessInt>0 || lessInt!=-1 ){
+                        break;
+                    }
                 }
+                System.out.println("Please input numbers between 1 - "+ TypeOfLesson.values().length+"\nOption: ");
                 scan.nextLine();
+            }
+            TypeOfLesson type = TypeOfLesson.LECTURE; 
+            if(lessInt == 1){
+                type = TypeOfLesson.LECTURE;
+            } else if(lessInt == 2){
+                type = TypeOfLesson.TUTORIAL;
+            }else if(lessInt == 3){
+                type = TypeOfLesson.LABORATORY;
+            }
+            scan.nextLine();
+                
 
                 int day = 1;
                 System.out.print("Select what day (Monday 1,... Friday 5): ");
@@ -703,9 +711,6 @@ public class AdminApp {
                 
             }
         }
-
-
-    }
 
     /**
      * UI for updating a course.
