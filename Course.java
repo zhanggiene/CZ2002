@@ -26,7 +26,7 @@ public class Course implements Serializable{
      * Getter for course code
      * @return course code string
      */
-    public String getcourseCode()
+    public String getCourseCode()
     {
         return this.courseCode;
     }

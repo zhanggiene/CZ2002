@@ -154,6 +154,7 @@ public class StudentManager {
 
     /**
      * Does swap for 2 students
+     * @author Wang Li Rong
      */
     public void swap(String[] swapEntry){
         String[] indexArray = swapEntry[0].split(" ");
@@ -163,4 +164,35 @@ public class StudentManager {
         getStudent(swapEntry[2]).swapIndex(indexArray[0], indexArray[1]);
         save();
     }
+
+    /**
+     * Updates the index number for all students in the list
+     * @param listOfStudents
+     * @author Wang Li Rong
+     */
+    public void updateIndexOfListOfStudents(ArrayList<String> listOfStudents, 
+                                                String oldIndex, String newIndex){
+        for (String matricNumber: listOfStudents){
+            getStudent(matricNumber).setCourseGroup(oldIndex,newIndex);
+        }
+        save();
+    }
+
+    /**
+     * Updates the courseCode for all students in the list
+     * We assume all students in the list have that courseCode
+     * @param listOfStudents
+     * @param oldCourseCode
+     * @param newCourseCode
+     * @author Wang Li Rong
+     */
+    public void updateCourseCodeOfListOfStudents(ArrayList<String> listOfStudents, 
+                                                String oldCourseCode, String newCourseCode){
+        for (String matricNumber: listOfStudents){
+            getStudent(matricNumber).setCourseCode(oldCourseCode, newCourseCode);
+        }
+        save();
+    }
+    
+
 }

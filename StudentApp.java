@@ -139,7 +139,7 @@ public class StudentApp {
 		}
         if(option<=availableCourse.size() && option>0) {
 			//shows all possible coursegroups 
-	        String selectedCourseID = availableCourse.get(courseID[option-1]).getcourseCode();
+	        String selectedCourseID = availableCourse.get(courseID[option-1]).getCourseCode();
 			//checks if student is in the course
 			if (loginStudent.isInCourse(selectedCourseID)){
 				System.out.println("You have already registered for this course!");

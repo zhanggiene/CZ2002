@@ -1,4 +1,3 @@
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,11 +18,11 @@ import java.util.regex.Pattern;
  * @author Wang Li Rong and Andrew
  */
 public class AdminApp {
-    StudentManager studentManager;
-    CourseManager courseManager;
-    LoginTimeManager timeManager;
-    EmailNotificationManager emailNotificationManager;
-    PasswordManager passwordManager;
+    private StudentManager studentManager;
+    private CourseManager courseManager;
+    private LoginTimeManager timeManager;
+    private EmailNotificationManager emailNotificationManager;
+    private PasswordManager passwordManager;
     
     public AdminApp(StudentManager studentManager,
                     CourseManager courseManager,
@@ -626,9 +625,7 @@ public class AdminApp {
         CourseGroup courseNum;
         if (!indexNum.isEmpty() && vacance > 0){
             courseNum = new CourseGroup(indexNum,vacance, courseCode);
-            courseManager.addCourseGroup(courseNum);
-            Course c = courseManager.getCourseByCode(courseCode);   
-            c.addCourseGroup(indexNum);
+            courseManager.addCourseGroup(courseNum, courseCode);
         } else{
             throw new RuntimeException("Particulars not filled up");
         }
@@ -719,8 +716,7 @@ public class AdminApp {
                 PeriodClass period;
                 if (day > 0 && day <= 5 && start >= 0 && start < 2400 && end >= 0 && end < 2400 && !loc.isEmpty()){
                     period = new PeriodClass(type,day,start,end,loc);
-                    courseNum.addLesson(period);
-                    courseManager.save();
+                    courseManager.addLesson(courseNum.getIndexNumber(), period);
                 } else{
                     throw new RuntimeException("Particulars not filled up");
                 }
@@ -776,8 +772,10 @@ public class AdminApp {
                         System.out.println("Please enter a valid course code.");
                     }
                 }
-                System.out.println(c.getcourseCode());
-                updateCourseCodesOfAllStudents(c.getcourseCode(), newCode);
+                
+                String oldCourseCode = c.getCourseCode();
+                studentManager.updateCourseCodeOfListOfStudents(courseManager.getStudentsOfCourse(oldCourseCode), oldCourseCode, newCode);
+                courseManager.setCourseCode(oldCourseCode, newCode);
             }
             else if(choice2 == 2){
                 String newName = "";
@@ -791,8 +789,7 @@ public class AdminApp {
                         System.out.println("Please enter a valid course name.");
                     }
                 }
-                c.setCourseName(newName);
-                courseManager.save();
+                courseManager.setCourseName(c.getCourseCode(), newName);
             }
             else if(choice2 == 3){
                 List schools = (List<School>)java.util.Arrays.asList(School.values());
@@ -817,8 +814,7 @@ public class AdminApp {
                         scan.nextLine();
                     }
                 }
-                c.setSchool(school);
-                courseManager.save();
+                courseManager.setSchool(c.getCourseCode(), school);
                 scan.nextLine();
             }
             else if(choice2 == 4){
@@ -852,11 +848,11 @@ public class AdminApp {
                                 System.out.println("Please enter a valid index number.");
                             }
                         }
-                        updateIndexesOfAllStudents(cgIndex.getIndexNumber(), newNumber);
                         
-                        cgIndex.setIndexNumber(newNumber);
+                        String oldNumber = cgIndex.getIndexNumber();
+                        courseManager.setIndexNumber(oldNumber, newNumber);
+                        studentManager.updateIndexOfListOfStudents(cgIndex.getStudents(), oldNumber, newNumber);
                         cg.set(cgInt-1,newNumber);
-                        courseManager.save();
                     }
                     else if(indexInt == 2){
                         ArrayList<String> cgStud = cgIndex.getStudents();
@@ -868,8 +864,7 @@ public class AdminApp {
                                 System.out.println("Number of vacancy must exceed number of student");
                             }
                             else{
-                                cgIndex.setTotalSize(newVacancy);
-                                courseManager.save();
+                                courseManager.setTotalSize(cgIndex.getIndexNumber(), newVacancy);
                             }
                         } catch (Exception e){
                             System.out.println("Please enter a valid integer.");
@@ -1051,48 +1046,6 @@ public class AdminApp {
             System.out.println("---------------------------------------");
         }
     }
-
-    /**
-     * This function updates the index number for all students in the index 
-     * as well as updates the index of the course group in course manager
-     * @param oldCourseGroupIndex
-     * @param newCourseGroupIndex
-     * @author Wang Li Rong
-     */
-    private void updateIndexesOfAllStudents(String oldCourseGroupIndex, String newCourseGroupIndex){
-        CourseGroup courseGroup = courseManager.getCourseGroup(oldCourseGroupIndex);
-        String courseCode  = courseGroup.getCourseCode(); 
-        courseManager.getCourseByCode(courseCode).setCourseGroup(oldCourseGroupIndex, newCourseGroupIndex);
-        for (String matricNumber: courseGroup.getStudents()){
-            studentManager.getStudent(matricNumber).setCourseGroup(oldCourseGroupIndex,newCourseGroupIndex);
-        }
-        studentManager.save();
-        courseGroup.setIndexNumber(newCourseGroupIndex);
-        courseManager.updateCourseGroup(courseGroup, oldCourseGroupIndex , newCourseGroupIndex);
-    }
-
-    /**
-     * This method updates the course codes of all students in the course
-     * as well as updates the course of the course in course manager
-     * @param oldCourseCode
-     * @param newCourseCode
-     * @author Wang Li Rong
-     */
-    private void updateCourseCodesOfAllStudents(String oldCourseCode, String newCourseCode){
-        Course course = courseManager.getCourseByCode(oldCourseCode);
-        for (String courseGroup : courseManager.getCourseGroupsOfCourse(oldCourseCode)){
-            ArrayList<String> students = courseManager.getCourseGroup(courseGroup).getStudents();
-            for (String matricNumber: students){
-                Student student = studentManager.getStudent(matricNumber);
-                student.setCourseCode(courseGroup, newCourseCode);
-            }
-        }
-        studentManager.save();
-        course.setCourseCode(newCourseCode);
-        courseManager.updateCourse(course, oldCourseCode, newCourseCode);
-        courseManager.save();
-    }
-
     
 
 }
