@@ -59,7 +59,7 @@ public class VideoTest {
         Student student = new Student(name, matricNumber, school, gender, nationality);
         studentManager.addStudent(student);
         passwordManager.add(student.getMatriculationNumber(), "student");
-        emailNotificationManager.add(student.getMatriculationNumber(), email);
+        emailNotificationManager.addStudent(student.getMatriculationNumber(), email);
     }
 
     /**
@@ -92,8 +92,6 @@ public class VideoTest {
         // BU8401
         addOneCourse("BU8401", "Business Management", School.NBS);
 
-        // Save changes
-        courseManager.save();
         // For confirmation
         courseManager.printAllRecord();
     }
@@ -128,8 +126,6 @@ public class VideoTest {
         // 19352
         addOneIndexToCourse("19352", "BU8401");
 
-        // Save changes
-        courseManager.save();
         // For confirmation
         courseManager.printAllRecord();
     }
@@ -170,8 +166,6 @@ public class VideoTest {
         // BU8401
         addOneLessonToIndex(TypeOfLesson.TUTORIAL, 4, 1030, 1330, "TR+20", "19352");
 
-        // Save changes
-        courseManager.save();
         // For confirmation
         showAllLessons();
     }
@@ -217,7 +211,7 @@ public class VideoTest {
     private void addOneLessonToIndex(TypeOfLesson typeOfLesson, int weekday, int start, int end, String location,
             String index) {
         PeriodClass lesson = new PeriodClass(typeOfLesson, weekday, start, end, location);
-        courseManager.getCourseGroup(index).addLesson(lesson);
+        courseManager.addLesson(index, lesson);
     }
 
     private void showAllLessons() {
@@ -274,19 +268,15 @@ public class VideoTest {
         }
 
         checkAllStudents();
-
-        studentManager.save();
-        courseManager.save();
         
     }
 
     private void enrolOneStudent(String matricNumber, String courseGroupIndex, String courseCode){
         //add the courseGroup to the student
-        Student student = studentManager.getStudent(matricNumber);
-        student.addToCourseGroups(courseGroupIndex, courseCode);
+        studentManager.enrol(matricNumber, courseGroupIndex, courseCode);
+
         //add the student to the courseGroup
-        CourseGroup courseGroup = courseManager.getCourseGroup(courseGroupIndex);
-        courseGroup.enrol(matricNumber);
+        courseManager.enrol(matricNumber, courseGroupIndex);
     }
 
     private void checkAllStudents(){

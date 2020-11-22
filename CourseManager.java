@@ -178,7 +178,7 @@ public class CourseManager{
 	 * Saves all hashmaps to their respective bin files
 	 * @author zhu yan
 	 */
-	public void save()
+	private void save()
 	{
 		try {
 			FileOutputStream fopCourse=new FileOutputStream("./"+this.CourseFile);

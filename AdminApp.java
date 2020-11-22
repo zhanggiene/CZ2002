@@ -21,18 +21,18 @@ public class AdminApp {
     private StudentManager studentManager;
     private CourseManager courseManager;
     private LoginTimeManager timeManager;
-    private EmailNotificationManager emailNotificationManager;
+    private NotificationManager notificationManager;
     private PasswordManager passwordManager;
     
     public AdminApp(StudentManager studentManager,
                     CourseManager courseManager,
                     LoginTimeManager timeManager,
                     PasswordManager passwordManager,
-                    EmailNotificationManager emailNotificationManager){
+                    NotificationManager notificationManager){
         this.studentManager = studentManager;
         this.courseManager = courseManager;
         this.timeManager = timeManager;
-        this.emailNotificationManager = emailNotificationManager;
+        this.notificationManager = notificationManager;
         this.passwordManager = passwordManager;
     }
 
@@ -455,7 +455,7 @@ public class AdminApp {
 
         //add student to emailNotificationManager
         if (!email.isEmpty() && email.matches(regex)){
-            emailNotificationManager.add(matricNumber, email);
+            notificationManager.addStudent(matricNumber, email);
         }
 
         System.out.println("========================================");

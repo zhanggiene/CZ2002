@@ -41,7 +41,7 @@ public class StudentManager {
      * Save all records
      * @author zhu yan
      */
-    public void save()
+    private void save()
     {
         try {
             FileOutputStream fop=new FileOutputStream("./"+this.FileName);

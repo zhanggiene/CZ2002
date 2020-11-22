@@ -23,16 +23,16 @@ public class StudentApp {
 	private Student loginStudent;
 	private StudentManager stdmgr;
 	private CourseManager crsmgr;
-	private EmailNotificationManager emailNotificationManager;
+	private NotificationManager notificationManager;
 	private Map<String, Course> availableCourse = new HashMap<String, Course>();
 
     public StudentApp(String userName,
                     StudentManager studentManager,
                     CourseManager courseManager,
-                    EmailNotificationManager emailNotificationManager){
+                    NotificationManager notificationManager){
 		stdmgr=studentManager;
 		crsmgr=courseManager;
-		this.emailNotificationManager=emailNotificationManager;
+		this.notificationManager=notificationManager;
 		loginStudent = stdmgr.getStudent(userName);
 	}
 
@@ -245,7 +245,7 @@ public class StudentApp {
 			if (addedStudentFromWaitlist != null){
 				stdmgr.enrol(addedStudentFromWaitlist, matchCG[option-1], crsmgr.getCourseGroup(matchCG[option-1]).getCourseCode());
 				//send an email
-				emailNotificationManager.sendEmail(addedStudentFromWaitlist, "New course added from your waitlist", "Congradulation\n"+matchCG[option-1]+" has been added . ");
+				notificationManager.sendNotification(addedStudentFromWaitlist, "New course added from your waitlist", "Congradulation\n"+matchCG[option-1]+" has been added . ");
 			}
 			dropMenu();
         }else {
