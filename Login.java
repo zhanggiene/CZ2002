@@ -17,8 +17,6 @@ public class Login {
         StudentManager studentManager=new StudentManager();
         LoginTimeManager timeManager=new LoginTimeManager();
         CourseManager courseManager=new CourseManager();
-        
-        EmailNotificationManager emailNotificationManager = new EmailNotificationManager();
 
         Console console = System.console();
         Scanner input = new Scanner(System.in);
@@ -42,7 +40,7 @@ public class Login {
             if (mypass.isCorrectAdmin(userName, new String(passwordArray)))
             {
                 // go to admin page APP
-                AdminApp adminPage = new AdminApp(studentManager,courseManager, timeManager, emailNotificationManager, mypass);
+                AdminApp adminPage = new AdminApp(studentManager,courseManager, timeManager,mypass);
                 adminPage.start();
             }
             else
