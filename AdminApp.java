@@ -641,13 +641,19 @@ public class AdminApp {
             while (true){
                 if (scan.hasNextInt()){
                      lessInt= scan.nextInt();
-                    if (lessInt<=TypeOfLesson.values().length && lessInt>0 || lessInt!=-1 ){
+                    if (lessInt<=TypeOfLesson.values().length && lessInt>0 || lessInt ==-1 ){
                         break;
                     }
                 }
                 System.out.println("Please input numbers between 1 - "+ TypeOfLesson.values().length+"\nOption: ");
                 scan.nextLine();
             }
+
+            if(lessInt == -1){
+                adding = false;
+                break;
+            }
+
             TypeOfLesson type = TypeOfLesson.LECTURE; 
             if(lessInt == 1){
                 type = TypeOfLesson.LECTURE;
@@ -657,7 +663,6 @@ public class AdminApp {
                 type = TypeOfLesson.LABORATORY;
             }
             scan.nextLine();
-                
 
                 int day = 1;
                 while(true){
