@@ -7,16 +7,24 @@ import java.util.Scanner;
      it shows all instructions for the users and receive input from the user
      * @author zhang zhuyan
      */
-public class Login {
+public class LoginApp 
+{
 
-    
+        private LoginTimeManager timeManager;
+        private PasswordManager passwordManager;
+        private StudentManager studentManager;
+        
+        public LoginApp(
+                        LoginTimeManager timeManager,
+                        PasswordManager passwordManager,
+                        StudentManager studentManager){
+            this.timeManager = timeManager;
+            this.passwordManager = passwordManager;
+            this.studentManager=studentManager;
+                        }
+        public String logIn()
+        {
 
-    public static void main(String[] args) {
-
-        PasswordManager mypass=new PasswordManager();
-        StudentManager studentManager=new StudentManager();
-        LoginTimeManager timeManager=new LoginTimeManager();
-        CourseManager courseManager=new CourseManager();
 
         Console console = System.console();
         Scanner input = new Scanner(System.in);
@@ -26,7 +34,10 @@ public class Login {
         }
 
         System.out.println("Welcome to My Student Automated Registration System (MySTARS)");
-        System.out.print("Enter your UserName:");
+        do
+    {
+
+            System.out.print("Enter your UserName:");
         String userName = input.nextLine();
 
         char[] passwordArray = console.readPassword("Enter your password:");
@@ -35,13 +46,12 @@ public class Login {
         //console.printf("Password entered was: %s%n", new String(passwordArray));
         //input.close();
 
-        if (mypass.isAdmin(userName))
+        if (passwordManager.isAdmin(userName))
         {
-            if (mypass.isCorrectAdmin(userName, new String(passwordArray)))
+            if (passwordManager.isCorrectAdmin(userName, new String(passwordArray)))
             {
                 // go to admin page APP
-                AdminApp adminPage = new AdminApp(studentManager,courseManager, timeManager,mypass);
-                adminPage.start();
+                return "admin";
             }
             else
             {
@@ -49,9 +59,9 @@ public class Login {
             }
         }
 
-        else if(mypass.studentExist(userName))
+        else if(passwordManager.studentExist(userName))
         {
-            if (mypass.isCorrectStudent(userName, new String(passwordArray)))
+            if (passwordManager.isCorrectStudent(userName, new String(passwordArray)))
             {
                 School schoolOfStudent=studentManager.getSchool(userName);
                 System.out.println("school of Student is "+schoolOfStudent);
@@ -59,17 +69,13 @@ public class Login {
                 {
                     // within the time
                     // initialize student APPs
-                    StudentApp studentApp=new StudentApp(userName,studentManager,courseManager, emailNotificationManager);
-                    studentApp.start();
+                    return userName;
                 }
                 else if (timeManager.isEarly(schoolOfStudent, new Date())) {
 
                     System.out.println("sorry, you are too early.\n");
                     System.out.println("your registration time is\n");
                     timeManager.PrintSchoolAcessTime(schoolOfStudent);
-                    input.close();
-
-                    
                 }
 
                 else
@@ -78,7 +84,6 @@ public class Login {
                     System.out.println("sorry, you are too late.\n");
                     System.out.println("your registration time is\n");
                     timeManager.PrintSchoolAcessTime(schoolOfStudent);
-                    input.close();
 
                 }
 
@@ -87,7 +92,6 @@ public class Login {
             else
             {
                 System.out.println("sorry, wrong password try again");
-                input.close();
 
             }
         }
@@ -96,7 +100,10 @@ public class Login {
                 {
                     // not within the time
                     System.out.println("sorry,try again");
-                    input.close();
                 }
     }
+        while(true);
+}
+        
+        
 }
