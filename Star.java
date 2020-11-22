@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 /**
      it serves as a starting point of the whole program.
-     it shows all instructions for the users and receive input from the user
      * @author zhang zhuyan
+     * @return the string of user account after checking it is valid(be it admin or student)
      */
 
 public class Star {
@@ -21,7 +21,7 @@ public class Star {
             LoginTimeManager timeManager=new LoginTimeManager();
             CourseManager courseManager=new CourseManager();
             EmailNotificationManager emailNotificationManager=new EmailNotificationManager();
-            AdminApp adminPage = new AdminApp(studentManager,courseManager, timeManager,mypass);
+            AdminApp adminPage = new AdminApp(studentManager,courseManager, timeManager,mypass,emailNotificationManager);
             LoginApp loginPage=new LoginApp(timeManager,mypass, studentManager);
 
             String name=loginPage.logIn();

@@ -27,11 +27,12 @@ public class AdminApp {
     public AdminApp(StudentManager studentManager,
                     CourseManager courseManager,
                     LoginTimeManager timeManager,
+                    EmailNotificationManager emailNotificationManager,
                     PasswordManager passwordManager){
         this.studentManager = studentManager;
         this.courseManager = courseManager;
         this.timeManager = timeManager;
-        this.emailNotificationManager = new EmailNotificationManager();
+        this.emailNotificationManager = emailNotificationManager;
         this.passwordManager = passwordManager;
     }
 
