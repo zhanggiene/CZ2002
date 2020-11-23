@@ -12,7 +12,7 @@ public class StudentManager {
    private Hashtable<String, Student> studentAccounts;
     private String FileName="StudentData.bin";
 
-    StudentManager(){
+    public StudentManager(){
         load();
     }
     
@@ -102,7 +102,7 @@ public class StudentManager {
      * @param metricNumber
      * @return
      */
-    School getSchool(String metricNumber)
+    public School getSchool(String metricNumber)
     {
         return studentAccounts.get(metricNumber).getSchool();
     }

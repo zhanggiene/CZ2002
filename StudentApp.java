@@ -452,7 +452,7 @@ public class StudentApp {
 			for (PeriodClass lesson: lessons){
 				System.out.println(lesson.getDayOfWeek()+"\t"+
 								   Integer.toString(lesson.getStartTime())+"-"+Integer.toString(lesson.getEndTime())+"\t"+
-								   lesson.typeOfLesson + "\t"+ lesson.getLocation());
+								   lesson.getTypeOfLesson() + "\t"+ lesson.getLocation());
 			}
 			System.out.println("---------------------------------------------------------");
 			System.out.print("Press any key to continue to the next course...");

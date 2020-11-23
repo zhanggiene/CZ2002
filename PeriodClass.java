@@ -17,11 +17,11 @@ enum TypeOfLesson {
  */
 public class PeriodClass implements Serializable{
     private static final long serialVersionUID = 1L;
-    DayOfWeek dayOfWeek;
-    int startTime;
-    int endTime;
-    String location;
-    TypeOfLesson typeOfLesson;
+    private DayOfWeek dayOfWeek;
+    private int startTime;
+    private int endTime;
+    private String location;
+    private TypeOfLesson typeOfLesson;
 
     public PeriodClass(TypeOfLesson type, int weekday,int start,int end,String location)
     {

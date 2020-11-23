@@ -1,9 +1,9 @@
 
 /**
-     it serves as a starting point of the whole program.
-     * @author zhang zhuyan
-     * @return the string of user account after checking it is valid(be it admin or student)
-     */
+ it serves as a starting point of the whole program.
+* @author zhang zhuyan
+* @return the string of user account after checking it is valid(be it admin or student)
+*/
 
 public class Star {
 
