@@ -125,17 +125,21 @@ public class Student implements Serializable
 
     /**
      * Change a course code in confirmedCourseGroups
+     * Assume that student has the course
      * @author Wang Li Rong
      */
     public void setCourseCode(String oldCourseCode, String newCourseCode){
+        String courseGroupIndexToRemove="";
         Set<String> courseGroups = confirmedCourseGroups.keySet();
         for (String courseGroupIndex : courseGroups){
             String courseCode = confirmedCourseGroups.get(courseGroupIndex);
-            if (courseCode == oldCourseCode){
-                confirmedCourseGroups.remove(courseGroupIndex);
-                confirmedCourseGroups.put(courseGroupIndex, newCourseCode);
+            if (courseCode.equals(oldCourseCode)){
+                courseGroupIndexToRemove = courseGroupIndex;
             }
         }
+        //To prevent java.util.ConcurrentModificationException
+        confirmedCourseGroups.remove(courseGroupIndexToRemove);
+        confirmedCourseGroups.put(courseGroupIndexToRemove, newCourseCode);
     }
 
     /**
